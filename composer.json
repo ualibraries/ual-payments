@@ -1,8 +1,8 @@
 {
-  "name": "symfony/framework-standard-edition",
-  "license": "MIT",
+  "name": "ual-payments",
+  "license": "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
   "type": "project",
-  "description": "The \"Symfony Standard Edition\" distribution",
+  "description": "Payments for UA Libraries",
   "autoload": {
     "psr-4": {
       "AppBundle\\": "src/AppBundle"
