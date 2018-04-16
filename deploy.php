@@ -8,7 +8,7 @@ require 'vendor/deployer/recipes/recipe/slack.php';
 set('application', 'ual-payments');
 
 // Project repository
-set('repository', 'https://github.com/ualibraries/ual-payments.git');
+set('repository', 'ssh://git@github.com/ualibraries/ual-payments.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
