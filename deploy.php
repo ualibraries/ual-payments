@@ -66,11 +66,6 @@ task('deploy', [
     'cleanup',
 ])->onStage(['prd']);
 
-desc('Andys testing');
-task('deploy:done', function () {
-    write('Andy, deploy done!');
-});
-
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
 
