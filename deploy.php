@@ -19,6 +19,7 @@ set('keep_releases', -1);
 // Default branch to deploy from
 set('branch', 'master');
 
+// Variables for Symfony recipe, required for Symfony3 support
 set('bin_dir', 'bin');
 set('var_dir', 'var');
 
