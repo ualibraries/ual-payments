@@ -74,10 +74,3 @@ after('deploy:failed', 'deploy:unlock');
 before('deploy', 'slack:notify');
 after('success', 'slack:notify:success');
 after('deploy:failed', 'slack:notify:failure');
-
-// Migrate database before symlink new release.
-/**
- * @todo uncomment after database is created
- */   
-//after('deploy:vendors', 'database:migrate');
-
