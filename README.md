@@ -16,9 +16,10 @@ University of Arizona Libraries - Payments
 
 This project uses [Deployer](https://deployer.org/) for it's deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
 
-* **Production:** `composer deploy:prd`
+* **Production:**  
+`composer deploy:prd`
 
-### Environments
+## Environments
 
 * **Production** - pay-prd
 
