@@ -46,7 +46,7 @@
     ],
     "post-install-cmd": ["@symfony-scripts"],
     "post-update-cmd": ["@symfony-scripts"],
-    "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
+    "deploy:prd": ["vendor/bin/dep --ansi deploy prd"]
   },
   "config": {
     "platform": {
