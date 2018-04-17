@@ -1,6 +1,7 @@
 {
   "name": "ual-payments",
-  "license": "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
+  "license":
+    "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
   "type": "project",
   "description": "Payments for UA Libraries",
   "autoload": {
@@ -45,9 +46,7 @@
     ],
     "post-install-cmd": ["@symfony-scripts"],
     "post-update-cmd": ["@symfony-scripts"],
-    "deploy:prd": [
-      "vendor/bin/dep --ansi deploy prd"
-    ]
+    "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
   },
   "config": {
     "platform": {
