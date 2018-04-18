@@ -31,7 +31,7 @@ add('shared_dirs', ['var/logs']);
 add('writable_dirs', ['var/cache', 'var/logs', 'var/sessions']);
 set('allow_anonymous_stats', false);
 
-set('slack_webhook', 'https://hooks.slack.com/services/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');
+set('slack_webhook', 'https://hooks.slack.com/services/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');
 
 // Hosts
 host('production')
