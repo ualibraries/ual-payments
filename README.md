@@ -14,7 +14,7 @@ University of Arizona Libraries - Payments
 
 ## Deploying
 
-This project uses [Deployer](https://deployer.org/) for it's deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
+This project uses [Deployer](https://deployer.org/) for its deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
 
 * **Production:**  
 `composer deploy:prd`
@@ -24,8 +24,17 @@ This project uses [Deployer](https://deployer.org/) for it's deployments. Deploy
 * **Production** - pay-prd
 
 ## Authentication
+* If you don't already have an SSH key on your development machine, [generate one and add it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key).
+* Add your SSH key to the server environment for the `deploy` user.  You can do this using `ssh-copy-id`:
+```
+$ ssh-copy-id deploy@pay-prd
+```
+If you don't have the password for the deploy account, you can ask someone who already has server access to add your key.  Send them your public key (e.g. `~/.ssh/id_rsa.pub`) and have them append it to the `authorized_keys` file for the `deploy` user:
 
-* You can add  your public ssh key (typically located at `~/.ssh/id_rsa.pub`) to the Github Repositories Deploy Keys. This will allow you to push, pull, and deploy without needing to provide your password each time. See [Github Documentation](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) for more information.  
+```
+deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/authorized_keys
+```
+
 
 ## Rollback
 

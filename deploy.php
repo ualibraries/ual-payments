@@ -35,6 +35,7 @@ set('slack_webhook', 'https://hooks.slack.com/services/T02B301C8/BA8GKJTHP/tsWw0
 
 // Hosts
 host('production')
+    ->user('deploy')
     ->hostname('pay-prd.library.arizona.edu')
     ->set('deploy_path', '/var/www')
     ->stage('prd'); 
