@@ -73,5 +73,5 @@ after('deploy:failed', 'deploy:unlock');
 
 // Slack notifications
 before('deploy', 'slack:notify');
-after('success', 'slack:notify:success');
+after('deploy', 'slack:notify:success');
 after('deploy:failed', 'slack:notify:failure');
