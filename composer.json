@@ -1,6 +1,7 @@
 {
   "name": "ual-payments",
-  "license": "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
+  "license":
+    "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
   "type": "project",
   "description": "Payments for UA Libraries",
   "autoload": {
@@ -29,6 +30,8 @@
     "twig/twig": "^1.0||^2.0"
   },
   "require-dev": {
+    "deployer/dist": "^6.1",
+    "deployer/recipes": "^6.0",
     "sensio/generator-bundle": "^3.0",
     "symfony/phpunit-bridge": "^3.0"
   },
@@ -42,11 +45,13 @@
       "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
     ],
     "post-install-cmd": ["@symfony-scripts"],
-    "post-update-cmd": ["@symfony-scripts"]
+    "post-update-cmd": ["@symfony-scripts"],
+    "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
+    "deploy:rollback": [ "vendor/bin/dep --ansi rollback prd"]
   },
   "config": {
     "platform": {
-      "php": "5.6"
+      "php": "7.2"
     },
     "sort-packages": true
   },

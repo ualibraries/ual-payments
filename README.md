@@ -1,77 +1,45 @@
-Symfony Standard Edition
+University of Arizona Libraries - Payments
 ========================
 
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
+## Requirements
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+* 💻
+* PHP >= 7.2
+* Composer
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+## Getting started
 
-What's inside?
---------------
+* Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
+* Run `composer install`
 
-The Symfony Standard Edition is configured with the following defaults:
+## Deploying
 
-  * An AppBundle you can use to start coding;
+This project uses [Deployer](https://deployer.org/) for its deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
 
-  * Twig as the only configured template engine;
+* **Production:**  
+`composer deploy:prd`
 
-  * Doctrine ORM/DBAL;
+## Environments
 
-  * Swiftmailer;
+* **Production** - pay-prd
 
-  * Annotations enabled for everything.
+## Authentication
+* If you don't already have an SSH key on your development machine, [generate one and add it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key).
+* Add your SSH key to the server environment for the `deploy` user.  You can do this using `ssh-copy-id`:
+```
+$ ssh-copy-id deploy@pay-prd
+```
+If you don't have the password for the deploy account, you can ask someone who already has server access to add your key.  Send them your public key (e.g. `~/.ssh/id_rsa.pub`) and have them append it to the `authorized_keys` file for the `deploy` user:
 
-It comes pre-configured with the following bundles:
+```
+deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/authorized_keys
+```
 
-  * **FrameworkBundle** - The core Symfony framework bundle
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+## Rollback
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+To rollback to the previous release, run `composer deploy:rollback`. See [Deployer documentation](https://deployer.org/docs) for more.
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+## Licensing
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
-
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/3.4/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.4/doctrine.html
-[8]:  https://symfony.com/doc/3.4/templating.html
-[9]:  https://symfony.com/doc/3.4/security.html
-[10]: https://symfony.com/doc/3.4/email.html
-[11]: https://symfony.com/doc/3.4/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
+Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved
