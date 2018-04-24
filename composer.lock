@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b04464b9d50f2c741250da9b12dff978",
+    "content-hash": "bbed1e9c75b36e420453cf64f2d2a279",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -61,6 +61,336 @@
                 "tls"
             ],
             "time": "2018-03-29T19:57:20+00:00"
+        },
+        {
+            "name": "dflydev/ant-path-matcher",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-util-antPathMatcher.git",
+                "reference": "66e0ed7cd07e1d989b170472d000b99ab8c9e33e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-util-antPathMatcher/zipball/66e0ed7cd07e1d989b170472d000b99ab8c9e33e",
+                "reference": "66e0ed7cd07e1d989b170472d000b99ab8c9e33e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "dflydev\\util\\antPathMatcher": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Ant Path Matcher Utility",
+            "homepage": "http://github.com/dflydev/dflydev-util-antPathMatcher",
+            "keywords": [
+                "ant",
+                "matcher",
+                "path",
+                "pattern"
+            ],
+            "time": "2012-12-03T05:03:00+00:00"
+        },
+        {
+            "name": "dflydev/apache-mime-types",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-apache-mime-types.git",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-apache-mime-types/zipball/f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Apache MIME Types",
+            "keywords": [
+                "apache",
+                "mime",
+                "mimetypes"
+            ],
+            "time": "2013-05-14T02:02:01+00:00"
+        },
+        {
+            "name": "dflydev/canal",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-canal.git",
+                "reference": "668af213d86f0f378f5dcce6799b974044fa6a51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-canal/zipball/668af213d86f0f378f5dcce6799b974044fa6a51",
+                "reference": "668af213d86f0f378f5dcce6799b974044fa6a51",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/apache-mime-types": "1.0.*",
+                "php": ">=5.3.3",
+                "webignition/internet-media-type": "0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\Canal": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Content analysis for the purpose of determining Internet media types.",
+            "keywords": [
+                "content",
+                "detection",
+                "mime",
+                "type"
+            ],
+            "time": "2013-05-14T05:22:25+00:00"
+        },
+        {
+            "name": "dflydev/dot-access-configuration",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-dot-access-configuration.git",
+                "reference": "ae6e7138b1d9063d343322cca63994ee1ac5161d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-configuration/zipball/ae6e7138b1d9063d343322cca63994ee1ac5161d",
+                "reference": "ae6e7138b1d9063d343322cca63994ee1ac5161d",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/dot-access-data": "1.*",
+                "dflydev/placeholder-resolver": "1.*",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "symfony/yaml": "Required for using the YAML Configuration Builders"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\DotAccessConfiguration": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Given a deep data structure representing a configuration, access configuration by dot notation.",
+            "homepage": "https://github.com/dflydev/dflydev-dot-access-configuration",
+            "keywords": [
+                "config",
+                "configuration"
+            ],
+            "time": "2016-12-12T17:43:40+00:00"
+        },
+        {
+            "name": "dflydev/dot-access-data",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-dot-access-data.git",
+                "reference": "3fbd874921ab2c041e899d044585a2ab9795df8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-dot-access-data/zipball/3fbd874921ab2c041e899d044585a2ab9795df8a",
+                "reference": "3fbd874921ab2c041e899d044585a2ab9795df8a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\DotAccessData": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                },
+                {
+                    "name": "Carlos Frutos",
+                    "email": "carlos@kiwing.it",
+                    "homepage": "https://github.com/cfrutos"
+                }
+            ],
+            "description": "Given a deep data structure, access data by dot notation.",
+            "homepage": "https://github.com/dflydev/dflydev-dot-access-data",
+            "keywords": [
+                "access",
+                "data",
+                "dot",
+                "notation"
+            ],
+            "time": "2017-01-20T21:14:22+00:00"
+        },
+        {
+            "name": "dflydev/placeholder-resolver",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-placeholder-resolver.git",
+                "reference": "c498d0cae91b1bb36cc7d60906dab8e62bb7c356"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-placeholder-resolver/zipball/c498d0cae91b1bb36cc7d60906dab8e62bb7c356",
+                "reference": "c498d0cae91b1bb36cc7d60906dab8e62bb7c356",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\PlaceholderResolver": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Given a data source representing key => value pairs, resolve placeholders like ${foo.bar} to the value associated with the 'foo.bar' key in the data source.",
+            "homepage": "https://github.com/dflydev/dflydev-placeholder-resolver",
+            "keywords": [
+                "placeholder",
+                "resolver"
+            ],
+            "time": "2012-10-28T21:08:28+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -850,6 +1180,54 @@
             "time": "2018-02-27T07:30:56+00:00"
         },
         {
+            "name": "evenement/evenement",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/igorw/evenement.git",
+                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/igorw/evenement/zipball/6ba9a777870ab49f417e703229d53931ed40fd7a",
+                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0||^5.7||^4.8.35"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Evenement": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                }
+            ],
+            "description": "Événement is a very simple event dispatching library for PHP",
+            "keywords": [
+                "event-dispatcher",
+                "event-emitter"
+            ],
+            "time": "2017-07-17T17:39:19+00:00"
+        },
+        {
             "name": "fig/link-util",
             "version": "1.0.0",
             "source": {
@@ -1005,6 +1383,52 @@
             "time": "2014-01-12T16:20:24+00:00"
         },
         {
+            "name": "michelf/php-markdown",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "01ab082b355bf188d907b9929cd99b2923053495"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/01ab082b355bf188d907b9929cd99b2923053495",
+                "reference": "01ab082b355bf188d907b9929cd99b2923053495",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Michelf\\": "Michelf/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "https://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2018-01-15T00:49:33+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.23.0",
             "source": {
@@ -1081,6 +1505,59 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
+        },
+        {
+            "name": "netcarver/textile",
+            "version": "v3.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/textile/php-textile.git",
+                "reference": "bac6381fcab28cf6b6ae3d0e61b6a8c8d6adca13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/textile/php-textile/zipball/bac6381fcab28cf6b6ae3d0e61b6a8c8d6adca13",
+                "reference": "bac6381fcab28cf6b6ae3d0e61b6a8c8d6adca13",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "satooshi/php-coveralls": "0.6.*",
+                "squizlabs/php_codesniffer": "1.5.*",
+                "symfony/yaml": "2.4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Netcarver\\Textile": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Textile markup language parser",
+            "homepage": "https://github.com/textile/php-textile",
+            "keywords": [
+                "document",
+                "format",
+                "html",
+                "language",
+                "markup",
+                "parser",
+                "php-textile",
+                "plaintext",
+                "textile"
+            ],
+            "time": "2016-11-17T14:18:12+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1226,6 +1703,56 @@
             "time": "2017-02-14T16:28:37+00:00"
         },
         {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
             "name": "psr/link",
             "version": "1.0.0",
             "source": {
@@ -1368,6 +1895,423 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "react/event-loop",
+            "version": "v0.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/event-loop.git",
+                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
+                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "ext-event": "~1.0",
+                "ext-libev": "*",
+                "ext-libevent": ">=0.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\EventLoop\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Event loop abstraction layer that libraries can use for evented I/O.",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "time": "2017-04-27T10:56:23+00:00"
+        },
+        {
+            "name": "react/http",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/http.git",
+                "reference": "b5e7d9bfc9effe8ec723af942c66df042ad17fe6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/http/zipball/b5e7d9bfc9effe8ec723af942c66df042ad17fe6",
+                "reference": "b5e7d9bfc9effe8ec723af942c66df042ad17fe6",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^2.0 || ^1.0",
+                "php": ">=5.3.0",
+                "react/socket": "^0.5",
+                "react/stream": "^0.6 || ^0.5 || ^0.4.4",
+                "ringcentral/psr7": "^1.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.10||^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Http\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Event-driven, streaming plaintext HTTP and secure HTTPS server for ReactPHP",
+            "keywords": [
+                "event-driven",
+                "http",
+                "https",
+                "reactphp",
+                "server",
+                "streaming"
+            ],
+            "time": "2017-03-09T14:03:48+00:00"
+        },
+        {
+            "name": "react/promise",
+            "version": "v2.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise.git",
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/62785ae604c8d69725d693eb370e1d67e94c4053",
+                "reference": "62785ae604c8d69725d693eb370e1d67e94c4053",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com"
+                }
+            ],
+            "description": "A lightweight implementation of CommonJS Promises/A for PHP",
+            "keywords": [
+                "promise",
+                "promises"
+            ],
+            "time": "2017-03-25T12:08:31+00:00"
+        },
+        {
+            "name": "react/socket",
+            "version": "v0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/socket.git",
+                "reference": "c0e337e375d5fb064da4ba62a91a29815e7502f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/socket/zipball/c0e337e375d5fb064da4ba62a91a29815e7502f8",
+                "reference": "c0e337e375d5fb064da4ba62a91a29815e7502f8",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "~2.0|~1.0",
+                "php": ">=5.3.0",
+                "react/event-loop": "0.4.*|0.3.*",
+                "react/promise": "^2.0 || ^1.1",
+                "react/stream": "^0.6 || ^0.5 || ^0.4.5"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.1",
+                "phpunit/phpunit": "~4.8",
+                "react/socket-client": "^0.5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Socket\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Async, streaming plaintext TCP/IP and secure TLS socket server for React PHP",
+            "keywords": [
+                "Socket"
+            ],
+            "time": "2017-03-09T12:13:07+00:00"
+        },
+        {
+            "name": "react/stream",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/stream.git",
+                "reference": "b68463756d8be851829b7a9de8200c9d19eb997e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/b68463756d8be851829b7a9de8200c9d19eb997e",
+                "reference": "b68463756d8be851829b7a9de8200c9d19eb997e",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^2.0|^1.0",
+                "php": ">=5.3.8"
+            },
+            "require-dev": {
+                "clue/stream-filter": "~1.2",
+                "phpunit/phpunit": "^5.0 || ^4.8.10",
+                "react/event-loop": "^0.4|^0.3",
+                "react/promise": "^2.0|^1.0"
+            },
+            "suggest": {
+                "react/event-loop": "^0.4",
+                "react/promise": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Stream\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Event-driven readable and writable streams for non-blocking I/O in ReactPHP",
+            "keywords": [
+                "event-driven",
+                "io",
+                "non-blocking",
+                "pipe",
+                "reactphp",
+                "readable",
+                "stream",
+                "writable"
+            ],
+            "time": "2017-03-26T18:02:15+00:00"
+        },
+        {
+            "name": "ringcentral/psr7",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ringcentral/psr7.git",
+                "reference": "dcd84bbb49b96c616d1dcc8bfb9bef3f2cd53d1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ringcentral/psr7/zipball/dcd84bbb49b96c616d1dcc8bfb9bef3f2cd53d1c",
+                "reference": "dcd84bbb49b96c616d1dcc8bfb9bef3f2cd53d1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "psr/http-message": "~1.0"
+            },
+            "provide": {
+                "psr/http-message-implementation": "1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RingCentral\\Psr7\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "PSR-7 message implementation",
+            "keywords": [
+                "http",
+                "message",
+                "stream",
+                "uri"
+            ],
+            "time": "2018-01-15T21:00:49+00:00"
+        },
+        {
+            "name": "sculpin/sculpin",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sculpin/sculpin.git",
+                "reference": "adee090505192baa44619d6b4fe2ea6527efbe2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sculpin/sculpin/zipball/adee090505192baa44619d6b4fe2ea6527efbe2f",
+                "reference": "adee090505192baa44619d6b4fe2ea6527efbe2f",
+                "shasum": ""
+            },
+            "require": {
+                "dflydev/ant-path-matcher": "^1.0",
+                "dflydev/apache-mime-types": "^1.0.1",
+                "dflydev/canal": "^1.0",
+                "dflydev/dot-access-configuration": "^1.0.1",
+                "doctrine/inflector": "^1.1",
+                "michelf/php-markdown": "^1.7",
+                "netcarver/textile": "^3.6",
+                "php": "^7.0",
+                "react/http": "^0.6",
+                "sculpin/sculpin-theme-composer-plugin": "^1.0",
+                "symfony/config": "^3.2",
+                "symfony/console": "^3.2",
+                "symfony/dependency-injection": "^3.2",
+                "symfony/event-dispatcher": "^3.2",
+                "symfony/filesystem": "^3.2",
+                "symfony/finder": "^3.2",
+                "symfony/http-kernel": "^3.2",
+                "symfony/process": "^3.2",
+                "symfony/yaml": "^3.2",
+                "twig/extensions": "^1.4",
+                "twig/twig": "^2.2",
+                "webignition/internet-media-type": "^0.4"
+            },
+            "replace": {
+                "sculpin/core": "self.version",
+                "sculpin/markdown-bundle": "self.version",
+                "sculpin/markdown-twig-compat-bundle": "self.version",
+                "sculpin/posts-bundle": "self.version",
+                "sculpin/proxy-source-collection-contrib": "self.version",
+                "sculpin/sculpin-bundle": "self.version",
+                "sculpin/standalone-bundle": "self.version",
+                "sculpin/taxonomy-contrib": "self.version",
+                "sculpin/textile-bundle": "self.version",
+                "sculpin/twig-bundle": "self.version"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.6.4",
+                "phpunit/phpunit": "^6.0",
+                "squizlabs/php_codesniffer": "^2.8",
+                "symfony/css-selector": "^3.2",
+                "symfony/dom-crawler": "^3.2"
+            },
+            "bin": [
+                "bin/sculpin",
+                "bin/sculpin.php"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev",
+                    "dev-develop": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sculpin\\": "src/Sculpin/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Static Site Generator",
+            "homepage": "https://sculpin.io",
+            "keywords": [
+                "generator",
+                "site",
+                "static"
+            ],
+            "time": "2018-02-28T05:44:39+00:00"
+        },
+        {
+            "name": "sculpin/sculpin-theme-composer-plugin",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sculpin/sculpin-theme-composer-plugin.git",
+                "reference": "f22bbf89971054e0e37983263828ca39ffca2437"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sculpin/sculpin-theme-composer-plugin/zipball/f22bbf89971054e0e37983263828ca39ffca2437",
+                "reference": "f22bbf89971054e0e37983263828ca39ffca2437",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Sculpin\\Composer\\SculpinThemePlugin\\SculpinThemePlugin",
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sculpin\\Composer\\SculpinThemePlugin\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2017-02-27T17:40:03+00:00"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -2206,6 +3150,62 @@
             "time": "2018-04-06T15:20:04+00:00"
         },
         {
+            "name": "twig/extensions",
+            "version": "v1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "d188c76168b853481cc75879ea045bf93d718e9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/d188c76168b853481cc75879ea045bf93d718e9c",
+                "reference": "d188c76168b853481cc75879ea045bf93d718e9c",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "~1.27|~2.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "~3.3@dev",
+                "symfony/translation": "~2.3|~3.0"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\Extensions\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2017-06-08T18:19:53+00:00"
+        },
+        {
             "name": "twig/twig",
             "version": "v2.4.8",
             "source": {
@@ -2270,6 +3270,192 @@
                 "templating"
             ],
             "time": "2018-04-02T09:24:19+00:00"
+        },
+        {
+            "name": "webignition/disallowed-character-terminated-string",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/disallowed-character-terminated-string.git",
+                "reference": "25d12868c82b56bc0d04278e31594385ba4dddc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/disallowed-character-terminated-string/zipball/25d12868c82b56bc0d04278e31594385ba4dddc4",
+                "reference": "25d12868c82b56bc0d04278e31594385ba4dddc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "A string terminated by one or more disallowed characters",
+            "homepage": "https://github.com/webignition/disallowed-character-terminated-string",
+            "keywords": [
+                "string",
+                "terminated"
+            ],
+            "time": "2012-07-16T21:29:50+00:00"
+        },
+        {
+            "name": "webignition/internet-media-type",
+            "version": "0.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/internet-media-type.git",
+                "reference": "1a5bbe38033b00b23acd5e1dd10489bb07eed77c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/internet-media-type/zipball/1a5bbe38033b00b23acd5e1dd10489bb07eed77c",
+                "reference": "1a5bbe38033b00b23acd5e1dd10489bb07eed77c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "webignition/quoted-string": ">=0.2.1,<1.0",
+                "webignition/string-parser": ">=0.2.3,<1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.0",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\InternetMediaType\\": "src/",
+                    "webignition\\Tests\\InternetMediaType\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "PHP model of an http://en.wikipedia.org/wiki/Internet_media_type",
+            "homepage": "https://github.com/webignition/internet-media-type",
+            "keywords": [
+                "content type",
+                "content-type",
+                "internet media type",
+                "media type",
+                "media-type"
+            ],
+            "time": "2018-03-12T14:54:00+00:00"
+        },
+        {
+            "name": "webignition/quoted-string",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/quoted-string.git",
+                "reference": "88b36b7be067796683ab3668e175322842dd5313"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/quoted-string/zipball/88b36b7be067796683ab3668e175322842dd5313",
+                "reference": "88b36b7be067796683ab3668e175322842dd5313",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0",
+                "webignition/string-parser": ">=0.2.3,<1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\QuotedString\\": "src/",
+                    "webignition\\Tests\\QuotedString\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "A parser for string values that are encapsulated in double quotes (ASCII 34)",
+            "homepage": "https://github.com/webignition/quoted-string",
+            "keywords": [
+                "parser",
+                "quoted-string"
+            ],
+            "time": "2017-05-11T11:41:31+00:00"
+        },
+        {
+            "name": "webignition/string-parser",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webignition/string-parser.git",
+                "reference": "8591e28c05bd250bcc67b8001f3588995b9ef74b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webignition/string-parser/zipball/8591e28c05bd250bcc67b8001f3588995b9ef74b",
+                "reference": "8591e28c05bd250bcc67b8001f3588995b9ef74b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "webignition/disallowed-character-terminated-string": ">=1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "webignition\\StringParser\\": "src/",
+                    "webignition\\Tests\\StringParser\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Cram",
+                    "email": "jon@webignition.net"
+                }
+            ],
+            "description": "Abstract state-based string parser",
+            "homepage": "https://github.com/webignition/string-parser",
+            "keywords": [
+                "parser",
+                "string"
+            ],
+            "time": "2017-05-11T10:04:12+00:00"
         }
     ],
     "packages-dev": [
@@ -2479,7 +3665,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "sculpin/sculpin": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

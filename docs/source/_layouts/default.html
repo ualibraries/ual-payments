@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}{{ page.title }}{% endblock %} &mdash; {{ site.title }} &mdash; {{ site.subtitle }}</title>
+
+        {% block head_meta %}
+        {% endblock %}
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.9.0/tachyons.min.css" />
+        <link href="{{ site.url }}/css/style.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css" />
+        <link rel="stylesheet" href="https://brand.arizona.edu/sites/default/files/v2/ua-brand-fonts/milo.css" />
+
+        {% block head_styles %}
+        {% endblock %}
+        {% block head_scripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="mw8 center">
+            <h1 class="f1">{{ site.title }}</h1>
+        </div>
+
+        <div class="mw8 center cf">
+            <div class="fl w-25 pa2">
+            <ul>
+                <li>
+                    <a href="{{ site.url }}/">Home</a>
+                </li>
+                <li>
+                  <a href="{{ site.url }}/README">README</a>
+                </li>
+            </ul>
+            </div>
+            
+            <div class="fl w-75 pa2">
+            {% block content_wrapper %}
+                {% block content %}
+                {% endblock %}
+            {% endblock %}
+            </div>
+
+        </div>
+        
+        <footer class="f6 mt4 mb4 mw8 center pa4 bg-ua-red white tc">
+            &copy; {{ "now"|date("Y") }} University of Arizona Libraries
+        </footer>
+
+        {% block scripts %}
+        {% endblock %}
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+        {% block scripts_after %}
+        {% endblock %}
+    </body>
+</html>

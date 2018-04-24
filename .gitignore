@@ -1,3 +1,4 @@
+
 /.web-server-pid
 /app/config/parameters.yml
 /build/
@@ -15,3 +16,14 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+
+docs/.sculpin/
+docs/app/cache/*
+docs/app/config/sculpin_kernel_*.yml
+docs/app/config/sculpin_site_*.yml
+docs/app/logs/*
+docs/output_*/
+docs/source/components/
+docs/s3.conf
+
+.idea

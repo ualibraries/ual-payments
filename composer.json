@@ -21,6 +21,7 @@
     "doctrine/doctrine-bundle": "^1.6",
     "doctrine/orm": "^2.5",
     "incenteev/composer-parameter-handler": "^2.0",
+    "sculpin/sculpin": "dev-develop",
     "sensio/distribution-bundle": "^5.0.19",
     "sensio/framework-extra-bundle": "^5.0.0",
     "symfony/monolog-bundle": "^3.1.0",
@@ -47,7 +48,16 @@
     "post-install-cmd": ["@symfony-scripts"],
     "post-update-cmd": ["@symfony-scripts"],
     "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
-    "deploy:rollback": [ "vendor/bin/dep --ansi rollback prd"]
+    "deploy:rollback": ["vendor/bin/dep --ansi rollback prd"],
+    "docs:preview": [
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
+    ],
+    "docs:build": [
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod"
+    ],
+    "docs:deploy": [
+      "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
+    ]
   },
   "config": {
     "platform": {
