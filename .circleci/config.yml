@@ -26,7 +26,14 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
+      - run:
+          name: Install PHP extensions
+          commands: |
+            sudo docker-php-ext-enable pdo_mysql
+      - run:
+          name: Set php.ini settings
+          commands: |
+            echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
       - run: cp app/config/parameters.yml.dist app/config/parameters.yml
       - run: php bin/console doctrine:database:create --env=test
