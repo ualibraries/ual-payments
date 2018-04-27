@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
+            sudo docker-php-ext-install pdo_mysql
             sudo docker-php-ext-enable pdo_mysql
       - run:
           name: Set php.ini settings
