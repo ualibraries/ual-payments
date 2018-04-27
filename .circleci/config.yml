@@ -18,6 +18,11 @@ jobs:
 
     steps:
       - checkout
+      - run: composer install -n --prefer-dist
+      - run: cp app/config/parameters.yml.dist app/config/parameters.yml
+      - run: php bin/console doctrine:database:create --env=test
+      - run: php bin/console doctrine:schema:create --env=test
+      - run: cp behat.local.yml.dist behat.local.yml
       - run: mkdir test-reports
       - run:
           name: Download Selenium
@@ -34,11 +39,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: composer install -n --prefer-dist
-      - run: cp app/config/parameters.yml.dist app/config/parameters.yml
-      - run: php bin/console doctrine:database:create --env=test
-      - run: php bin/console doctrine:schema:create --env=test
-      - run: cp behat.local.yml.dist behat.local.yml
 
       - save_cache:
           paths:
