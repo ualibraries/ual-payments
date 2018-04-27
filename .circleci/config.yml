@@ -43,8 +43,8 @@ jobs:
           name: Configured behat.local.yml
           command: |
             cp behat.local.yml.dist behat.local.yml
-            sed 's/^\(\s*username\s*:\s*\).*/\1'$BROWSERSTACK_USERNAME'/' -i behat.local.yml
-            sed 's/^\(\s*access_key\s*:\s*\).*/\1'$BROWSERSTACK_ACCESS_KEY'/' -i behat.local.yml
+            sed 's/^\(\s*username\s*:\s*\).*/\1 '$BROWSERSTACK_USERNAME'/' -i behat.local.yml
+            sed 's/^\(\s*access_key\s*:\s*\).*/\1 '$BROWSERSTACK_ACCESS_KEY'/' -i behat.local.yml
 
 
       - save_cache:
