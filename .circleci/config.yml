@@ -25,6 +25,13 @@ jobs:
           - v1-dependencies-{{ checksum "composer.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+      - run:
+          name: Run BrowserStack Local
+          background: true
+          command: |
+            wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+            unzip BrowserStackLocal-linux-x64.zip
+            ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY}
 
       - run:
           name: Install PHP extensions
