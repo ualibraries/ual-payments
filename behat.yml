@@ -8,4 +8,7 @@ default:
         default:
           goutte: ~
         javascript:
-          selenium2: ~
+          browser_stack:
+            capabilities:
+              browser: 'firefox'
+              browserstack-tunnel: true
