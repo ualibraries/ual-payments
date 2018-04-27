@@ -28,11 +28,11 @@ jobs:
 
       - run:
           name: Install PHP extensions
-          commands: |
+          command: |
             sudo docker-php-ext-enable pdo_mysql
       - run:
           name: Set php.ini settings
-          commands: |
+          command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
       - run: cp app/config/parameters.yml.dist app/config/parameters.yml
