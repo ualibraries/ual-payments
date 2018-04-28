@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - checkout
-      - sudo cp .circleci/circle.conf /etc/apache2/sites-available
-      - sudo a2ensite circle
-      - sudo service apache2 reload
-      - sudo chmod -R 777 var/
+      - run: sudo cp .circleci/circle.conf /etc/apache2/sites-available
+      - run: sudo a2ensite circle
+      - run: sudo service apache2 reload
+      - run: sudo chmod -R 777 var/
 
 
       # Download and cache dependencies
