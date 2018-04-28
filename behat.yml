@@ -10,5 +10,5 @@ default:
         javascript:
           browser_stack:
             capabilities:
-              browser: 'firefox'
+              browser: 'chrome'
               browserstack-tunnel: true
