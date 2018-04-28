@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
       - run: sudo a2ensite circleci
-      - run: sudo service apache2 reload
+      - run: sudo service apache2 start
       - run: sudo chmod -R 777 var/
 
 
