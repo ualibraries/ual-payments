@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo cp .circleci/circle.conf /etc/apache2/sites-available
+      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
       - run: sudo a2ensite circle
       - run: sudo service apache2 reload
       - run: sudo chmod -R 777 var/
