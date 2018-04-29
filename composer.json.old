@@ -1,0 +1,82 @@
+{
+  "name": "ual-payments",
+  "license":
+    "Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved",
+  "type": "project",
+  "description": "Payments for UA Libraries",
+  "autoload": {
+    "psr-4": {
+      "AppBundle\\": "src/AppBundle"
+    },
+    "classmap": ["app/AppKernel.php", "app/AppCache.php"]
+  },
+  "autoload-dev": {
+    "psr-4": { "Tests\\": "tests/" },
+    "files": [
+      "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+    ]
+  },
+  "require": {
+    "php": ">=5.5.9",
+    "doctrine/doctrine-bundle": "^1.6",
+    "doctrine/orm": "^2.5",
+    "incenteev/composer-parameter-handler": "^2.0",
+    "sculpin/sculpin": "dev-develop",
+    "sensio/distribution-bundle": "^5.0.19",
+    "sensio/framework-extra-bundle": "^5.0.0",
+    "symfony/monolog-bundle": "^3.1.0",
+    "symfony/polyfill-apcu": "^1.0",
+    "symfony/swiftmailer-bundle": "^2.6.4",
+    "symfony/symfony": "3.4.*",
+    "twig/twig": "^1.0||^2.0"
+  },
+  "require-dev": {
+    "deployer/dist": "^6.1",
+    "deployer/recipes": "^6.0",
+    "sensio/generator-bundle": "^3.0",
+    "symfony/phpunit-bridge": "^3.0"
+  },
+  "scripts": {
+    "symfony-scripts": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+    ],
+    "post-install-cmd": ["@symfony-scripts"],
+    "post-update-cmd": ["@symfony-scripts"],
+    "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
+    "deploy:rollback": ["vendor/bin/dep --ansi rollback prd"],
+    "docs:preview": [
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
+    ],
+    "docs:build": [
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod"
+    ],
+    "docs:deploy": [
+      "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
+    ]
+  },
+  "config": {
+    "platform": {
+      "php": "7.2"
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-bin-dir": "bin",
+    "symfony-var-dir": "var",
+    "symfony-web-dir": "web",
+    "symfony-tests-dir": "tests",
+    "symfony-assets-install": "relative",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
+    },
+    "branch-alias": {
+      "dev-master": "3.4-dev"
+    }
+  }
+}
