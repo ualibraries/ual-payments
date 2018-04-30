@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b33cc0f4495730bf44ae4dc70a66b04",
+    "content-hash": "0805454d37d32e7de027ce601b406a06",
     "packages": [
         {
             "name": "dflydev/ant-path-matcher",
@@ -6805,7 +6805,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "sculpin/sculpin": 20
+        "sculpin/sculpin": 20,
+        "sensio/framework-extra-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
