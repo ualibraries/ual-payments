@@ -61,7 +61,6 @@ jobs:
           command: |
             sed 's/^\(\s*TEST_UAID\s*=\s*\).*/\1'$SHIB_TEST_UAID'/' -i .env
             sed 's#^\(\s*DATABASE_URL\s*=\s*\).*#\1'$TEST_DATABASE_URL'#' -i .env
-      - run: php bin/console doctrine:database:create --env=test
       - run: php bin/console doctrine:schema:create --env=test
 
 
