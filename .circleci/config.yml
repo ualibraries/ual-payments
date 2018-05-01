@@ -49,15 +49,20 @@ jobs:
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
-      - run: cp app/config/parameters.yml.dist app/config/parameters.yml
-      - run: php bin/console doctrine:database:create --env=test
-      - run: php bin/console doctrine:schema:create --env=test
+      - run: cp .env.dist .env
       - run:
-          name: Configured behat.local.yml
+          name: Configure behat.local.yml
           command: |
             cp behat.local.yml.dist behat.local.yml
             sed 's/^\(\s*username\s*:\s*\).*/\1 '$BROWSERSTACK_USERNAME'/' -i behat.local.yml
             sed 's/^\(\s*access_key\s*:\s*\).*/\1 '$BROWSERSTACK_ACCESS_KEY'/' -i behat.local.yml
+      - run:
+          name: Configure .env
+          command: |
+            sed 's/^\(\s*TEST_UAID\s*=\s*\).*/\1'$SHIB_TEST_UAID'/' .env
+            sed 's/^\(\s*DATABASE_URL\s*=\s*\).*/\1'$TEST_DATABASE_URL'/' .env
+      - run: php bin/console doctrine:database:create --env=test
+      - run: php bin/console doctrine:schema:create --env=test
 
 
       - save_cache:
