@@ -6,15 +6,26 @@
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    td { border-bottom: 2px solid black; }
+    table { border-collapse: collapse; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ uaid }}! ✅</h1>
+    <h1>Hello {{ full_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'src/Controller/ListFinesController.php'|file_link(0) }}">src/Controller/ListFinesController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'templates/list_fines/index.html.twig'|file_link(0) }}">templates/list_fines/index.html.twig</a></code></li>
-    </ul>
+    <h2>Library Fees:</h2>
+    <table>
+      {% for fine in user_fines %}
+        <tr class="table-row">
+          <td>
+            <p>{{ fine.label }}</p>
+            <p>{{ fine.title }}</p>
+          </td>
+          <td>
+            <p>{{ fine.balance }}</p>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
 </div>
 {% endblock %}

@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0805454d37d32e7de027ce601b406a06",
+    "content-hash": "86bb4ffed886dacad5dcccf366ed9b86",
     "packages": [
         {
             "name": "dflydev/ant-path-matcher",
@@ -6812,7 +6812,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.0.8",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-simplexml": "^7.2"
     },
     "platform-dev": []
 }

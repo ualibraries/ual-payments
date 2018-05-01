@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AlmaUser
 {
     private $uaid;
+    private $api_url;
+    private $api_key;
 
     function __construct() {
         $this->uaid = $this->getUaIdFromVariable();

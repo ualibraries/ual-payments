@@ -7,6 +7,7 @@
   "require": {
     "php": "^7.0.8",
     "ext-iconv": "*",
+    "ext-simplexml": "^7.2",
     "sculpin/sculpin": "^3.0@dev",
     "sensio/framework-extra-bundle": "^5.2@dev",
     "symfony/asset": "^3.4",
