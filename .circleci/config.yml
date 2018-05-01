@@ -22,7 +22,6 @@ jobs:
       - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
       - run: sudo a2ensite circleci
       - run: sudo service apache2 start
-      - run: sudo chmod -R 777 var/
 
 
       # Download and cache dependencies
@@ -49,6 +48,7 @@ jobs:
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
+      - run: sudo chmod -R 777 var/
       - run: cp .env.dist .env
       - run:
           name: Configure behat.local.yml
