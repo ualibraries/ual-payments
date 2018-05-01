@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\AlmaUser;
-use App\Service\RetrieveAlmaUserData;
+use App\Service\HandleAlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ListFinesController extends Controller
 {
-    public function index(RetrieveAlmaUserData $userdata)
+    public function index(HandleAlmaUserData $userdata)
     {
         $user = new AlmaUser();
         $uaid = $user->getUaId();

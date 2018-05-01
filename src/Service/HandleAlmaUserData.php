@@ -3,7 +3,7 @@ namespace App\Service;
 
 use \SimpleXMLElement; 
 
-class RetrieveAlmaUserData
+class HandleAlmaUserData
 {
     private $api_url;
     private $api_key;
@@ -26,20 +26,6 @@ class RetrieveAlmaUserData
           
         $sXML = new SimpleXMLElement($response);
         return $sXML;
-
-
-
-        $ch = curl_init();
-        $url = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/users';
-        $queryParams = '?' . urlencode('limit') . '=' . urlencode('1') . '&' . urlencode('offset') . '=' . urlencode('0') . '&' . urlencode('q') . '=' . urlencode('primary_id~113827331439') . '&' . urlencode('order_by') . '=' . urlencode('last_name, first_name, primary_id') . '&' . urlencode('apikey') . '=' . urlencode('l7xx4bbfb649aec2482a87023726e41fafce');
-        curl_setopt($ch, CURLOPT_URL, $url . $queryParams);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-        $response = curl_exec($ch);
-        curl_close($ch);
-         
-        var_dump($response);
     }
     
     public function getUserData($uaid, $api_path) {
