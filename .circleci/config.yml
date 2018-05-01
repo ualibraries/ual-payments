@@ -4,6 +4,11 @@
 #
 version: 2
 jobs:
+  filters:
+    branches:
+      only:
+        - master
+        - develop
   build:
     docker:
       # specify the version you desire here
