@@ -35,4 +35,6 @@ docs/s3.conf
 
 ###> Editor Configs ###
 .idea
-###< Editor Configs ###
+
+###< Behat Local Configuration Files ###
+behat.local.yml

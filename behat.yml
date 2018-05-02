@@ -1,0 +1,14 @@
+imports:
+  # settings specific to a particular machine
+  - ./behat.local.yml
+default:
+  extensions:
+    Behat\MinkExtension:
+      sessions:
+        default:
+          goutte: ~
+        javascript:
+          browser_stack:
+            capabilities:
+              browser: 'chrome'
+              browserstack-tunnel: true
