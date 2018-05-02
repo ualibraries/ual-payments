@@ -4,30 +4,37 @@ namespace App\Controller;
 
 use App\Entity\AlmaUser;
 use App\Service\AlmaApi;
+use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use \SimpleXMLElement;
 
 class ListFinesController extends Controller
 {
-    public function index(AlmaApi $userdata)
+    private $user;
+    private $api;
+    private $userdata;
+
+    function __construct(AlmaApi $api, AlmaUserData $userdata)
     {
-        $user = new AlmaUser();
-        $uaid = $user->getUaId();
+        $this->user = new AlmaUser();
+        $this->api = $api;
+        $this->userdata = $userdata;
+    }
 
-        var_dump(new SimpleXMLElement($userdata->getUserFines($uaid)->getBody()));
-        exit();
+    public function index()
+    {
+        $uaid = $this->user->getUaId();
 
-        $alma_user_exists = $userdata->almaUserExists($uaid);
+        $alma_user_exists = $this->userdata->isValidUser($this->api->findUserById($uaid));
 
-        if ($uaid === null && !$alma_user_exists) {
+        if ($uaid === null || !$alma_user_exists) {
             return $this->render('unauthorized.html.twig');
         }
 
         return $this->render('list_fines/index.html.twig', [
-            'controller_name' => 'ListFinesController',
-            'full_name' => $userdata->getUsersFullName($uaid),
-            'user_fines' => $userdata->getUserFines($uaid)
+            'full_name' => $this->userdata->getFullNameAsString($this->api->getUserById($uaid)),
+            'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid))
         ]);
     }
 }
