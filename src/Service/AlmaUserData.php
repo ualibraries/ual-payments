@@ -26,7 +26,7 @@ class AlmaUserData
         $list_fees = [];
 
         // "fee" is an array that includes each individual fee in the user "fees" object in Alma
-            foreach ($sxml->fee as $indv_fee) {
+        foreach ($sxml->fee as $indv_fee) {
             $list_fees[] = [
             'id' => (string)$indv_fee->id,
             'label' => (string)$indv_fee->type->attributes()->desc,

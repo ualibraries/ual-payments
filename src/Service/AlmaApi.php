@@ -15,7 +15,8 @@ class AlmaApi
   /**
    * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
    */
-    function __construct() {
+    public function __construct()
+    {
         $this->apiUrl = getenv('API_URL');
         $this->apiKey = getenv('API_KEY');
     }
@@ -50,7 +51,6 @@ class AlmaApi
             return null;
         }
         return $response;
-
     }
 
     /**
@@ -58,7 +58,7 @@ class AlmaApi
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function getUserFines($uaid) 
+    public function getUserFines($uaid)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
@@ -70,8 +70,8 @@ class AlmaApi
             'apikey' => $this->apiKey
         ];
         $curlOps = [
-            CURLOPT_HEADER => FALSE,
-            CURLOPT_RETURNTRANSFER => TRUE
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
         ];
 
         return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
@@ -95,8 +95,8 @@ class AlmaApi
             'apikey' => $this->apiKey
         ];
         $curlOps = [
-            CURLOPT_HEADER => FALSE,
-            CURLOPT_RETURNTRANSFER => TRUE
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
         ];
         return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
     }
@@ -107,7 +107,8 @@ class AlmaApi
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function findUserById($uaid) {
+    public function findUserById($uaid)
+    {
         $method = 'GET';
         $urlPath = '/almaws/v1/users';
         $templateParamNames = array();
@@ -120,8 +121,8 @@ class AlmaApi
             'apikey' => $this->apiKey
         ];
         $curlOps = [
-            CURLOPT_HEADER => FALSE,
-            CURLOPT_RETURNTRANSFER => TRUE
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
         ];
         return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
     }

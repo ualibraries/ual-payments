@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Dotenv\Dotenv;
 
 class AlmaApiTest extends TestCase
-    {
+{
     private $api;
     private $uaid;
 
@@ -46,11 +46,10 @@ class AlmaApiTest extends TestCase
         $this->assertEquals(200, $user->getStatusCode());
     }
 
-    public function testFindUserById() {
+    public function testFindUserById()
+    {
         $user = $this->api->findUserById($this->uaid);
 
         $this->assertEquals(200, $user->getStatusCode());
     }
 }
-
-

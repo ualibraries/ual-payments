@@ -32,7 +32,8 @@ class AlmaUserDataTest extends TestCase
     /**
      * Test getting fees when the user has multiple fees.
      */
-    public function testListFinesWithMultipleFees() {
+    public function testListFinesWithMultipleFees()
+    {
         $body = file_get_contents(__DIR__ . '/TestXMLData/fees_test_data.xml');
         $mock = new MockHandler([
             new Response(200, [], $body)
@@ -71,7 +72,8 @@ class AlmaUserDataTest extends TestCase
     /**
      * Test getting the users full name from Alma
      */
-    public function testGetFullNameAsString() {
+    public function testGetFullNameAsString()
+    {
         $body = file_get_contents(__DIR__ . '/TestXMLData/user_test_data.xml');
         $mock = new MockHandler([
             new Response(200, [], $body)
@@ -96,7 +98,8 @@ class AlmaUserDataTest extends TestCase
     /**
      * Test that a user not found in Alma returns false
      */
-    public function testCheckInvalidUser() {
+    public function testCheckInvalidUser()
+    {
         $body = file_get_contents(__DIR__ . '/TestXMLData/no_user_found_data.xml');
 
         $mock = new MockHandler([
@@ -123,7 +126,8 @@ class AlmaUserDataTest extends TestCase
     /**
      * Test that the Shib-uaId matches a valid primary_id in Alma
      */
-    public function testCheckValidUser() {
+    public function testCheckValidUser()
+    {
         $body = file_get_contents(__DIR__ . '/TestXMLData/find_user_data.xml');
 
         $mock = new MockHandler([

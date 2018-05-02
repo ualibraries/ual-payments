@@ -15,7 +15,7 @@ class ListFinesController extends Controller
     private $api;
     private $userdata;
 
-    function __construct(AlmaApi $api, AlmaUserData $userdata)
+    public function __construct(AlmaApi $api, AlmaUserData $userdata)
     {
         $this->user = new AlmaUser();
         $this->api = $api;
