@@ -31,7 +31,7 @@ class AlmaApi
      * @param $templateParamValues
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues)
+    protected function executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues)
     {
         $client = new Client(['base_uri' => $this->apiUrl]);
 
