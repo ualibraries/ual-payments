@@ -1,9 +1,13 @@
 <?php
 namespace App\Service;
 
-use \SimpleXMLElement; 
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use \SimpleXMLElement;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 
-class HandleAlmaUserData
+class AlmaApi
 {
     private $api_url;
     private $api_key;
@@ -54,27 +58,35 @@ class HandleAlmaUserData
         return $this->executeApiRequest($uaid, $queryParams, $url);
     }
 
-  /**
-   * Retrieve user fines from alma and return an associative array with each fines id, label, balance, and title
-   * @param $uaid
-   * @return array
-   */
     public function getUserFines($uaid) 
     {
-        $fees = $this->getUserData($uaid, '/almaws/v1/users/{user_id}/fees');
-        $list_fees = [];
-        
-        // "fee" is an array that includes each individual fee in the user "fees" object in Alma
-        foreach ($fees->fee as $indv_fee) {
-            $list_fees[] = [
-                'id' => (string)$indv_fee->id,
-                'label' => (string)$indv_fee->type->attributes()->desc,
-                'balance' => (string)$indv_fee->balance,
-                'title' => (string)$indv_fee->title
-            ];
-        }
-        return $list_fees;
+        $client = new Client(['base_uri' => $this->api_url]);
 
+        $url = '/almaws/v1/users/{user_id}/fees';
+        $templateParamNames = array('{user_id}');
+        $templateParamValues = array(urlencode($uaid));
+        $url = str_replace($templateParamNames, $templateParamValues, $url);
+
+        try {
+            $response = $client->request('GET', $url, [
+                'query' => [
+                    'user_id_type' => 'all_unique',
+                    'status' => 'ACTIVE',
+                    'apikey' => $this->api_key
+                ],
+                'curl' => [
+                    CURLOPT_HEADER => FALSE,
+                    CURLOPT_RETURNTRANSFER => TRUE
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+            echo Psr7\str($e->getRequest());
+            if ($e->hasResponse()) {
+                echo Psr7\str($e->getResponse());
+            }
+            return null;
+        }
+        return $response;
     }
 
   /**
@@ -94,7 +106,7 @@ class HandleAlmaUserData
    * @param $uaid
    * @return bool
    */
-    public function almaUserExists($uaid)
+    public function getAlmaUser($uaid)
     {
         $queryParams = '?' . urlencode('limit') . '=' . urlencode('1') . '&' . urlencode('offset') . '=' . urlencode('0') . '&' . urlencode('q') . '=' . urlencode('primary_id~' . $uaid) . '&' . urlencode('order_by') . '=' . urlencode('last_name, first_name, primary_id');
         $url = $this->api_url .  '/almaws/v1/users';

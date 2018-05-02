@@ -3,15 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\AlmaUser;
-use App\Service\HandleAlmaUserData;
+use App\Service\AlmaApi;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+use \SimpleXMLElement;
 
 class ListFinesController extends Controller
 {
-    public function index(HandleAlmaUserData $userdata)
+    public function index(AlmaApi $userdata)
     {
         $user = new AlmaUser();
         $uaid = $user->getUaId();
+
+        var_dump(new SimpleXMLElement($userdata->getUserFines($uaid)->getBody()));
+        exit();
 
         $alma_user_exists = $userdata->almaUserExists($uaid);
 
