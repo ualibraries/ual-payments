@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fees total_record_count="2" total_sum="7.0" currency="USD">
+    <fee link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/users/123/fees/1599882100003843">
+        <id>1599882100003843</id>
+        <type desc="Lost item replacement fee">LOSTITEMREPLACEMENTFEE</type>
+        <status desc="Active">ACTIVE</status>
+        <balance>5.0</balance>
+        <original_amount>5.0</original_amount>
+        <creation_time>2018-03-29T22:42:10.153Z</creation_time>
+        <status_time>2018-03-29T22:42:10.153Z</status_time>
+        <comment>This is a fine</comment>
+        <owner desc="Main Library">MAIN</owner>
+        <title>Dinosaur / by Carl E. Baugh, with Clifford A. Wilson.</title>
+        <barcode link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/items?item_barcode=39001034526254">39001034526254</barcode>
+    </fee>
+    <fee link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/users/123/fees/1603983790003843">
+        <id>1603983790003843</id>
+        <type desc="Card renewal">CARDRENEWAL</type>
+        <status desc="Active">ACTIVE</status>
+        <balance>2.0</balance>
+        <original_amount>2.0</original_amount>
+        <creation_time>2018-04-12T14:56:04.271Z</creation_time>
+        <status_time>2018-04-12T14:56:04.271Z</status_time>
+        <owner desc="University of Arizona">01UA_INST</owner>
+    </fee>
+</fees>
