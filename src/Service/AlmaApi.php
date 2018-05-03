@@ -41,7 +41,10 @@ class AlmaApi
         try {
             $response = $client->request($method, $url, [
                 'query' => $queryParams,
-                'curl' => $curlOps
+                'curl' => $curlOps,
+                'headers' => [
+                    'Authorization' => 'apikey ' . $this->apiKey
+                ]
             ]);
         } catch (GuzzleException $e) {
             echo Psr7\str($e->getRequest());
@@ -66,8 +69,7 @@ class AlmaApi
         $templateParamValues = array(urlencode($uaid));
         $queryParams = [
             'user_id_type' => 'all_unique',
-            'status' => 'ACTIVE',
-            'apikey' => $this->apiKey
+            'status' => 'ACTIVE'
         ];
         $curlOps = [
             CURLOPT_HEADER => false,
@@ -91,8 +93,7 @@ class AlmaApi
         $queryParams = [
             'user_id_type' => 'all_unique',
             'view' => 'full',
-            'expand' => 'none',
-            'apikey' => $this->apiKey
+            'expand' => 'none'
         ];
         $curlOps = [
             CURLOPT_HEADER => false,
@@ -117,8 +118,7 @@ class AlmaApi
             'limit' => '10',
             'offset' => '0',
             'q' => 'primary_id~' . $uaid,
-            'order_by' => 'last_name, first_name, primary_id',
-            'apikey' => $this->apiKey
+            'order_by' => 'last_name first_name, primary_id'
         ];
         $curlOps = [
             CURLOPT_HEADER => false,
