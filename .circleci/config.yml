@@ -76,4 +76,5 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       # run tests!
+      - run: bin/phpunit
       - run: vendor/bin/behat
