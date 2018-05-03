@@ -1,7 +1,7 @@
 <?php
 namespace Deployer;
 
-require 'recipe/symfony.php';
+require 'recipe/symfony4.php';
 require 'vendor/deployer/recipes/recipe/slack.php';
 
 // Project name
@@ -19,16 +19,13 @@ set('keep_releases', -1);
 // Default branch to deploy from
 set('branch', 'master');
 
-// Variables for Symfony recipe, required for Symfony3 support
-set('bin_dir', 'bin');
-set('var_dir', 'var');
+// Shared files/dirs between deploys
+set('shared_files', ['.env']);
+set('shared_dirs', ['var/log', 'var/sessions']);
+// Writable dirs by web server
+set('writable_dirs', ['var']);
 
-// Shared files/dirs between deploys 
-add('shared_files', ['.env']);
-add('shared_dirs', ['var/logs']);
-
-// Writable dirs by web server 
-add('writable_dirs', ['var/cache', 'var/logs', 'var/sessions']);
+// We're not allowing anonymous stats
 set('allow_anonymous_stats', false);
 
 set('slack_webhook', 'https://hooks.slack.com/services/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');
@@ -46,23 +43,18 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
-desc('Deploy your project');
+desc('Deploy project');
 task('deploy', [
     'deploy:info',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
     'deploy:update_code',
-    'deploy:clear_paths',
-    'deploy:create_cache_dir',
     'deploy:shared',
-    'deploy:assets',
+    'deploy:writable',
     'deploy:vendors',
-    'deploy:assets:install',
-    'deploy:assetic:dump',
     'deploy:cache:clear',
     'deploy:cache:warmup',
-    'deploy:writable',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
