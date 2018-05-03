@@ -24,7 +24,7 @@ set('bin_dir', 'bin');
 set('var_dir', 'var');
 
 // Shared files/dirs between deploys 
-add('shared_files', ['app/config/parameters.yml']);
+add('shared_files', ['.env']);
 add('shared_dirs', ['var/logs']);
 
 // Writable dirs by web server 
