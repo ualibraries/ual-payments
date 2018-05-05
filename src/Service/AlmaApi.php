@@ -126,4 +126,46 @@ class AlmaApi
         ];
         return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
     }
+
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $feeId - The Alma specific fee id to be updated
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     */
+    public function payUserFee($uaid, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
+    {
+        $queryParams = [
+            'op' => 'pay',
+            'amount' => $amount,
+            'method' => $method,
+            'external_transaction_id' => $externalTransactionId,
+            'comment' => $comment,
+        ];
+        /**
+         * " If no callback is supplied, all entries of array equal to FALSE (see converting to boolean) will be removed."
+         * - http://php.net/array_filter
+         */
+        $queryParams = array_filter($queryParams);
+
+        return $this->updateUserFee($uaid, $feeId, $queryParams);
+    }
+
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $feeId - The Alma specific fee id to be updated
+     * @param $queryParams - The parameters for the query.
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     */
+    protected function updateUserFee($uaid, $feeId, $queryParams)
+    {
+        $method = 'POST';
+        $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
+        $templateParamNames = array('{user_id}', '{fee_id}');
+        $templateParamValues = array(urlencode($uaid), urlencode($feeId));
+        $curlOps = [
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+        return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
+    }
 }
