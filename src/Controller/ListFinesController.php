@@ -6,6 +6,8 @@ use App\Entity\AlmaUser;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use \SimpleXMLElement;
 
@@ -36,5 +38,20 @@ class ListFinesController extends Controller
             'full_name' => $this->userdata->getFullNameAsString($this->api->getUserById($uaid)),
             'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid))
         ]);
+    }
+
+    /**
+     * @Route("/pay/{feeId}/{amount}", name="pay_fee")
+     */
+    public function payFee($feeId, $amount)
+    {
+        $uaid = $this->user->getUaId();
+        try {
+            $this->api->payUserFee($uaid, $feeId . 'fdasv', $amount);
+            $this->addFlash('notice', 'Transaction complete.');
+        } catch(\GuzzleHttp\Exception\TransferException $e) {
+            $this->addFlash('error', 'We were unable to process your transaction.');
+        }
+        return new RedirectResponse("/");
     }
 }
