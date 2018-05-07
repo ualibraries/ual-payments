@@ -29,6 +29,7 @@ class AlmaApi
      * @param $curlOps
      * @param $templateParamNames
      * @param $templateParamValues
+     * @throws \GuzzleHttp\Exception\TransferException
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
     protected function executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues)
@@ -38,21 +39,14 @@ class AlmaApi
         $url = $urlPath;
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
 
-        try {
-            $response = $client->request($method, $url, [
-                'query' => $queryParams,
-                'curl' => $curlOps,
-                'headers' => [
-                    'Authorization' => 'apikey ' . $this->apiKey
-                ]
-            ]);
-        } catch (GuzzleException $e) {
-            echo Psr7\str($e->getRequest());
-            if ($e->hasResponse()) {
-                echo Psr7\str($e->getResponse());
-            }
-            return null;
-        }
+        $response = $client->request($method, $url, [
+            'query' => $queryParams,
+            'curl' => $curlOps,
+            'headers' => [
+                'Authorization' => 'apikey ' . $this->apiKey
+            ]
+        ]);
+
         return $response;
     }
 
