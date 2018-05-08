@@ -163,7 +163,7 @@ class AlmaApi
             CURLOPT_RETURNTRANSFER => true
         ];
         $requestParams = compact('curl', 'query');
-        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamValues);
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
 }
