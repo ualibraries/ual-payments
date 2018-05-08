@@ -39,11 +39,10 @@ class AlmaApi
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
         $defaultRequestParams = [
             'headers' => [
-                'Authorization' => 'apikey ' . $this->apiKey
+                'Authorization' => 'apikey ' . $this->apiKey,
             ]
         ];
-
-        $response = $client->request($method, $url, $defaultRequestParams + $requestParams);
+        $response = $client->request($method, $url, $requestParams + $defaultRequestParams);
 
         return $response;
     }
