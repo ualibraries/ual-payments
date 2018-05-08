@@ -17,12 +17,6 @@ class Fee
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Transaction", inversedBy="fees")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $transaction;
-
-    /**
      * @ORM\Column(type="string", length=25)
      */
     private $fee_id;
@@ -38,6 +32,12 @@ class Fee
     private $balance;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Transaction", inversedBy="fees")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $transaction;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Transaction")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -45,18 +45,6 @@ class Fee
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getTransaction(): ?Transaction
-    {
-        return $this->transaction;
-    }
-
-    public function setTransaction(?Transaction $transaction): self
-    {
-        $this->transaction = $transaction;
-
-        return $this;
     }
 
     public function getFeeId(): ?string
@@ -91,6 +79,18 @@ class Fee
     public function setBalance($balance): self
     {
         $this->balance = $balance;
+
+        return $this;
+    }
+
+    public function getTransaction(): ?Transaction
+    {
+        return $this->transaction;
+    }
+
+    public function setTransaction(?Transaction $transaction): self
+    {
+        $this->transaction = $transaction;
 
         return $this;
     }

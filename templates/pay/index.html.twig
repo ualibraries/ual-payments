@@ -9,18 +9,15 @@
 </style>
 
 <div class="example-wrapper">
+    <h2>You are about to pay ${{ total_balance }}</h2>
     <form action="https://payflowlink.paypal.com" method="post">
         <input type="hidden" name="LOGIN" value="leehemphill">
         <input type="hidden" name="PARTNER" value="PayPal">
         <input type="hidden" name="AMOUNT" value={{ total_balance }}>
         <input type="hidden" name="TYPE" value="S">
         <input type="hidden" name="INVOICE" value={{ invoice_number }}>
-        <lable>If you are not redirected to Payflow</lable><br>
-        <input id="pay_form" type="submit" value="Click here">
+        <a href="/">Cancel</a>
+        <input id="pay_form" type="submit" value="Continue">
     </form>
-
-    <script>
-        window.onload = () => document.getElementById("pay_form").click();
-    </script>
 </div>
 {% endblock %}

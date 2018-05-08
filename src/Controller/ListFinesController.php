@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\AlmaUser;
+use App\Entity\Transaction;
+use App\Entity\Fee;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,8 +26,8 @@ class ListFinesController extends Controller
 
     public function index()
     {
+        $this->removePendingFees();
         $uaid = $this->user->getUaId();
-
         $alma_user_exists = $this->userdata->isValidUser($this->api->findUserById($uaid));
 
         if ($uaid === null || !$alma_user_exists) {
@@ -37,5 +39,20 @@ class ListFinesController extends Controller
             'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid)),
             'user_id' => $this->user->getUaId()
         ]);
+    }
+
+    private function removePendingFees() {
+        $repository = $this->getDoctrine()->getRepository(Transaction::class);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $transactions = $repository->findBy([
+            'user_id' => $this->user->getUaId(),
+            'status' => 'PENDING'
+        ]);
+        
+        foreach ($transactions as $transaction) {
+            $entityManager->remove($transaction);
+        }
+        $entityManager->flush();
     }
 }
