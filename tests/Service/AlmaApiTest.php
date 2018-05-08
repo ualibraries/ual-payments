@@ -9,6 +9,7 @@
 namespace App\Tests\Service;
 
 use App\Service\AlmaApi;
+use App\Service\AlmaUserData;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Dotenv\Dotenv;
 use \SimpleXMLElement;
@@ -56,23 +57,15 @@ class AlmaApiTest extends TestCase
 
     public function testPayUserFee()
     {
-        $body = new \stdClass;
-        $body->type = new \stdClass;
-        $body->type->value = "OVERDUEFINE";
-        $body->type->desc = "Overdue fine";
-        $body->original_amount = 3.50;
-        $body->comment = "Test fee";
-        $body->owner = new \stdClass;
-        $body->owner->value = "MAIN";
-        $body->owner->desc = "Main Library";
-
         try {
-            $response = $this->api->createUserFee($this->uaid, $body);
-            $sxml = new SimpleXMLElement($response->getBody());
-            $this->api->payUserFee($this->uaid, $sxml->id, 3.50);
-            $this->assertEquals(200, $response->getStatusCode());
-        } catch(\Exception $e) {
-            echo $e->getMessage();
+            $this->api->payUserFee($this->uaid, $this->testFee->id, (float)$this->testFee->balance);
+            $response = $this->api->getUserFines($this->uaid);
+            $userfines = $this->userdata->listFines($response);
+            foreach ($userfines as $fine) {
+                $this->assertNotEquals($this->testFee->id, $fine['id']);
+            }
+        } catch (\Exception $e) {
+            $this->fail("Unable to pay user test fee: " . $e->getMessage());
         }
     }
 
