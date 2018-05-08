@@ -78,7 +78,7 @@ class AlmaApi
     }
 
     /**
-     * Get the user from alma by the user id. Returns 400 status code if user does not exist.s
+     * Get the user from alma by the user id. Returns 400 status code if user does not exist.
      * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */

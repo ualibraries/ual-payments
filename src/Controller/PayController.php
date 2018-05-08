@@ -2,69 +2,64 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Transaction;
 use App\Entity\Fee;
+use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class PayController extends Controller
 {
-    private $transaction;
-    private $entityManager;
-    private $total;
-
-    public function __construct()
-    {
-        $this->transaction = new Transaction();
-        $this->total = 0;
-    }
-
     public function index(Request $request)
     {
-        $this->transaction->setUserId($request->request->get('user_id'));
-        $this->transaction->setInvoiceNumber(uniqid());
-        $this->transaction->setStatus('PENDING');
-        $this->transaction->setDate(new \DateTime());
+        $transaction = new Transaction();
+        $transaction->setUserId($request->request->get('user_id'));
+        $transaction->setInvoiceNumber(uniqid());
+        $transaction->setStatus('PENDING');
+        $transaction->setDate(new \DateTime());
+
+        $entityManager = $this->getDoctrine()->getManager();
         $feeIds = $request->request->get('fee');
+        $this->setUserFees($entityManager, $transaction, $feeIds);
 
-        $this->entityManager = $this->getDoctrine()->getManager();
-
-        $this->setUserFees($this->transaction->getUserId(), $feeIds);
-
-        $this->transaction->setTotalBalance($this->total);
-
-        $this->entityManager->persist($this->transaction);
-        $this->entityManager->flush();
+        $entityManager->persist($transaction);
+        $entityManager->flush();
 
         return $this->render('pay/index.html.twig', [
-            'invoice_number' => $this->transaction->getInvoiceNumber(),
-            'total_balance' => $this->transaction->getTotalBalance()
+            'invoice_number' => $transaction->getInvoiceNumber(),
+            'total_balance' => $transaction->getTotalBalance()
         ]);
     }
 
     /**
      * Use the fee id to get the information about the fee (including balance) from Alma
-     * @param $fees - The users fees that they have selected to pay for this transaction.
+     * @param ObjectManager $em - Doctrine Entity Manager
+     * @param Transaction $transaction
+     * @param $feeIds
      */
-    private function setUserFees($userId, $feeIds)
+    private function setUserFees(ObjectManager $em, Transaction $transaction, $feeIds)
     {
-        $userdata = new AlmaUserData();
+        $userData = new AlmaUserData();
         $api = new AlmaApi();
 
-        $almaFees = $userdata->listFines($api->getUserFines($userId));
+        $userId = $transaction->getUserId();
+        $almaFees = $userData->listFines($api->getUserFines($userId));
 
-        foreach($almaFees as $almaFee) {
-            if(in_array($almaFee['id'], $feeIds)) {
+        $total = 0;
+        foreach ($almaFees as $almaFee) {
+            if (in_array($almaFee['id'], $feeIds)) {
                 $fee = new Fee();
                 $fee->setFeeId($almaFee['id']);
                 $fee->setBalance($almaFee['balance']);
-                $fee->setLabel($almaFee['balance']);
-                $this->transaction->addFee($fee);
-                $this->entityManager->persist($fee);
-                $this->total += $fee->getBalance();
+                $fee->setLabel($almaFee['label']);
+
+                $em->persist($fee);
+                $transaction->addFee($fee);
+                $total += $almaFee['balance'];
             }
         }
+        $transaction->setTotalBalance($total);
     }
 }

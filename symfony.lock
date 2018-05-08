@@ -1,4 +1,37 @@
 {
+    "behat/behat": {
+        "version": "v3.4.3"
+    },
+    "behat/gherkin": {
+        "version": "v4.5.1"
+    },
+    "behat/mink": {
+        "version": "v1.7.1"
+    },
+    "behat/mink-browserkit-driver": {
+        "version": "v1.3.2"
+    },
+    "behat/mink-extension": {
+        "version": "2.3.1"
+    },
+    "behat/mink-goutte-driver": {
+        "version": "v1.2.1"
+    },
+    "behat/mink-selenium2-driver": {
+        "version": "v1.3.1"
+    },
+    "behat/transliterator": {
+        "version": "1.2-dev"
+    },
+    "container-interop/container-interop": {
+        "version": "1.2.0"
+    },
+    "deployer/dist": {
+        "version": "v6.2.0"
+    },
+    "deployer/recipes": {
+        "version": "6.1.1"
+    },
     "dflydev/ant-path-matcher": {
         "version": "v1.0.3"
     },
@@ -89,6 +122,9 @@
     "evenement/evenement": {
         "version": "v2.1.0"
     },
+    "fabpot/goutte": {
+        "version": "3.2-dev"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -100,6 +136,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.4-dev"
+    },
+    "instaclick/php-webdriver": {
+        "version": "1.4.5"
     },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
@@ -181,6 +220,9 @@
             "version": "4.0",
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
+    },
+    "sensio/generator-bundle": {
+        "version": "3.1.x-dev"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"
