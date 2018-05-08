@@ -2,6 +2,6 @@ index:
    path: /
    defaults: { _controller: 'App\Controller\ListFinesController::index' }
 
-payflow_handler:
+payment_handler:
    path: /pay
    controller: App\Controller\PayController::index

@@ -55,15 +55,15 @@ class AlmaApi
 
     /**
      * Get the users list of fines from Alma
-     * @param $uaid
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function getUserFines($uaid)
+    public function getUserFines($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($uaid));
+        $templateParamValues = array(urlencode($userId));
         $queryParams = [
             'user_id_type' => 'all_unique',
             'status' => 'ACTIVE',
@@ -79,15 +79,15 @@ class AlmaApi
 
     /**
      * Get the user from alma by the user id. Returns 400 status code if user does not exist.s
-     * @param $uaid
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function getUserById($uaid)
+    public function getUserById($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($uaid));
+        $templateParamValues = array(urlencode($userId));
         $queryParams = [
             'user_id_type' => 'all_unique',
             'view' => 'full',
@@ -102,12 +102,12 @@ class AlmaApi
     }
 
     /**
-     * Use the Alma api to search for the user by primary_id. This is how we will check that a the provided uaid is found
+     * Use the Alma api to search for the user by primary_id. This is how we will check that a the provided user id is found
      * in Alma as a primary_id.
-     * @param $uaid
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      */
-    public function findUserById($uaid)
+    public function findUserById($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users';
@@ -116,7 +116,7 @@ class AlmaApi
         $queryParams = [
             'limit' => '10',
             'offset' => '0',
-            'q' => 'primary_id~' . $uaid,
+            'q' => 'primary_id~' . $userId,
             'order_by' => 'last_name, first_name, primary_id',
             'apikey' => $this->apiKey
         ];

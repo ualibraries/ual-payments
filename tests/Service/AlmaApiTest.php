@@ -15,14 +15,14 @@ use Symfony\Component\Dotenv\Dotenv;
 class AlmaApiTest extends TestCase
 {
     private $api;
-    private $uaid;
+    private $userId;
 
     public function setUp()
     {
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__.'/../../.env');
         $this->api = new AlmaApi();
-        $this->uaid = getenv('TEST_UAID');
+        $this->userId = getenv('TEST_ID');
 
         parent::setUp();
     }
@@ -32,7 +32,7 @@ class AlmaApiTest extends TestCase
     */
     public function testGetUserFines()
     {
-        $userfines = $this->api->getUserFines($this->uaid);
+        $userfines = $this->api->getUserFines($this->userId);
         $this->assertEquals(200, $userfines->getStatusCode());
     }
 
@@ -41,14 +41,14 @@ class AlmaApiTest extends TestCase
     */
     public function testGetUserById()
     {
-        $user = $this->api->getUserById($this->uaid);
+        $user = $this->api->getUserById($this->userId);
 
         $this->assertEquals(200, $user->getStatusCode());
     }
 
     public function testFindUserById()
     {
-        $user = $this->api->findUserById($this->uaid);
+        $user = $this->api->findUserById($this->userId);
 
         $this->assertEquals(200, $user->getStatusCode());
     }

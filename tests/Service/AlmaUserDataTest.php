@@ -23,8 +23,8 @@ class AlmaUserDataTest extends TestCase
     {
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/../../.env');
-        $uaid = getenv('TEST_UAID');
-        $this->userdata = new AlmaUserData($uaid);
+        $userId = getenv('TEST_ID');
+        $this->userdata = new AlmaUserData($userId);
 
         parent::setUp();
     }
