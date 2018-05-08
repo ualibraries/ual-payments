@@ -25,6 +25,11 @@ class AlmaApiTest extends TestCase
         $dotenv->load(__DIR__.'/../../.env');
         $this->api = new AlmaApi();
         $this->uaid = getenv('TEST_UAID');
+        $this->userdata = new AlmaUserData($this->uaid);
+
+        $testFeeBody = file_get_contents(__DIR__ . '/TestJSONData/fee1.json');
+        $response = $this->api->createUserFee($this->uaid, json_decode($testFeeBody));
+        $this->testFee = new SimpleXMLElement($response->getBody());
 
         parent::setUp();
     }
