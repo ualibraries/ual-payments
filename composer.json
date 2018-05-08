@@ -5,7 +5,7 @@
   "description": "Payments for UA Libraries",
   "type": "project",
   "require": {
-    "php": "^7.0.8",
+    "php": "^7.2",
     "ext-iconv": "*",
     "ext-simplexml": "^7.2",
     "guzzlehttp/guzzle": "^6.3",
