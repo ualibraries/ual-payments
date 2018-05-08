@@ -34,7 +34,8 @@ class ListFinesController extends Controller
 
         return $this->render('list_fines/index.html.twig', [
             'full_name' => $this->userdata->getFullNameAsString($this->api->getUserById($uaid)),
-            'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid))
+            'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid)),
+            'user_id' => $this->user->getUaId()
         ]);
     }
 }

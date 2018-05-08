@@ -3,7 +3,7 @@
 {% block title %}Your Fines{% endblock %}
 
 {% block body %}
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     td { border-bottom: 2px solid black; }
@@ -14,18 +14,23 @@
     <h1>Hello {{ full_name }}! ✅</h1>
 
     <h2>Library Fees:</h2>
-    <table>
-      {% for fine in user_fines %}
-        <tr class="table-row">
-          <td>
-            <p>{{ fine.label }}</p>
-            <p>{{ fine.title }}</p>
-          </td>
-          <td>
-            <p>{{ fine.balance }}</p>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+    <form action="{{ path('payflow_handler') }}" method="post">
+        <table>
+        {% for fine in user_fines %}
+            <tr class="table-row">
+                <td><input type="checkbox" name="fee[]" value="{{ fine|json_encode }}" data-fee-balance="{{ fine.balance }}"></td>
+                <td>
+                    <p>{{ fine.label }}</p>
+                    <p>{{ fine.title }}</p>
+                </td>
+                <td>
+                    <p>{{ fine.balance }}</p>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+        <input type="hidden" name="user_id" value="{{ user_id }}">
+        <input type="submit" value="Pay Your Fine" />
+    </form>
 </div>
 {% endblock %}
