@@ -7,33 +7,31 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AlmaUser
 {
-    private $uaid;
-    private $api_url;
-    private $api_key;
+    private $userId;
 
     function __construct() {
-        $this->uaid = $this->getUaIdFromVariable();
+        $this->userId = $this->getUserIdFromVariable();
     }
 
-    public function getUaIdFromVariable()
+    public function getUserIdFromVariable()
     {
         $request = Request::createFromGlobals();
 
-        $uaid = $request->server->get('Shib-uaId');
-
-        $test_uaid = getenv('TEST_UAID');
-
+        $testUserId = getenv('TEST_ID');
         $app_env = getenv('APP_ENV');
+        $useTestId = getenv('USE_TEST_ID');
         
-        // If the environment variable TEST_UAID, in .env, is set use that as the uaid
-        if ($uaid === null && $test_uaid !== "" && $app_env !== 'prod') {
-            return $test_uaid;
+        // If the environment variable TEST_ID, in .env, is set use that as the user id
+        if ($testUserId !== "" && $app_env !== 'prod' && $useTestId == 'TRUE') {
+            return $testUserId;
         }
 
-        return $uaid;
+        $userId = $request->server->get('Shib-uaId');
+
+        return $userId;
     }
 
-    public function getUaId() {
-        return $this->uaid;
+    public function getUserId() {
+        return $this->userId;
     }
 }
