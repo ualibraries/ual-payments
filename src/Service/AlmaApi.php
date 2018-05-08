@@ -166,4 +166,31 @@ class AlmaApi
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $body - A plain PHP object representing a fee.
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     */
+    public function createUserFee($uaid, $body)
+    {
+        $method = 'POST';
+        $urlPath = '/almaws/v1/users/{user_id}/fees';
+        $templateParamNames = array('{user_id}');
+        $templateParamValues = array(urlencode($uaid));
+        $curl = [
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+
+        $headers = [
+            'Authorization' => 'apikey ' . $this->apiKey,
+            'Content-Type' => 'application/json'
+        ];
+        $body = json_encode($body);
+        $requestParams = compact('curl', 'body', 'headers');
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
+    }
+
+
+
 }

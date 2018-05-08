@@ -11,6 +11,7 @@ namespace App\Tests\Service;
 use App\Service\AlmaApi;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Dotenv\Dotenv;
+use \SimpleXMLElement;
 
 class AlmaApiTest extends TestCase
 {
@@ -52,4 +53,27 @@ class AlmaApiTest extends TestCase
 
         $this->assertEquals(200, $user->getStatusCode());
     }
+
+    public function testPayUserFee()
+    {
+        $body = new \stdClass;
+        $body->type = new \stdClass;
+        $body->type->value = "OVERDUEFINE";
+        $body->type->desc = "Overdue fine";
+        $body->original_amount = 3.50;
+        $body->comment = "Test fee";
+        $body->owner = new \stdClass;
+        $body->owner->value = "MAIN";
+        $body->owner->desc = "Main Library";
+
+        try {
+            $response = $this->api->createUserFee($this->uaid, $body);
+            $sxml = new SimpleXMLElement($response->getBody());
+            $this->api->payUserFee($this->uaid, $sxml->id, 3.50);
+            $this->assertEquals(200, $response->getStatusCode());
+        } catch(\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
 }
