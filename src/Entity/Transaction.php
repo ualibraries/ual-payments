@@ -43,6 +43,11 @@ class Transaction
      */
     private $user_id;
 
+    /**
+     * @ORM\Column(type="decimal", precision=7, scale=2)
+     */
+    private $total_balance;
+
     public function __construct()
     {
         $this->fees = new ArrayCollection();
@@ -128,6 +133,18 @@ class Transaction
     public function setUserId(string $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getTotalBalance()
+    {
+        return $this->total_balance;
+    }
+
+    public function setTotalBalance($total_balance): self
+    {
+        $this->total_balance = $total_balance;
 
         return $this;
     }
