@@ -8,6 +8,8 @@ use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Psr\Log\LoggerInterface;
+
 
 use \SimpleXMLElement;
 
@@ -43,14 +45,15 @@ class ListFinesController extends Controller
     /**
      * @Route("/pay/{feeId}/{amount}", name="pay_fee")
      */
-    public function payFee($feeId, $amount)
+    public function payFee($feeId, $amount, LoggerInterface $logger)
     {
         $uaid = $this->user->getUaId();
         try {
-            $this->api->payUserFee($uaid, $feeId . 'fdasv', $amount);
+            $this->api->payUserFee($uaid, $feeId, $amount);
             $this->addFlash('notice', 'Transaction complete.');
         } catch(\GuzzleHttp\Exception\TransferException $e) {
             $this->addFlash('error', 'We were unable to process your transaction.');
+            $logger->error("Error processing fee $feeId: " . $e->getMessage());
         }
         return new RedirectResponse("/");
     }
