@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service;
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -12,9 +13,9 @@ class AlmaApi
     private $apiUrl;
     private $apiKey;
 
-  /**
-   * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
-   */
+    /**
+     * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
+     */
     public function __construct()
     {
         $this->apiUrl = getenv('API_URL');
@@ -22,7 +23,7 @@ class AlmaApi
     }
 
     /**
-     * Wrapper for requests to Almas API
+     * Wrapper for requests to Alma API
      * @param $urlPath
      * @param $method
      * @param $queryParams
@@ -35,7 +36,6 @@ class AlmaApi
     {
         $client = new Client(['base_uri' => $this->apiUrl]);
 
-        $url = $urlPath;
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
 
         try {

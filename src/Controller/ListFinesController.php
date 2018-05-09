@@ -12,33 +12,34 @@ class ListFinesController extends Controller
 {
     private $user;
     private $api;
-    private $userdata;
+    private $userData;
 
-    public function __construct(AlmaApi $api, AlmaUserData $userdata)
+    public function __construct(AlmaApi $api, AlmaUserData $userData)
     {
         $this->user = new AlmaUser();
         $this->api = $api;
-        $this->userdata = $userdata;
+        $this->userData = $userData;
     }
 
     public function index()
     {
         $this->removePendingFees();
         $userId = $this->user->getUserId();
-        $alma_user_exists = $this->userdata->isValidUser($this->api->findUserById($userId));
+        $alma_user_exists = $this->userData->isValidUser($this->api->findUserById($userId));
 
         if ($userId === null || !$alma_user_exists) {
             return $this->render('unauthorized.html.twig');
         }
 
         return $this->render('list_fines/index.html.twig', [
-            'full_name' => $this->userdata->getFullNameAsString($this->api->getUserById($userId)),
-            'user_fines' => $this->userdata->listFines($this->api->getUserFines($userId)),
+            'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
+            'user_fines' => $this->userData->listFines($this->api->getUserFines($userId)),
             'user_id' => $this->user->getUserId()
         ]);
     }
 
-    private function removePendingFees() {
+    private function removePendingFees()
+    {
         $repository = $this->getDoctrine()->getRepository(Transaction::class);
         $entityManager = $this->getDoctrine()->getManager();
 

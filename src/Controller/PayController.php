@@ -6,7 +6,6 @@ use App\Entity\Fee;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,7 +21,7 @@ class PayController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
         $feeIds = $request->request->get('fee');
-        $this->setUserFees($entityManager, $transaction, $feeIds);
+        $this->setUserFees($transaction, $feeIds);
 
         $entityManager->persist($transaction);
         $entityManager->flush();
@@ -34,12 +33,11 @@ class PayController extends Controller
     }
 
     /**
-     * Use the fee id to get the information about the fee (including balance) from Alma
-     * @param ObjectManager $em - Doctrine Entity Manager
+     * Use the fee id to get the information about the fee (including balance) from Alma, than add them to the transaction.
      * @param Transaction $transaction
      * @param $feeIds
      */
-    private function setUserFees(ObjectManager $em, Transaction $transaction, $feeIds)
+    private function setUserFees(Transaction $transaction, $feeIds)
     {
         $userData = new AlmaUserData();
         $api = new AlmaApi();
@@ -55,7 +53,7 @@ class PayController extends Controller
                 $fee->setBalance($almaFee['balance']);
                 $fee->setLabel($almaFee['label']);
 
-                $em->persist($fee);
+                $this->getDoctrine()->getManager()->persist($fee);
                 $transaction->addFee($fee);
                 $total += $almaFee['balance'];
             }

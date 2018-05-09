@@ -13,9 +13,9 @@
     <form action="https://payflowlink.paypal.com" method="post">
         <input type="hidden" name="LOGIN" value="leehemphill">
         <input type="hidden" name="PARTNER" value="PayPal">
-        <input type="hidden" name="AMOUNT" value={{ total_balance }}>
+        <input type="hidden" name="AMOUNT" value="{{ total_balance }}">
         <input type="hidden" name="TYPE" value="S">
-        <input type="hidden" name="INVOICE" value={{ invoice_number }}>
+        <input type="hidden" name="INVOICE" value="{{ invoice_number }}">
         <a href="/">Cancel</a>
         <input id="pay_form" type="submit" value="Continue">
     </form>

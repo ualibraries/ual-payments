@@ -9,7 +9,7 @@
 namespace App\Service;
 
 use GuzzleHttp\Psr7\Response;
-use \SimpleXMLElement;
+use SimpleXMLElement;
 
 class AlmaUserData
 {
@@ -28,10 +28,10 @@ class AlmaUserData
         // "fee" is an array that includes each individual fee in the user "fees" object in Alma
         foreach ($sxml->fee as $indv_fee) {
             $list_fees[] = [
-            'id' => (string)$indv_fee->id,
-            'label' => (string)$indv_fee->type->attributes()->desc,
-            'balance' => (string)$indv_fee->balance,
-            'title' => (string)$indv_fee->title
+                'id' => (string)$indv_fee->id,
+                'label' => (string)$indv_fee->type->attributes()->desc,
+                'balance' => (string)$indv_fee->balance,
+                'title' => (string)$indv_fee->title
             ];
         }
         return $list_fees;
@@ -49,7 +49,7 @@ class AlmaUserData
     }
 
     /**
-     * Checks that there is exaxtly one user has primary_id set to 'Shib-uaId' property (the user UA id)
+     * Checks that there is exactly one user has primary_id set to 'Shib-uaId' property (the user UA id)
      * @param Response $response
      * @return bool
      */
