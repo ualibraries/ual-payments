@@ -11,7 +11,7 @@
    ========================================================================== */
 
 html {
-  color: #403635;
+  color: var(--dark-gray);
   font-size: 1em;
   line-height: 1.4;
 }
@@ -128,7 +128,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--coal);
+  color: var(--dark-gray);
 }
 
 h1,

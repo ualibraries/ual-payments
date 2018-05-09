@@ -4,41 +4,81 @@
   margin: 0 auto;
 }
 
-.charges__title {
-  margin: 0 1rem;
-}
-
 .charges__inner {
   margin: 1rem;
 }
 
-.charges__card {
+.charges__title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.charges__total-amount-due {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.charges__total-amount-number {
+  font-weight: 600;
+}
+
+.charges__sign-out {
+  margin-bottom: 2rem;
+}
+
+.charges__prompt {
+  font-weight: 600;
+}
+
+.charges__list {
+  list-style-type: none;
+  margin: 0 0 1rem 0;
+  padding: 0;
+}
+
+.charges__item:nth-child(odd) {
+  background-color: var(--mid-light-gray);
+}
+
+.charges__item-details {
   display: flex;
+  justify-content: space-between;
   list-style-type: none;
   margin: 0;
-  padding: 1rem;
-  border-bottom: 1px solid var(--light-gray);
+  padding: .75rem 1rem;
 }
 
-.charges__card:last-child {
-  border-bottom: 0;
-}
-
-.charges__card--title {
-  flex: 1;
+.charges__item-checkbox {
   position: relative;
-  overflow: hidden;
+  width: 2rem;
 }
 
-.charges__card--amount {
+.charges__item-checkbox input[type="checkbox"] {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--ua-red);
+  border-radius: 0;
+  background-color: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.charges__item-checkbox input[type="checkbox"]:checked {
+  background-color: var(--ua-red);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34.84 24.92"><title>checkmark</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon points="14.59 24.92 0 11.31 4.77 6.2 14.46 15.22 29.93 0 34.84 4.99 14.59 24.92" fill="%23fdfdfd"/></g></g></svg>');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.charges__item-label {
+  flex: 1;
+}
+
+.charges__item-balance {
   font-weight: 600;
-  color: var(--dark-silver);
-}
-
-.charges__card--checkbox {
-  margin-right: 1rem;
-}
-
-.charges__action {
-  margin: 0 1rem;
 }

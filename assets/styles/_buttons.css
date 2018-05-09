@@ -1,4 +1,4 @@
-.btn {
+.button {
   display: inline-block;
   padding: 0.5rem 1rem;
   border: none;
@@ -6,18 +6,18 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.btn-primary {
+.button-primary {
   background-color: var(--ua-red);
   color: var(--white);
 }
 
-.btn-primary:hover {
+.button-primary:hover {
   background-color: var(--bloom);
   color: var(--white);
   cursor: pointer;
 }
 
-.btn-block {
+.button-block {
   display: block;
   width: 100%;
 }
@@ -34,7 +34,6 @@ html #libchat_07713bc057f66ebcdccd4dd1b4a2be3e button {
   padding: .5rem 1rem;
   text-align: center;
   white-space: nowrap;
-  vertical-align: middle;
   cursor: pointer;
   background-image: none;
   border: none;
