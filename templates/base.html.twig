@@ -10,7 +10,7 @@
 
 <body>
     <div id="header"></div>
-    
+
     <div class="title__wrapper">
         <div class="title__inner">
             <h1 class="title__title">Library payments</h1>
@@ -21,6 +21,8 @@
     <script src="{{ asset('build/polyfill.js') }}"></script>
     <script src="{{ asset('build/app.js') }}"></script>
     {% block javascripts %}{% endblock %}
+
+    {% include 'partials/footer.html.twig' %}
 </body>
 
 </html>

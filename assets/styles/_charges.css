@@ -82,3 +82,13 @@
 .charges__item-balance {
   font-weight: 600;
 }
+
+.charges__total-amount-selected {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.charges__total-amount-selected-number {
+  font-weight: 600;
+}

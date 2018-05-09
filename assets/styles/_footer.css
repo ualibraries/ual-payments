@@ -1,5 +1,5 @@
 .footer__wrapper {
-  margin-top: 1rem;
+  margin-top: 3rem;
   background-color: var(--warm-gray);
 }
 
@@ -7,7 +7,11 @@
   width: 1140px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem;
   color: var(--dark-silver);
   text-align: center;
+}
+
+.footer__inner p:last-child {
+  margin-bottom: 0;
 }
