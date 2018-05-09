@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactSVG from 'react-svg'
 import HelpControl from './HelpControl'
 import branding from '../images/branding.svg'
 
@@ -49,8 +50,9 @@ class Header extends React.Component {
           <a
             href="https://new.library.arizona.edu"
             className="logo"
-            dangerouslySetInnerHTML={{ __html: branding }}
-          />
+          >
+            <ReactSVG path={branding} />
+          </a>
           <div className="header__uicontrols-outer">
             <div className="header__uicontrols" id="header__uicontrols">
               <HelpControl

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactSVG from 'react-svg'
 import PropTypes from 'prop-types'
 import askusIcon from '../images/ask-us.svg'
 
@@ -19,10 +20,9 @@ class HelpControl extends React.Component {
         }
       >
         <button className="header__control-button" onClick={this.props.handler}>
-          <div
-            className="header__control-icon"
-            dangerouslySetInnerHTML={{ __html: askusIcon }}
-          />
+          <div className="header__control-icon">
+            <ReactSVG path={askusIcon} />
+          </div>
           Ask us
         </button>
 
