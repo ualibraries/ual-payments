@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}"> {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% block stylesheets %}{% endblock %}
 </head>
 
 <body>
     <div id="header"></div>
     {% block body %}{% endblock %}
-    <script src="{{ asset('build/app.js') }}"></script> {% block javascripts %}{% endblock %}
+    <script src="{{ asset('build/polyfill.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
+    {% block javascripts %}{% endblock %}
 </body>
 
 </html>
