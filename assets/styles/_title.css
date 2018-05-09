@@ -1,0 +1,13 @@
+.title__wrapper {
+  width: 1140px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.title__inner {
+  margin: 0 1rem;
+}
+
+.title__title {
+  font-size: 40px;
+}

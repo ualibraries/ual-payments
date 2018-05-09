@@ -1,0 +1,13 @@
+.footer__wrapper {
+  margin-top: 1rem;
+  background-color: var(--warm-gray);
+}
+
+.footer__inner {
+  width: 1140px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  color: var(--dark-silver);
+  text-align: center;
+}

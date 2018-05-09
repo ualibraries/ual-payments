@@ -1,0 +1,49 @@
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--ua-red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--bloom);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* LibChat button */
+html #libchat_07713bc057f66ebcdccd4dd1b4a2be3e button.libchat_online {
+  background-color: var(--ua-red);
+  color: var(--white);
+}
+
+html #libchat_07713bc057f66ebcdccd4dd1b4a2be3e button {
+  width: 100%;
+  display: block;
+  padding: .5rem 1rem;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: none;
+  border-radius: 0;
+  background-color: var(--ua-red);
+  color: var(--white);
+  transition: background-color .2s ease;
+}
+
+html #libchat_07713bc057f66ebcdccd4dd1b4a2be3e button:hover {
+  background-color: var(--bloom);
+}

@@ -1,0 +1,44 @@
+.charges__wrapper {
+  width: 1140px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.charges__title {
+  margin: 0 1rem;
+}
+
+.charges__inner {
+  margin: 1rem;
+}
+
+.charges__card {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.charges__card:last-child {
+  border-bottom: 0;
+}
+
+.charges__card--title {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.charges__card--amount {
+  font-weight: 600;
+  color: var(--dark-silver);
+}
+
+.charges__card--checkbox {
+  margin-right: 1rem;
+}
+
+.charges__action {
+  margin: 0 1rem;
+}
