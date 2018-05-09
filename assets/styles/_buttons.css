@@ -6,6 +6,10 @@
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+.button:hover {
+  cursor: pointer;
+}
+
 .button-primary {
   background-color: var(--ua-red);
   color: var(--white);
@@ -14,7 +18,15 @@
 .button-primary:hover {
   background-color: var(--bloom);
   color: var(--white);
-  cursor: pointer;
+}
+
+.button-link {
+  background-color: transparent;
+  color: var(--ua-red);
+}
+
+.button-link:hover {
+  color: var(--bloom);
 }
 
 .button-block {

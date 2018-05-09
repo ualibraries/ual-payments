@@ -1,23 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello!{% endblock %}
+{% block title %}Confirmation{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h2>You are about to pay ${{ total_balance }}</h2>
-    <form action="https://payflowlink.paypal.com" method="post">
-        <input type="hidden" name="LOGIN" value="leehemphill">
-        <input type="hidden" name="PARTNER" value="PayPal">
-        <input type="hidden" name="AMOUNT" value="{{ total_balance }}">
-        <input type="hidden" name="TYPE" value="S">
-        <input type="hidden" name="INVOICE" value="{{ invoice_number }}">
-        <a href="/">Cancel</a>
-        <input id="pay_form" type="submit" value="Continue">
-    </form>
+<div class="confirmation__wrapper">
+    <div class="confirmation__inner">
+        <h2>You are about to pay ${{ total_balance|number_format(2, '.', ',') }}</h2>
+        <form action="https://payflowlink.paypal.com" method="post">
+            <input type="hidden" name="LOGIN" value="leehemphill">
+            <input type="hidden" name="PARTNER" value="PayPal">
+            <input type="hidden" name="AMOUNT" value="{{ total_balance }}">
+            <input type="hidden" name="TYPE" value="S">
+            <input type="hidden" name="INVOICE" value="{{ invoice_number }}">
+            <button class="button button-link" onclick="javascript:window.location='/';return false;">Cancel</button>
+            <input id="pay_form" type="submit" value="Continue" class="button button-primary">
+        </form>
+    </div>
 </div>
 {% endblock %}
