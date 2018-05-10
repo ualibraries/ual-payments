@@ -18,6 +18,7 @@ class AlmaApiTest extends TestCase
 {
     private $api;
     private $uaid;
+    private $testFee;
 
     public function setUp()
     {
