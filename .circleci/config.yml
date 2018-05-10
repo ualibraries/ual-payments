@@ -76,7 +76,7 @@ jobs:
             sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
             sed 's/\(^DB_USER=\)/\1'root'/' -i .env
             sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env
-            sed 's/\(^API_URL=\)/\1'$ALMA_API_URL'/' -i .env
+            sed 's#\(^API_URL=\)#\1'$ALMA_API_URL'#' -i .env
             sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
       - run: php bin/console doctrine:migrations:migrate --no-interaction
 
