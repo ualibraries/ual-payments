@@ -19,6 +19,7 @@
   --mid-gray: #a7a7a7;
   --mid-light-gray: #f7f7f7;
   --light-gray: #efefef;
+  --concrete-gray: #f8f8f8;
 }
 
 @custom-media --small (min-width: 576px);
