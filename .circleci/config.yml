@@ -77,7 +77,7 @@ jobs:
             sed 's#^\(\s*DB_NAME\s*=\s*\).*#\1'circle_test'#' -i .env
             sed 's#^\(\s*API_URL\s*=\s*\).*#\1'$ALMA_API_URL'#' -i .env
             sed 's#^\(\s*API_KEY\s*=\s*\).*#\1'$ALMA_API_KEY'#' -i .env
-      - run: yes | php bin/console doctrine:migrations:migrate
+      - run: php bin/console doctrine:migrations:migrate --no-interaction
 
 
       - save_cache:
