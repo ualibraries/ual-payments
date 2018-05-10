@@ -2,13 +2,16 @@
 
 {% block title %}Charges{% endblock %}
 
-{% block body %}
+{% block javascripts %}
+<script src="{{ asset('build/total-selected-charges.js') }}"></script>
+{% endblock %}
 
+{% block body %}
 <div class="charges__wrapper">
     <div class="charges__inner">
         <div class="charges__title">Hi, {{ full_name }}!</div>
     
-        <div class="charges__total-amount-due">Your total amount due is: <span class="charges__total-amount-number"></span></div>
+        <div class="charges__total-amount-due">Your total amount due is: <span class="charges__total-amount-number" id="totalAmount"></span></div>
 
         <p class="charges__sign-out">I am done with payments, <a href="#">sign me out</a>.</p>
 
@@ -20,7 +23,7 @@
                 <li class="charges__item">
                     <ul class="charges__item-details">
                         <li class="charges__item-checkbox">
-                            <input type="checkbox" name="fee[]" value="{{ fine.id }}" data-fee-balance="{{ fine.balance }}">
+                            <input type="checkbox" name="fee[]" class="charges__item-checkbox-input" value="{{ fine.id }}" data-fee-balance="{{ fine.balance }}">
                         </li>
                         <li class="charges__item-label">{{ fine.label }}</li>
                         <li>{{ fine.title }}</li>
@@ -30,7 +33,7 @@
             {% endfor %}
             </ul>
 
-            <div class="charges__total-amount-selected">Selected charges total: <span class="charges__total-amount-selected-number"></span></div>
+            <div class="charges__total-amount-selected">Selected charges total: <span class="charges__total-amount-selected-number" id="totalSelectedAmount"></span></div>
 
             <input type="hidden" name="user_id" value="{{ user_id }}">
             <input type="submit" value="Pay now" class="button button-primary" />
