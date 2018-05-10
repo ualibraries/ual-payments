@@ -10,6 +10,7 @@ Encore
   // will create public/build/app.js and public/build/app.css
   .addEntry('app', './assets/app.js')
   .addEntry('polyfill', './assets/polyfill.js')
+  .addEntry('total-selected-charges', './assets/total-selected-charges.js')
 
   .configureBabel(babelConfig => {
     babelConfig.presets.push('stage-0')
