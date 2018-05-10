@@ -10,9 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Log\LoggerInterface;
 
-
-use \SimpleXMLElement;
-
 class ListFinesController extends Controller
 {
     private $user;
@@ -26,6 +23,11 @@ class ListFinesController extends Controller
         $this->userdata = $userdata;
     }
 
+    /**
+     * @Route("/", name="index")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function index()
     {
         $uaid = $this->user->getUaId();
@@ -44,6 +46,11 @@ class ListFinesController extends Controller
 
     /**
      * @Route("/pay/{feeId}/{amount}", name="pay_fee")
+     * @param $feeId
+     * @param $amount
+     * @param LoggerInterface $logger
+     * @return RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function payFee($feeId, $amount, LoggerInterface $logger)
     {

@@ -28,8 +28,8 @@ class AlmaApi
      * @param $requestParams
      * @param $templateParamNames
      * @param $templateParamValues
-     * @throws \GuzzleHttp\Exception\TransferException
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues)
     {
@@ -51,6 +51,7 @@ class AlmaApi
      * Get the users list of fines from Alma
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function getUserFines($uaid)
     {
@@ -75,6 +76,7 @@ class AlmaApi
      * Get the user from alma by the user id. Returns 400 status code if user does not exist.s
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function getUserById($uaid)
     {
@@ -101,6 +103,7 @@ class AlmaApi
      * in Alma as a primary_id.
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function findUserById($uaid)
     {
@@ -127,6 +130,7 @@ class AlmaApi
      * @param $uaid - The numeric uaid of the logged in user
      * @param $feeId - The Alma specific fee id to be updated
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function payUserFee($uaid, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
     {
@@ -151,6 +155,7 @@ class AlmaApi
      * @param $feeId - The Alma specific fee id to be updated
      * @param $query - The parameters for the query.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     protected function updateUserFee($uaid, $feeId, $query)
     {
@@ -170,6 +175,7 @@ class AlmaApi
      * @param $uaid - The numeric uaid of the logged in user
      * @param $body - A plain PHP object representing a fee.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function createUserFee($uaid, $body)
     {
@@ -190,7 +196,4 @@ class AlmaApi
         $requestParams = compact('curl', 'body', 'headers');
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
-
-
-
 }
