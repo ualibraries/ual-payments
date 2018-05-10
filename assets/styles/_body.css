@@ -1,0 +1,14 @@
+.body__wrapper {
+  display: flex;
+}
+
+.body__aside-column {
+  width: 254px;
+  background-color: var(--concrete-gray);
+}
+
+.body__primary-column {
+  flex: 1;
+  max-width: 1140px;
+  padding: 0 2rem 2rem 2rem;
+}

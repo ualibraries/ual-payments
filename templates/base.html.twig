@@ -11,18 +11,22 @@
 <body>
     <div id="header"></div>
 
-    <div class="title__wrapper">
-        <div class="title__inner">
-            <h1 class="title__title">Library payments</h1>
+    <div class="body__wrapper">
+        <div class="body__aside-column">
+            {% include 'partials/menu.html.twig' %}
+        </div>
+        <div class="body__primary-column">
+            {% include 'partials/title.html.twig' %}
+            {% block body %}{% endblock %}
         </div>
     </div>
 
-    {% block body %}{% endblock %}
+    {% include 'partials/footer.html.twig' %}
+
     <script src="{{ asset('build/polyfill.js') }}"></script>
     <script src="{{ asset('build/app.js') }}"></script>
-    {% block javascripts %}{% endblock %}
 
-    {% include 'partials/footer.html.twig' %}
+    {% block javascripts %}{% endblock %}
 </body>
 
 </html>
