@@ -12,6 +12,13 @@
 
 <div class="example-wrapper">
     <h1>Hello {{ full_name }}! ✅</h1>
+    {% for label, messages in app.flashes %}
+      {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+      {% endfor %}
+    {% endfor %}
 
     <h2>Library Fees:</h2>
     <table>
@@ -23,6 +30,11 @@
           </td>
           <td>
             <p>{{ fine.balance }}</p>
+          </td>
+          <td>
+            {% if fine.label is not same as("Credit") %}
+              <a href="{{ path('pay_fee', {'feeId': fine.id, 'amount': fine.balance }) }}">Pay Fee</a>
+            {% endif %}
           </td>
         </tr>
       {% endfor %}

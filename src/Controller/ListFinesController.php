@@ -6,8 +6,9 @@ use App\Entity\AlmaUser;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use \SimpleXMLElement;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Psr\Log\LoggerInterface;
 
 class ListFinesController extends Controller
 {
@@ -22,6 +23,11 @@ class ListFinesController extends Controller
         $this->userdata = $userdata;
     }
 
+    /**
+     * @Route("/", name="index")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function index()
     {
         $uaid = $this->user->getUaId();
@@ -36,5 +42,26 @@ class ListFinesController extends Controller
             'full_name' => $this->userdata->getFullNameAsString($this->api->getUserById($uaid)),
             'user_fines' => $this->userdata->listFines($this->api->getUserFines($uaid))
         ]);
+    }
+
+    /**
+     * @Route("/pay/{feeId}/{amount}", name="pay_fee")
+     * @param $feeId
+     * @param $amount
+     * @param LoggerInterface $logger
+     * @return RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function payFee($feeId, $amount, LoggerInterface $logger)
+    {
+        $uaid = $this->user->getUaId();
+        try {
+            $this->api->payUserFee($uaid, $feeId, $amount);
+            $this->addFlash('notice', 'Transaction complete.');
+        } catch(\GuzzleHttp\Exception\TransferException $e) {
+            $this->addFlash('error', 'We were unable to process your transaction.');
+            $logger->error("Error processing fee $feeId: " . $e->getMessage());
+        }
+        return new RedirectResponse("/");
     }
 }

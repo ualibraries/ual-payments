@@ -9,13 +9,16 @@
 namespace App\Tests\Service;
 
 use App\Service\AlmaApi;
+use App\Service\AlmaUserData;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Dotenv\Dotenv;
+use \SimpleXMLElement;
 
 class AlmaApiTest extends TestCase
 {
     private $api;
     private $uaid;
+    private $testFee;
 
     public function setUp()
     {
@@ -23,6 +26,11 @@ class AlmaApiTest extends TestCase
         $dotenv->load(__DIR__.'/../../.env');
         $this->api = new AlmaApi();
         $this->uaid = getenv('TEST_UAID');
+        $this->userdata = new AlmaUserData($this->uaid);
+
+        $testFeeBody = file_get_contents(__DIR__ . '/TestJSONData/fee1.json');
+        $response = $this->api->createUserFee($this->uaid, json_decode($testFeeBody));
+        $this->testFee = new SimpleXMLElement($response->getBody());
 
         parent::setUp();
     }
@@ -52,4 +60,19 @@ class AlmaApiTest extends TestCase
 
         $this->assertEquals(200, $user->getStatusCode());
     }
+
+    public function testPayUserFee()
+    {
+        try {
+            $this->api->payUserFee($this->uaid, $this->testFee->id, (float)$this->testFee->balance);
+            $response = $this->api->getUserFines($this->uaid);
+            $userfines = $this->userdata->listFines($response);
+            foreach ($userfines as $fine) {
+                $this->assertNotEquals($this->testFee->id, $fine['id']);
+            }
+        } catch (\Exception $e) {
+            $this->fail("Unable to pay user test fee: " . $e->getMessage());
+        }
+    }
+
 }

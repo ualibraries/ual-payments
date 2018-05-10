@@ -25,31 +25,25 @@ class AlmaApi
      * Wrapper for requests to Almas API
      * @param $urlPath
      * @param $method
-     * @param $queryParams
-     * @param $curlOps
+     * @param $requestParams
      * @param $templateParamNames
      * @param $templateParamValues
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
-    protected function executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues)
+    protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues)
     {
         $client = new Client(['base_uri' => $this->apiUrl]);
 
         $url = $urlPath;
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
+        $defaultRequestParams = [
+            'headers' => [
+                'Authorization' => 'apikey ' . $this->apiKey,
+            ]
+        ];
+        $response = $client->request($method, $url, $requestParams + $defaultRequestParams);
 
-        try {
-            $response = $client->request($method, $url, [
-                'query' => $queryParams,
-                'curl' => $curlOps
-            ]);
-        } catch (GuzzleException $e) {
-            echo Psr7\str($e->getRequest());
-            if ($e->hasResponse()) {
-                echo Psr7\str($e->getResponse());
-            }
-            return null;
-        }
         return $response;
     }
 
@@ -57,6 +51,7 @@ class AlmaApi
      * Get the users list of fines from Alma
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function getUserFines($uaid)
     {
@@ -64,23 +59,24 @@ class AlmaApi
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
         $templateParamValues = array(urlencode($uaid));
-        $queryParams = [
+        $query = [
             'user_id_type' => 'all_unique',
-            'status' => 'ACTIVE',
-            'apikey' => $this->apiKey
+            'status' => 'ACTIVE'
         ];
-        $curlOps = [
+        $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
         ];
+        $requestParams = compact('query', 'curl');
 
-        return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
      * Get the user from alma by the user id. Returns 400 status code if user does not exist.s
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function getUserById($uaid)
     {
@@ -88,17 +84,18 @@ class AlmaApi
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
         $templateParamValues = array(urlencode($uaid));
-        $queryParams = [
+        $query = [
             'user_id_type' => 'all_unique',
             'view' => 'full',
-            'expand' => 'none',
-            'apikey' => $this->apiKey
+            'expand' => 'none'
         ];
-        $curlOps = [
+        $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
         ];
-        return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
+
+        $requestParams = compact('query', 'curl');
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
@@ -106,6 +103,7 @@ class AlmaApi
      * in Alma as a primary_id.
      * @param $uaid
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
      */
     public function findUserById($uaid)
     {
@@ -113,17 +111,89 @@ class AlmaApi
         $urlPath = '/almaws/v1/users';
         $templateParamNames = array();
         $templateParamValues = array();
-        $queryParams = [
+        $query = [
             'limit' => '10',
             'offset' => '0',
             'q' => 'primary_id~' . $uaid,
-            'order_by' => 'last_name, first_name, primary_id',
-            'apikey' => $this->apiKey
+            'order_by' => 'last_name first_name, primary_id'
         ];
-        $curlOps = [
+        $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
         ];
-        return $this->executeApiRequest($urlPath, $method, $queryParams, $curlOps, $templateParamNames, $templateParamValues);
+
+        $requestParams = compact('query', 'curl');
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
+    }
+
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $feeId - The Alma specific fee id to be updated
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
+     */
+    public function payUserFee($uaid, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
+    {
+        $queryParams = [
+            'op' => 'pay',
+            'amount' => $amount,
+            'method' => $method,
+            'external_transaction_id' => $externalTransactionId,
+            'comment' => $comment,
+        ];
+        /**
+         * " If no callback is supplied, all entries of array equal to FALSE (see converting to boolean) will be removed."
+         * - http://php.net/array_filter
+         */
+        $queryParams = array_filter($queryParams);
+
+        return $this->updateUserFee($uaid, $feeId, $queryParams);
+    }
+
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $feeId - The Alma specific fee id to be updated
+     * @param $query - The parameters for the query.
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
+     */
+    protected function updateUserFee($uaid, $feeId, $query)
+    {
+        $method = 'POST';
+        $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
+        $templateParamNames = array('{user_id}', '{fee_id}');
+        $templateParamValues = array(urlencode($uaid), urlencode($feeId));
+        $curl = [
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+        $requestParams = compact('curl', 'query');
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
+    }
+
+    /**
+     * @param $uaid - The numeric uaid of the logged in user
+     * @param $body - A plain PHP object representing a fee.
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
+     */
+    public function createUserFee($uaid, $body)
+    {
+        $method = 'POST';
+        $urlPath = '/almaws/v1/users/{user_id}/fees';
+        $templateParamNames = array('{user_id}');
+        $templateParamValues = array(urlencode($uaid));
+        $curl = [
+            CURLOPT_HEADER => false,
+            CURLOPT_RETURNTRANSFER => true
+        ];
+
+        $headers = [
+            'Authorization' => 'apikey ' . $this->apiKey,
+            'Content-Type' => 'application/json'
+        ];
+        $body = json_encode($body);
+        $requestParams = compact('curl', 'body', 'headers');
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 }
