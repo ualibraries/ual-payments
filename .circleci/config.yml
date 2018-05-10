@@ -22,10 +22,6 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo a2dissite 000-default
-      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
-      - run: sudo a2ensite circleci
-      - run: sudo service apache2 start
 
 
       # Download and cache dependencies
@@ -86,6 +82,10 @@ jobs:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
 
+      - run: sudo a2dissite 000-default
+      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
+      - run: sudo a2ensite circleci
+      - run: sudo service apache2 start
       # run tests!
       - run: bin/phpunit
       - run: vendor/bin/behat
