@@ -4,56 +4,66 @@
 
 {% block body %}
 
-<div class="charges__wrapper">
+  <div class="charges__wrapper">
     <div class="charges__inner">
-        <div class="charges__title">Hi, {{ full_name }}!</div>
+      <div class="charges__title">Hi, {{ full_name }}!</div>
 
-        <div class="charges__total-amount-due">Your total amount due is: <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span></div>
+      {% if user_fines %}
+        <div class="charges__total-amount-due">Your total amount due is: <span
+            class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
+        </div>
 
         <p class="charges__sign-out">I am done with payments, <a href="#">sign me out</a>.</p>
 
         <p class="charges__prompt">Select charges you want to pay:</p>
 
         <form action="{{ path('payment_handler') }}" method="post">
-            <ul class="charges__list">
+          <ul class="charges__list">
             {% for fine in user_fines %}
-                <li class="charges__item">
-                    <ul class="charges__item-details">
-                        <li class="charges__item-checkbox">
-                            <input type="checkbox" name="fee[]" value="{{ fine.id }}" data-fee-balance="{{ fine.balance }}">
-                        </li>
-                        <li class="charges__item-label">{{ fine.label }}</li>
-                        <li>{{ fine.title }}</li>
-                        <li class="charges__item-balance">${{ fine.balance|number_format(2, '.', ',') }}</li>
-                    </ul>
-                </li>
+              <li class="charges__item">
+                <ul class="charges__item-details">
+                  <li class="charges__item-checkbox">
+                    <input type="checkbox" name="fee[]" value="{{ fine.id }}"
+                           data-fee-balance="{{ fine.balance }}">
+                  </li>
+                  <li class="charges__item-label">{{ fine.label }}</li>
+                  <li>{{ fine.title }}</li>
+                  <li class="charges__item-balance">
+                    ${{ fine.balance|number_format(2, '.', ',') }}</li>
+                </ul>
+              </li>
             {% endfor %}
-            </ul>
+          </ul>
 
-            <div class="charges__total-amount-selected">Selected charges total: <span id="selectedTotal" class="charges__total-amount-selected-number">$0.00</span></div>
+          <div class="charges__total-amount-selected">Selected charges total: <span id="selectedTotal"
+                                                                                    class="charges__total-amount-selected-number">$0.00</span>
+          </div>
 
-            <input type="hidden" name="user_id" value="{{ user_id }}">
-            <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled/>
+          <input type="hidden" name="user_id" value="{{ user_id }}">
+          <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled/>
         </form>
+      {% else %}
+        <p>You currently have no charges.</p>
+      {% endif %}
     </div>
-</div>
+  </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+  <script>
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
-        const calcTotal = () => {
-            let total = 0.0;
-            checkboxes.forEach(el => {
-                if (el.checked) {
-                    total += parseFloat(el.dataset.feeBalance);
-                }
-            });
-            document.getElementById("selectedTotal").innerHTML = "$" + total.toFixed(2);
-            document.getElementById("submitButton").disabled = (total === 0.0);
-        };
+      const calcTotal = () => {
+          let total = 0.0;
+          checkboxes.forEach(el => {
+              if (el.checked) {
+                  total += parseFloat(el.dataset.feeBalance);
+              }
+          });
+          document.getElementById("selectedTotal").innerHTML = "$" + total.toFixed(2);
+          document.getElementById("submitButton").disabled = (total === 0.0);
+      };
 
-        checkboxes.forEach(el => el.onchange = calcTotal);
-    </script>
+      checkboxes.forEach(el => el.onchange = calcTotal);
+  </script>
 {% endblock %}
