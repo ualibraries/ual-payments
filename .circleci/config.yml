@@ -5,6 +5,10 @@
 version: 2
 jobs:
   build:
+    machine:
+      node:
+        version: 8.2.0
+
     branches:
       only:
         - master
@@ -54,6 +58,8 @@ jobs:
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
+      - run: npm install
+      - run: npm run build
       - run: sudo chmod -R 777 var/
       - run: cp .env.dist .env
       - run:
