@@ -21,7 +21,7 @@
 
         <p class="charges__prompt">Select charges you want to pay:</p>
 
-        <form action="{{ path('payment_handler') }}" method="post">
+        <form action="{{ path('payment_handler') }}" method="post" id="chargesList" name="chargesList">
             <ul class="charges__list">
                 {% for fine in user_fines %}
                 <li class="charges__item">
@@ -43,7 +43,7 @@
             </div>
 
             <input type="hidden" name="user_id" value="{{ user_id }}">
-            <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled/>
+            <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled="disabled" />
         </form>
         {% else %}
         <p>You currently have no charges.</p>

@@ -13,7 +13,15 @@ function selectedTotal() {
     }
   )
 
-  document.getElementById('totalSelectedAmount').innerHTML = `$${currency(total)}`
+  document.getElementById('totalSelectedAmount').innerHTML = `$${currency(
+    total
+  )}`
+
+  if (total > 0) {
+    document.getElementById('submitButton').removeAttribute('disabled')
+  } else {
+    document.getElementById('submitButton').setAttribute('disabled', 'disabled')
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
