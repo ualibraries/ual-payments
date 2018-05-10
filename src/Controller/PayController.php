@@ -13,6 +13,11 @@ class PayController extends Controller
 {
     public function index(Request $request)
     {
+        $feeIds = $request->request->get('fee');
+        if (!isset($feeIds) || !count($feeIds)) {
+            return $this->redirectToRoute('index');
+        }
+
         $transaction = new Transaction();
         $transaction->setUserId($request->request->get('user_id'));
         $transaction->setInvoiceNumber(uniqid());
@@ -20,7 +25,6 @@ class PayController extends Controller
         $transaction->setDate(new \DateTime());
 
         $entityManager = $this->getDoctrine()->getManager();
-        $feeIds = $request->request->get('fee');
         $this->setUserFees($transaction, $feeIds);
 
         $entityManager->persist($transaction);

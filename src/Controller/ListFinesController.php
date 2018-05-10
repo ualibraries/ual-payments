@@ -31,10 +31,17 @@ class ListFinesController extends Controller
             return $this->render('unauthorized.html.twig');
         }
 
+        $totalDue = 0;
+        $userFines = $this->userData->listFines($this->api->getUserFines($userId));
+        foreach ($userFines as $userFine) {
+            $totalDue += $userFine['balance'];
+        }
+
         return $this->render('list_fines/index.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
-            'user_fines' => $this->userData->listFines($this->api->getUserFines($userId)),
-            'user_id' => $this->user->getUserId()
+            'user_id' => $this->user->getUserId(),
+            'user_fines' => $userFines,
+            'total_Due' => $totalDue
         ]);
     }
 
