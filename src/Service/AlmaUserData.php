@@ -31,7 +31,8 @@ class AlmaUserData
                 'id' => (string)$indv_fee->id,
                 'label' => (string)$indv_fee->type->attributes()->desc,
                 'balance' => (string)$indv_fee->balance,
-                'title' => (string)$indv_fee->title
+                'title' => (string)$indv_fee->title,
+                'date' => new \DateTime($indv_fee->creation_time)
             ];
         }
         return $list_fees;

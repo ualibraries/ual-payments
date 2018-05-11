@@ -3,7 +3,7 @@
 {% block title %}Charges{% endblock %}
 
 {% block javascripts %}
-<script src="{{ asset('build/total-selected-charges.js') }}"></script> 
+<script src="{{ asset('build/total-selected-charges.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -33,6 +33,7 @@
                         <li>{{ fine.title }}</li>
                         <li class="charges__item-balance">
                             ${{ fine.balance|number_format(2, '.', ',') }}</li>
+                        <li>| {{ fine.date|date('m/d/Y') }}</li>
                     </ul>
                 </li>
                 {% endfor %}
