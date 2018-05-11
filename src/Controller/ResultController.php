@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,9 +52,11 @@ class ResultController extends Controller
 
         $transaction->setStatus('PAID');
 
-        $this->updateFeesOnAlma($transaction);
-
-        $transaction->setStatus('COMPLETED');
+        if ($this->updateFeesOnAlma($transaction)) {
+            $transaction->setStatus('COMPLETED');
+        } else {
+            $transaction->setStatus('FAILED');
+        }
 
         $entityManager->persist($transaction);
         $entityManager->flush();
@@ -63,10 +67,20 @@ class ResultController extends Controller
     private function updateFeesOnAlma(Transaction $transaction)
     {
         $api = new AlmaApi();
+        $result = false;
 
         $fees = $transaction->getFees();
         foreach ($fees as $fee) {
-            $api->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
+            try {
+                $api->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
+                $result = true;
+            } catch (ClientException $ce) {
+                echo $ce->getCode();
+            } catch (GuzzleException $ge) {
+                echo $ge->getMessage();
+            }
         }
+
+        return $result;
     }
 }
