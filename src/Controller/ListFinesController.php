@@ -63,11 +63,11 @@ class ListFinesController extends Controller
      */
     public function payFee($feeId, $amount, LoggerInterface $logger)
     {
-        $uaid = $this->user->getUaId();
+        $userId = $this->user->getUserId();
         try {
-            $this->api->payUserFee($uaid, $feeId, $amount);
+            $this->api->payUserFee($userId, $feeId, $amount);
             $this->addFlash('notice', 'Transaction complete.');
-        } catch(\GuzzleHttp\Exception\TransferException $e) {
+        } catch (\GuzzleHttp\Exception\TransferException $e) {
             $this->addFlash('error', 'We were unable to process your transaction.');
             $logger->error("Error processing fee $feeId: " . $e->getMessage());
         }
