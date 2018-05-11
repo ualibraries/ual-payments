@@ -3,3 +3,4 @@ shib_login:
 
 shib_logout:
   path: /Shibboleth.sso/Logout?return=https://shibboleth.arizona.edu
+
