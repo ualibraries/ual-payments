@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment History{% endblock %}
+
+{% block body %}
+    <h3>Hi, {{ full_name }}!</h3>
+
+    {% if transactions %}
+        <table>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.invoiceNumber }}</td>
+                    <td>{{ transaction.totalBalance }}</td>
+                    <td>{{ transaction.date | date('m/d/Y') }}</td>
+                    <td>{{ transaction.status }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>You currently have no payments.</p>
+    {% endif %}
+{% endblock %}
