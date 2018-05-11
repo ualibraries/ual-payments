@@ -71,6 +71,7 @@
     "symfony/polyfill-php56": "*"
   },
   "scripts": {
+    "assets:build": ["npm install", "npm run build"],
     "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
     "deploy:rollback": ["vendor/bin/dep --ansi rollback prd"],
     "docs:preview": [

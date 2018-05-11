@@ -43,6 +43,11 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
+
+task('assets-build', function () {
+    run('cd {{release_path}} && composer assets:build');
+});
+
 // Backup remote database
 task('backup-remote-db', function () {
     cd('{{release_path}}');
@@ -65,6 +70,7 @@ task('deploy', [
     'deploy:cache:warmup',
     'backup-remote-db',
     'database:migrate',
+    'assets-build',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
