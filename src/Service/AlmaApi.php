@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service;
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -12,9 +13,9 @@ class AlmaApi
     private $apiUrl;
     private $apiKey;
 
-  /**
-   * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
-   */
+    /**
+     * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
+     */
     public function __construct()
     {
         $this->apiUrl = getenv('API_URL');
@@ -22,7 +23,7 @@ class AlmaApi
     }
 
     /**
-     * Wrapper for requests to Almas API
+     * Wrapper for requests to Alma API
      * @param $urlPath
      * @param $method
      * @param $requestParams
@@ -35,7 +36,6 @@ class AlmaApi
     {
         $client = new Client(['base_uri' => $this->apiUrl]);
 
-        $url = $urlPath;
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
         $defaultRequestParams = [
             'headers' => [
@@ -49,16 +49,16 @@ class AlmaApi
 
     /**
      * Get the users list of fines from Alma
-     * @param $uaid
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserFines($uaid)
+    public function getUserFines($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($uaid));
+        $templateParamValues = array(urlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'status' => 'ACTIVE'
@@ -73,17 +73,17 @@ class AlmaApi
     }
 
     /**
-     * Get the user from alma by the user id. Returns 400 status code if user does not exist.s
-     * @param $uaid
+     * Get the user from alma by the user id. Returns 400 status code if user does not exist.
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserById($uaid)
+    public function getUserById($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($uaid));
+        $templateParamValues = array(urlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'view' => 'full',
@@ -99,13 +99,13 @@ class AlmaApi
     }
 
     /**
-     * Use the Alma api to search for the user by primary_id. This is how we will check that a the provided uaid is found
+     * Use the Alma api to search for the user by primary_id. This is how we will check that a the provided user id is found
      * in Alma as a primary_id.
-     * @param $uaid
+     * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function findUserById($uaid)
+    public function findUserById($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users';
@@ -114,9 +114,10 @@ class AlmaApi
         $query = [
             'limit' => '10',
             'offset' => '0',
-            'q' => 'primary_id~' . $uaid,
+            'q' => 'primary_id~' . $userId,
             'order_by' => 'last_name first_name, primary_id'
         ];
+
         $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
@@ -127,12 +128,12 @@ class AlmaApi
     }
 
     /**
-     * @param $uaid - The numeric uaid of the logged in user
+     * @param $userId - The numeric userId of the logged in user
      * @param $feeId - The Alma specific fee id to be updated
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function payUserFee($uaid, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
+    public function payUserFee($userId, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
     {
         $queryParams = [
             'op' => 'pay',
@@ -147,22 +148,22 @@ class AlmaApi
          */
         $queryParams = array_filter($queryParams);
 
-        return $this->updateUserFee($uaid, $feeId, $queryParams);
+        return $this->updateUserFee($userId, $feeId, $queryParams);
     }
 
     /**
-     * @param $uaid - The numeric uaid of the logged in user
+     * @param $userId - The numeric userId of the logged in user
      * @param $feeId - The Alma specific fee id to be updated
      * @param $query - The parameters for the query.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    protected function updateUserFee($uaid, $feeId, $query)
+    protected function updateUserFee($userId, $feeId, $query)
     {
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
         $templateParamNames = array('{user_id}', '{fee_id}');
-        $templateParamValues = array(urlencode($uaid), urlencode($feeId));
+        $templateParamValues = array(urlencode($userId), urlencode($feeId));
         $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
@@ -172,17 +173,17 @@ class AlmaApi
     }
 
     /**
-     * @param $uaid - The numeric uaid of the logged in user
+     * @param $userId - The numeric userId of the logged in user
      * @param $body - A plain PHP object representing a fee.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function createUserFee($uaid, $body)
+    public function createUserFee($userId, $body)
     {
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($uaid));
+        $templateParamValues = array(urlencode($userId));
         $curl = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true

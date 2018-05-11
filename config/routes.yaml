@@ -1,4 +1,7 @@
+index:
+   path: /
+   defaults: { _controller: 'App\Controller\ListFinesController::index' }
 
-#index:
-#    path: /
-#    defaults: { _controller: 'App\Controller\DefaultController::index' }
+payment_handler:
+   path: /pay
+   controller: App\Controller\PayController::index

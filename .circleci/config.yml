@@ -22,10 +22,6 @@ jobs:
 
     steps:
       - checkout
-      - run: sudo a2dissite 000-default
-      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
-      - run: sudo a2ensite circleci
-      - run: sudo service apache2 start
 
 
       # Download and cache dependencies
@@ -54,6 +50,13 @@ jobs:
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
+      - run:
+          name: Install npm
+          command: |
+            curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+      - run: npm install
+      - run: npm run build
       - run: sudo chmod -R 777 var/
       - run: cp .env.dist .env
       - run:
@@ -65,11 +68,13 @@ jobs:
       - run:
           name: Configure .env
           command: |
-            sed 's/^\(\s*TEST_UAID\s*=\s*\).*/\1'$SHIB_TEST_UAID'/' -i .env
-            sed 's#^\(\s*DATABASE_URL\s*=\s*\).*#\1'$TEST_DATABASE_URL'#' -i .env
-            sed 's#^\(\s*API_URL\s*=\s*\).*#\1'$ALMA_API_URL'#' -i .env
-            sed 's#^\(\s*API_KEY\s*=\s*\).*#\1'$ALMA_API_KEY'#' -i .env
-      - run: php bin/console doctrine:schema:create --env=test
+            sed 's/\(^TEST_ID=\)/\1'$SHIB_TEST_UAID'/' -i .env
+            sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
+            sed 's/\(^DB_USER=\)/\1'root'/' -i .env
+            sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env
+            sed 's#\(^API_URL=\)#\1'$ALMA_API_URL'#' -i .env
+            sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
+      - run: php bin/console doctrine:migrations:migrate --no-interaction
 
 
       - save_cache:
@@ -77,6 +82,10 @@ jobs:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
 
+      - run: sudo a2dissite 000-default
+      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
+      - run: sudo a2ensite circleci
+      - run: sudo service apache2 start
       # run tests!
       - run: bin/phpunit
       - run: vendor/bin/behat

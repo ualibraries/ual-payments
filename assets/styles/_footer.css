@@ -1,0 +1,16 @@
+.footer__wrapper {
+  padding: 1rem;
+  background-color: var(--warm-gray);
+}
+
+.footer__inner {
+  width: 1140px;
+  max-width: 100%;
+  margin: 0 auto;
+  color: var(--dark-silver);
+  text-align: center;
+}
+
+.footer__inner p:last-child {
+  margin-bottom: 0;
+}

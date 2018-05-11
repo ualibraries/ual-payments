@@ -17,7 +17,6 @@ use \SimpleXMLElement;
 class AlmaApiTest extends TestCase
 {
     private $api;
-    private $uaid;
     private $testFee;
 
     public function setUp()
@@ -25,11 +24,11 @@ class AlmaApiTest extends TestCase
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__.'/../../.env');
         $this->api = new AlmaApi();
-        $this->uaid = getenv('TEST_UAID');
-        $this->userdata = new AlmaUserData($this->uaid);
+        $this->userId = getenv('TEST_ID');
+        $this->userdata = new AlmaUserData($this->userId);
 
         $testFeeBody = file_get_contents(__DIR__ . '/TestJSONData/fee1.json');
-        $response = $this->api->createUserFee($this->uaid, json_decode($testFeeBody));
+        $response = $this->api->createUserFee($this->userId, json_decode($testFeeBody));
         $this->testFee = new SimpleXMLElement($response->getBody());
 
         parent::setUp();
@@ -40,7 +39,7 @@ class AlmaApiTest extends TestCase
     */
     public function testGetUserFines()
     {
-        $userfines = $this->api->getUserFines($this->uaid);
+        $userfines = $this->api->getUserFines($this->userId);
         $this->assertEquals(200, $userfines->getStatusCode());
     }
 
@@ -49,14 +48,14 @@ class AlmaApiTest extends TestCase
     */
     public function testGetUserById()
     {
-        $user = $this->api->getUserById($this->uaid);
+        $user = $this->api->getUserById($this->userId);
 
         $this->assertEquals(200, $user->getStatusCode());
     }
 
     public function testFindUserById()
     {
-        $user = $this->api->findUserById($this->uaid);
+        $user = $this->api->findUserById($this->userId);
 
         $this->assertEquals(200, $user->getStatusCode());
     }
@@ -64,8 +63,8 @@ class AlmaApiTest extends TestCase
     public function testPayUserFee()
     {
         try {
-            $this->api->payUserFee($this->uaid, $this->testFee->id, (float)$this->testFee->balance);
-            $response = $this->api->getUserFines($this->uaid);
+            $this->api->payUserFee($this->userId, $this->testFee->id, (float)$this->testFee->balance);
+            $response = $this->api->getUserFines($this->userId);
             $userfines = $this->userdata->listFines($response);
             foreach ($userfines as $fine) {
                 $this->assertNotEquals($this->testFee->id, $fine['id']);

@@ -1,43 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Your Fines{% endblock %}
+{% block title %}Charges{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('build/total-selected-charges.js') }}"></script> 
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    td { border-bottom: 2px solid black; }
-    table { border-collapse: collapse; }
-</style>
+<div class="charges__wrapper">
+    <div class="charges__inner">
+        <div class="charges__title">Hi, {{ full_name }}!</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ full_name }}! ✅</h1>
-    {% for label, messages in app.flashes %}
-      {% for message in messages %}
-        <div class="flash-{{ label }}">
-            {{ message }}
+        {% if user_fines %}
+        <div class="charges__total-amount-due">Your total amount due is:
+            <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
         </div>
-      {% endfor %}
-    {% endfor %}
 
-    <h2>Library Fees:</h2>
-    <table>
-      {% for fine in user_fines %}
-        <tr class="table-row">
-          <td>
-            <p>{{ fine.label }}</p>
-            <p>{{ fine.title }}</p>
-          </td>
-          <td>
-            <p>{{ fine.balance }}</p>
-          </td>
-          <td>
-            {% if fine.label is not same as("Credit") %}
-              <a href="{{ path('pay_fee', {'feeId': fine.id, 'amount': fine.balance }) }}">Pay Fee</a>
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+        <p class="charges__sign-out">I am done with payments,
+            <a href="#">sign me out</a>.</p>
+
+        <p class="charges__prompt">Select charges you want to pay:</p>
+
+        <form action="{{ path('payment_handler') }}" method="post" id="chargesList" name="chargesList">
+            <ul class="charges__list">
+                {% for fine in user_fines %}
+                <li class="charges__item">
+                    <ul class="charges__item-details">
+                        <li class="charges__item-checkbox">
+                            <input type="checkbox" name="fee[]" value="{{ fine.id }}" data-fee-balance="{{ fine.balance }}" class="charges__item-checkbox-input" />
+                        </li>
+                        <li class="charges__item-label">{{ fine.label }}</li>
+                        <li>{{ fine.title }}</li>
+                        <li class="charges__item-balance">
+                            ${{ fine.balance|number_format(2, '.', ',') }}</li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="charges__total-amount-selected">Selected charges total:
+                <span class="charges__total-amount-selected-number" id="totalSelectedAmount"></span>
+            </div>
+
+            <input type="hidden" name="user_id" value="{{ user_id }}">
+            <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled="disabled" />
+        </form>
+        {% else %}
+        <p>You currently have no charges.</p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

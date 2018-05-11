@@ -1,12 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} - University of Arizona Libraries</title>
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <div class="body__wrapper">
+        <div class="body__aside-column">
+            {% include 'partials/menu.html.twig' %}
+        </div>
+        <div class="body__primary-column">
+            {% include 'partials/title.html.twig' %}
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+
+    {% include 'partials/footer.html.twig' %}
+
+    <script src="{{ asset('build/polyfill.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
+
+    {% block javascripts %}{% endblock %}
+</body>
+
 </html>

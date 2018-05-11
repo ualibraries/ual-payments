@@ -38,3 +38,6 @@ docs/s3.conf
 
 ###< Behat Local Configuration Files ###
 behat.local.yml
+
+###< macOS Finder config files ###
+.DS_Store
