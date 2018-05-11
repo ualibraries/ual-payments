@@ -21,7 +21,7 @@ set('branch', 'master');
 
 // Shared files/dirs between deploys
 set('shared_files', ['.env']);
-set('shared_dirs', ['var/log', 'var/sessions']);
+set('shared_dirs', ['var/log', 'var/sessions', 'backups']);
 // Writable dirs by web server
 set('writable_dirs', ['var']);
 
@@ -43,6 +43,19 @@ task('build', function () {
     run('cd {{release_path}} && build');
 });
 
+
+task('assets-build', function () {
+    run('cd {{release_path}} && composer assets:build');
+});
+
+// Backup remote database
+task('backup-remote-db', function () {
+    cd('{{release_path}}');
+    run('source .env && mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME | gzip > ./backups/$DB_NAME-`date +%s`.sql.gz');
+    // Remove database backup files older than 30 days
+    run('find ./backups -name *sql.gz -mtime 30 -type f -delete');
+});
+
 desc('Deploy project');
 task('deploy', [
     'deploy:info',
@@ -55,6 +68,9 @@ task('deploy', [
     'deploy:vendors',
     'deploy:cache:clear',
     'deploy:cache:warmup',
+    'backup-remote-db',
+    'database:migrate',
+    'assets-build',
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',

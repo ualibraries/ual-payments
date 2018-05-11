@@ -368,6 +368,9 @@
     "symfony/polyfill-apcu": {
         "version": "v1.7.0"
     },
+    "symfony/polyfill-ctype": {
+        "version": "1.8-dev"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.7.0"
     },
