@@ -21,7 +21,7 @@ set('branch', 'master');
 
 // Shared files/dirs between deploys
 set('shared_files', ['.env']);
-set('shared_dirs', ['var/log', 'var/sessions']);
+set('shared_dirs', ['var/log', 'var/sessions', 'backups']);
 // Writable dirs by web server
 set('writable_dirs', ['var']);
 
@@ -46,7 +46,7 @@ task('build', function () {
 // Backup remote database
 task('backup-remote-db', function () {
     cd('{{release_path}}');
-    run('source .env && mysqldump -u $DB_USER -p$DB_PASS $DB_DATABASE | gzip > ./backups/$DB_DATABASE-`date +%s`.sql.gz');
+    run('source .env && mysqldump -u $DB_USER -p$DB_PASSWORD $DB_NAME | gzip > ./backups/$DB_NAME-`date +%s`.sql.gz');
     // Remove database backup files older than 30 days
     run('find ./backups -name *sql.gz -mtime 30 -type f -delete');
 });
