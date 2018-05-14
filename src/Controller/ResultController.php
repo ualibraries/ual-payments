@@ -40,8 +40,13 @@ class ResultController extends Controller
             return new Response('Invalid amount', Response::HTTP_BAD_REQUEST);
         }
 
+        //Communication error
+        if ($resultCode < 0) {
+            return new Response('Communication error', Response::HTTP_OK);
+        }
+
         //The transaction is declined on Payflow.
-        if ($resultCode != 0) {
+        if ($resultCode > 0) {
             $transaction->setStatus('DECLINED');
             $entityManager->persist($transaction);
             $entityManager->flush();

@@ -2,11 +2,8 @@
 
 namespace App\Service;
 
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
-use \SimpleXMLElement;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\GuzzleException;
 
 class AlmaApi
 {
@@ -130,6 +127,10 @@ class AlmaApi
     /**
      * @param $userId - The numeric userId of the logged in user
      * @param $feeId - The Alma specific fee id to be updated
+     * @param $amount
+     * @param string $method
+     * @param null $externalTransactionId
+     * @param null $comment
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
