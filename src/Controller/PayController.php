@@ -33,7 +33,10 @@ class PayController extends Controller
         return $this->render('pay/index.html.twig', [
             'user_id' => $transaction->getUserId(),
             'invoice_number' => $transaction->getInvoiceNumber(),
-            'total_balance' => $transaction->getTotalBalance()
+            'total_balance' => $transaction->getTotalBalance(),
+            'payflow_url' => getEnv("PAYFLOW_URL"),
+            'payflow_login' => getEnv("PAYFLOW_LOGIN"),
+            'payflow_partner' => getEnv("PAYFLOW_PARTNER"),
         ]);
     }
 
