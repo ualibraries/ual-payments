@@ -5,11 +5,17 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResultController extends Controller
 {
+    /**
+     * @Route("/result", name="result")
+     * @param Request $request
+     * @return Response
+     */
     public function result(Request $request)
     {
         //No result code in the request

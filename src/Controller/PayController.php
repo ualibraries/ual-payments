@@ -7,10 +7,17 @@ use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 class PayController extends Controller
 {
+    /**
+     * @Route("/pay", name="payment_handler")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function index(Request $request)
     {
         $feeIds = $request->request->get('fee');
@@ -44,6 +51,7 @@ class PayController extends Controller
      * Use the fee id to get the information about the fee (including balance) from Alma, than add them to the transaction.
      * @param Transaction $transaction
      * @param $feeIds
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function setUserFees(Transaction $transaction, $feeIds)
     {
