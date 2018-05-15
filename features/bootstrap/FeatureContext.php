@@ -28,6 +28,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     /**
      * @BeforeFeature @fee
+     * @BeforeScenario @additionalfee
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function createFee()
     {
@@ -49,7 +51,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $fees = $userData->listFines($api->getUserFines($userId));
 
         foreach ($fees as $fee) {
-            $api->payUserFee($userId, $fee['id'], '7');
+            $api->payUserFee($userId, $fee['id'], $fee['balance']);
         }
     }
 
@@ -70,4 +72,20 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
             );
         }
     }
+
+    /**
+     * @When I check all fees
+     * @throws \Behat\Mink\Exception\ElementNotFoundException
+     * @throws Exception
+     */
+    public function iCheckAllFees()
+    {
+        $session = $this->getSession();
+        $page = $session->getPage();
+        $fees = $page->findAll('named', ['checkbox', 'fee[]']);
+        foreach($fees as $fee) {
+            $fee->check();
+        }
+    }
+
 }
