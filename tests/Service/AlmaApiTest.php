@@ -68,7 +68,7 @@ class AlmaApiTest extends TestCase
 
             $feeNotRemoved = false;
             foreach ($userFees as $fee) {
-                if($fee->id == $testFee['id']) {
+                if($fee['id'] == $testFee->id) {
                     $feeNotRemoved = true;
                 }
             }
