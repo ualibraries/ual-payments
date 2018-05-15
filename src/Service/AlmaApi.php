@@ -45,12 +45,12 @@ class AlmaApi
     }
 
     /**
-     * Get the users list of fines from Alma
+     * Get the users list of fees from Alma
      * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserFines($userId)
+    public function getUserFees($userId)
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';

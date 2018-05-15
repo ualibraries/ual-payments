@@ -32,7 +32,7 @@ class AlmaUserDataTest extends TestCase
     /**
      * Test getting fees when the user has multiple fees.
      */
-    public function testListFinesWithMultipleFees()
+    public function testListFeesWithMultipleFees()
     {
         $body = file_get_contents(__DIR__ . '/TestXMLData/fees_test_data.xml');
         $mock = new MockHandler([
@@ -51,9 +51,9 @@ class AlmaUserDataTest extends TestCase
         }
 
 
-        $givenListOfFines = $this->userdata->listFines($response);
+        $givenListOfFees = $this->userdata->listFees($response);
 
-        $expectedListOfFines = [
+        $expectedListOfFees = [
             [
                 'id' => '1599882100003843',
                 'label' => 'Lost item replacement fee',
@@ -70,7 +70,7 @@ class AlmaUserDataTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expectedListOfFines, $givenListOfFines);
+        $this->assertEquals($expectedListOfFees, $givenListOfFees);
     }
 
     /**

@@ -48,7 +48,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $api = new AlmaApi();
         $userData = new AlmaUserData();
         $userId = getenv('TEST_ID');
-        $fees = $userData->listFines($api->getUserFines($userId));
+        $fees = $userData->listFees($api->getUserFees($userId));
 
         foreach ($fees as $fee) {
             $api->payUserFee($userId, $fee['id'], $fee['balance']);
@@ -75,8 +75,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     /**
      * @When I check all fees
-     * @throws \Behat\Mink\Exception\ElementNotFoundException
-     * @throws Exception
      */
     public function iCheckAllFees()
     {

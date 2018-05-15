@@ -14,12 +14,12 @@ use SimpleXMLElement;
 class AlmaUserData
 {
     /**
-     * Given a guzzle response from Alma, return the list of fines as an associative array with each
-     * fine and each fines properties
+     * Given a guzzle response from Alma, return the list of fees as an associative array with each
+     * fee and each fees properties
      * @param Response $response
      * @return array
      */
-    public function listFines(Response $response)
+    public function listFees(Response $response)
     {
         $sxml = new SimpleXMLElement($response->getBody());
 

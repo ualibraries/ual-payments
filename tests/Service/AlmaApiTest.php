@@ -32,12 +32,12 @@ class AlmaApiTest extends TestCase
     }
 
     /**
-    * Test that a 200 response code is provided in the response object returned by getUserFines.
+    * Test that a 200 response code is provided in the response object returned by getUserFees.
     */
-    public function testGetUserFines()
+    public function testGetUserFees()
     {
-        $userfines = $this->api->getUserFines($this->userId);
-        $this->assertEquals(200, $userfines->getStatusCode());
+        $userFees = $this->api->getUserFees($this->userId);
+        $this->assertEquals(200, $userFees->getStatusCode());
     }
 
     /**
@@ -63,12 +63,12 @@ class AlmaApiTest extends TestCase
             $testFeeBody = file_get_contents(__DIR__ . '/TestJSONData/fee1.json');
             $testFee = $this->createFeeForTesting($testFeeBody);
             $this->api->payUserFee($this->userId, $testFee->id, (float)$testFee->balance);
-            $response = $this->api->getUserFines($this->userId);
-            $userfines = $this->userdata->listFines($response);
-            
+            $response = $this->api->getUserFees($this->userId);
+            $userFees = $this->userdata->listFees($response);
+
             $feeNotRemoved = false;
-            foreach ($userfines as $fine) {
-                if($fine->id == $testFee['id']) {
+            foreach ($userFees as $fee) {
+                if($fee->id == $testFee['id']) {
                     $feeNotRemoved = true;
                 }
             }

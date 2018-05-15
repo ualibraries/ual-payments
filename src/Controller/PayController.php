@@ -56,7 +56,7 @@ class PayController extends Controller
         $api = new AlmaApi();
 
         $userId = $transaction->getUserId();
-        $almaFees = $userData->listFines($api->getUserFines($userId));
+        $almaFees = $userData->listFees($api->getUserFees($userId));
 
         $total = 0;
         foreach ($almaFees as $almaFee) {

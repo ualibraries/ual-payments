@@ -8,10 +8,8 @@ use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Psr\Log\LoggerInterface;
 
-class ListFinesController extends Controller
+class ListFeesController extends Controller
 {
     private $user;
     private $api;
@@ -40,38 +38,17 @@ class ListFinesController extends Controller
         }
 
         $totalDue = 0;
-        $userFines = $this->userData->listFines($this->api->getUserFines($userId));
-        foreach ($userFines as $userFine) {
-            $totalDue += $userFine['balance'];
+        $userFees = $this->userData->listFees($this->api->getUserFees($userId));
+        foreach ($userFees as $userFee) {
+            $totalDue += $userFee['balance'];
         }
 
-        return $this->render('list_fines/index.html.twig', [
+        return $this->render('list_fees/index.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'user_id' => $this->user->getUserId(),
-            'user_fines' => $userFines,
+            'user_fees' => $userFees,
             'total_Due' => $totalDue
         ]);
-    }
-
-    /**
-     * @Route("/pay/{feeId}/{amount}", name="pay_fee")
-     * @param $feeId
-     * @param $amount
-     * @param LoggerInterface $logger
-     * @return RedirectResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function payFee($feeId, $amount, LoggerInterface $logger)
-    {
-        $userId = $this->user->getUserId();
-        try {
-            $this->api->payUserFee($userId, $feeId, $amount);
-            $this->addFlash('notice', 'Transaction complete.');
-        } catch (\GuzzleHttp\Exception\TransferException $e) {
-            $this->addFlash('error', 'We were unable to process your transaction.');
-            $logger->error("Error processing fee $feeId: " . $e->getMessage());
-        }
-        return new RedirectResponse("/");
     }
 
     private function removePendingFees()
