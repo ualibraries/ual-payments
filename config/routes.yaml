@@ -1,7 +1,3 @@
-index:
-   path: /
-   defaults: { _controller: 'App\Controller\ListFinesController::index' }
-
-payment_handler:
-   path: /pay
-   controller: App\Controller\PayController::index
+#index:
+#    path: /
+#    defaults: { _controller: 'App\Controller\ListFinesController::index' }

@@ -3,7 +3,7 @@
 {% block title %}Charges{% endblock %}
 
 {% block javascripts %}
-<script src="{{ asset('build/total-selected-charges.js') }}"></script> 
+<script src="{{ asset('build/total-selected-charges.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
     <div class="charges__inner">
         <div class="charges__title">Hi, {{ full_name }}!</div>
 
-        {% if user_fines %}
+        {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
         </div>
@@ -23,16 +23,17 @@
 
         <form action="{{ path('payment_handler') }}" method="post" id="chargesList" name="chargesList">
             <ul class="charges__list">
-                {% for fine in user_fines %}
+                {% for fee in user_fees %}
                 <li class="charges__item">
                     <ul class="charges__item-details">
                         <li class="charges__item-checkbox">
-                            <input type="checkbox" name="fee[]" value="{{ fine.id }}" data-fee-balance="{{ fine.balance }}" class="charges__item-checkbox-input" />
+                            <input type="checkbox" name="fee[]" value="{{ fee.id }}" data-fee-balance="{{ fee.balance }}" class="charges__item-checkbox-input" />
                         </li>
-                        <li class="charges__item-label">{{ fine.label }}</li>
-                        <li>{{ fine.title }}</li>
+                        <li class="charges__item-label">{{ fee.label }}</li>
+                        <li>{{ fee.title }}</li>
                         <li class="charges__item-balance">
-                            ${{ fine.balance|number_format(2, '.', ',') }}</li>
+                            ${{ fee.balance|number_format(2, '.', ',') }}</li>
+                        <li>| {{ fee.date|date('m/d/Y') }}</li>
                     </ul>
                 </li>
                 {% endfor %}
