@@ -18,11 +18,8 @@ class PayController extends Controller
             return $this->redirectToRoute('index');
         }
 
-        $transaction = new Transaction();
-        $transaction->setUserId($request->request->get('user_id'));
-        $transaction->setInvoiceNumber(uniqid());
-        $transaction->setStatus('PENDING');
-        $transaction->setDate(new \DateTime());
+        $user_id = $request->request->get('user_id');
+        $transaction = new Transaction($user_id);
 
         $entityManager = $this->getDoctrine()->getManager();
         $this->setUserFees($transaction, $feeIds);

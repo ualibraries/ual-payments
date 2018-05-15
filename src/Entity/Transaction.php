@@ -48,9 +48,13 @@ class Transaction
      */
     private $fees;
 
-    public function __construct()
+    public function __construct($user_id, $invoice_number = null, $status = 'PENDING', $date = null)
     {
         $this->fees = new ArrayCollection();
+        $this->user_id = $user_id;
+        $this->status = $status;
+        $this->invoice_number = $invoice_number ?: uniqid();
+        $this->date = $date ?: new \DateTime();
     }
 
     public function getId()
