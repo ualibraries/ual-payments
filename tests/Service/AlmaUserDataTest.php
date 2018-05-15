@@ -50,19 +50,23 @@ class AlmaUserDataTest extends TestCase
             }
         }
 
+
         $givenListOfFines = $this->userdata->listFines($response);
+
         $expectedListOfFines = [
             [
                 'id' => '1599882100003843',
                 'label' => 'Lost item replacement fee',
                 'balance' => '5.0',
-                'title' => 'Dinosaur / by Carl E. Baugh, with Clifford A. Wilson.'
+                'title' => 'Dinosaur / by Carl E. Baugh, with Clifford A. Wilson.',
+                'date' => new \DateTime('2018-03-29T22:42:10.153Z')
             ],
             [
                 'id' => '1603983790003843',
                 'label' => 'Card renewal',
                 'balance' => '2.0',
-                'title' => ''
+                'title' => '',
+                'date' => new \DateTime('2018-04-12T14:56:04.271Z')
             ]
         ];
 
