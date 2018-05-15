@@ -85,6 +85,7 @@ jobs:
       - run: sudo a2dissite 000-default
       - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
       - run: sudo a2ensite circleci
+      - run: sudo a2enmod rewrite
       - run: sudo service apache2 start
       # run tests!
       - run: composer test
