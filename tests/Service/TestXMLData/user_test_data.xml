@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<user>
+    <record_type desc="Public">PUBLIC</record_type>
+    <primary_id>123</primary_id>
+    <first_name>Hank</first_name>
+    <middle_name></middle_name>
+    <last_name>Hill</last_name>
+    <full_name>Hank Hill</full_name>
+    <user_title desc=""></user_title>
+    <job_category desc=""></job_category>
+    <job_description></job_description>
+    <gender desc=""></gender>
+    <user_group desc="Propane Salesman">3</user_group>
+    <campus_code desc=""/>
+    <web_site_url></web_site_url>
+    <cataloger_level desc="[00] Default Level">00</cataloger_level>
+    <preferred_language desc="English">en</preferred_language>
+    <expiry_date>2018-05-16Z</expiry_date>
+    <purge_date>2018-05-16Z</purge_date>
+    <account_type desc="Internal">INTERNAL</account_type>
+    <external_id></external_id>
+    <password></password>
+    <force_password_change></force_password_change>
+    <status desc="Active">ACTIVE</status>
+    <contact_info>
+        <addresses/>
+        <emails>
+            <email preferred="true" segment_type="Internal">
+                <email_address>hhil@SCRUBBED_email.arizona.edu</email_address>
+                <email_types>
+                    <email_type desc="Personal">personal</email_type>
+                    <email_type desc="Work">work</email_type>
+                    <email_type desc="School">school</email_type>
+                    <email_type desc="Alternative">alternative</email_type>
+                </email_types>
+            </email>
+        </emails>
+        <phones/>
+    </contact_info>
+    <user_identifiers>
+        <user_identifier segment_type="Internal">
+            <id_type desc="Barcode">BARCODE</id_type>
+            <value>1234</value>
+            <status>ACTIVE</status>
+        </user_identifier>
+    </user_identifiers>
+    <user_roles>
+        <user_role>
+            <status desc="Active">ACTIVE</status>
+            <scope desc="University of Arizona">01UA_INST</scope>
+            <role_type desc="Patron">200</role_type>
+            <parameters/>
+        </user_role>
+        <user_role>
+            <status desc="Active">ACTIVE</status>
+            <scope desc="Main Library">MAIN</scope>
+            <role_type desc="Circulation Desk Manager">221</role_type>
+            <parameters>
+                <parameter>
+                    <type>CirculationDesk</type>
+                    <value desc="Information Commons Information Desk">DEFAULT_CIRC_DESK</value>
+                </parameter>
+            </parameters>
+        </user_role>
+    </user_roles>
+    <user_blocks/>
+    <user_notes/>
+    <user_statistics>
+        <user_statistic segment_type="Internal">
+            <statistic_category>o</statistic_category>
+        </user_statistic>
+        <user_statistic segment_type="Internal">
+            <statistic_category>0</statistic_category>
+        </user_statistic>
+    </user_statistics>
+    <proxy_for_users/>
+</user>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users total_record_count="1">
+    <user link="https://api-eu.hosted.exlibrisgroup.com/almaws/v1/users/123">
+        <primary_id>123</primary_id>
+        <first_name>Hank</first_name>
+        <last_name>Hill</last_name>
+        <gender desc=""></gender>
+        <password></password>
+        <status desc="Active">ACTIVE</status>
+    </user>
+</users>

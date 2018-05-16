@@ -1,0 +1,132 @@
+.Header {
+  background-color: var(--ua-red);
+}
+
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1140px;
+}
+
+.logo {
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 45px;
+  max-width: 100%;
+  padding: 1rem;
+}
+
+@media (min-width: 460px) {
+  .logo {
+    width: 246px;    
+  }
+}
+
+.logo svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100%;
+}
+
+.header__uicontrols-outer {
+  /* Here for IE 11 */
+}
+
+.header__uicontrols {
+  position: relative;
+  display: flex;
+  z-index: 1000;
+}
+
+.header__control {
+  overflow: hidden;
+}
+
+.header__control,
+.header__control--active {
+  position: relative;
+}
+
+.header__control-button {
+  min-width: 4rem;
+  padding: 0.5rem;
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  color: var(--white);
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.header__control-button:hover {
+  cursor: pointer;
+}
+
+@media (min-width: 400px) {
+  .header__control-button {
+    min-width: 5rem;
+    padding: 1rem;
+    font-size: 14px;    
+  }
+}
+
+.header__control--active .header__control-button {
+  background-color: var(--light-gray);
+  color: var(--ua-red);
+}
+
+.header__control--active .header__control-button path {
+  fill: var(--ua-red);
+}
+
+.header__control-icon {
+  margin-bottom: 4px;
+}
+
+.header__control-icon svg {
+  max-width: 20px;
+  height: 24px;
+}
+
+@media (min-width: 400px) {
+  .header__control-icon svg {
+    max-width: 30px;
+    height: 24px;
+  }
+}
+
+.header__control-popout {
+  position: absolute;
+  right: 0;
+  display: block;
+  padding: 1rem;
+  box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
+  background-color: var(--light-gray);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  transform: translateZ(0);
+}
+
+/* Popout active */
+.header__control--active .header__control-popout {
+  overflow: visible;
+  opacity: 1;
+  transform: translateZ(1);
+}
+
+.header__popout-setting {
+  margin-bottom: 1rem;
+}
+
+.header__popout-setting:last-child {
+  margin-bottom: 0;
+}
+
+.header__popout-setting input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+

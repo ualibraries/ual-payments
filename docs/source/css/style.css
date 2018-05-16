@@ -1,0 +1,33 @@
+body {
+  font-family: 'MiloWeb-Text', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'MiloSerifWeb', serif;
+}
+
+label {
+  font-family: 'MiloWeb', sans-serif;
+}
+
+a {
+  color: #bd2036;
+}
+
+.bg-ua-red {
+  background-color: #8b0015;
+}
+
+code {
+  color: #ef4056;
+}
+
+code,
+pre {
+  font-size: 14px;
+}

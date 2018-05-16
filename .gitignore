@@ -1,17 +1,43 @@
-/.web-server-pid
-/app/config/parameters.yml
-/build/
-/phpunit.xml
-/var/*
-!/var/cache
-/var/cache/*
-!var/cache/.gitkeep
-!/var/logs
-/var/logs/*
-!var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
-!var/sessions/.gitkeep
-!var/SymfonyRequirements.php
+
+###> symfony/framework-bundle ###
+/.env
+/public/bundles/
+/var/
 /vendor/
-/web/bundles/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-pack ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+
+###> Sculpin ###
+docs/.sculpin/
+docs/app/cache/*
+docs/app/config/sculpin_kernel_*.yml
+docs/app/config/sculpin_site_*.yml
+docs/app/logs/*
+docs/output_*/
+docs/source/components/
+docs/s3.conf
+###< Sculpin ###
+
+###> Editor Configs ###
+.idea
+
+###< Behat Local Configuration Files ###
+behat.local.yml
+
+###< macOS Finder config files ###
+.DS_Store

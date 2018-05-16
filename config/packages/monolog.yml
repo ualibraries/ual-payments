@@ -1,0 +1,14 @@
+monolog:
+    handlers:
+        normal_log:
+            type: stream
+            # log to var/log/(environment).log
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            # log *all* messages (debug is lowest level)
+            level: debug
+        error_log:
+            type: stream
+            # log to var/log/(environment)_error.log
+            path: "%kernel.logs_dir%/%kernel.environment%_error.log"
+            # log error messages
+            level: error

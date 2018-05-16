@@ -1,0 +1,92 @@
+# PHP CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-php/ for more details
+#
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+        - develop
+        - /release*/
+    docker:
+      # specify the version you desire here
+      - image: circleci/php:7.2-apache
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      - image: circleci/mysql:5.7
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run:
+          name: Run BrowserStack Local
+          background: true
+          command: |
+            wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+            unzip BrowserStackLocal-linux-x64.zip
+            ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY}
+
+      - run:
+          name: Install PHP extensions
+          command: |
+            sudo docker-php-ext-install pdo_mysql
+            sudo docker-php-ext-enable pdo_mysql
+            sudo apt-get install libzip-dev
+            sudo docker-php-ext-install zip
+      - run:
+          name: Set php.ini settings
+          command: |
+            echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
+      - run: composer install -n --prefer-dist
+      - run:
+          name: Install npm
+          command: |
+            curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+      - run: npm install
+      - run: npm run build
+      - run: sudo chmod -R 777 var/
+      - run: cp .env.dist .env
+      - run:
+          name: Configure behat.local.yml
+          command: |
+            cp behat.local.yml.dist behat.local.yml
+            sed 's/^\(\s*username\s*:\s*\).*/\1 '$BROWSERSTACK_USERNAME'/' -i behat.local.yml
+            sed 's/^\(\s*access_key\s*:\s*\).*/\1 '$BROWSERSTACK_ACCESS_KEY'/' -i behat.local.yml
+      - run:
+          name: Configure .env
+          command: |
+            sed 's/\(^TEST_ID=\)/\1'$SHIB_TEST_UAID'/' -i .env
+            sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
+            sed 's/\(^DB_USER=\)/\1'root'/' -i .env
+            sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env
+            sed 's#\(^API_URL=\)#\1'$ALMA_API_URL'#' -i .env
+            sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
+      - run: php bin/console doctrine:migrations:migrate --no-interaction
+
+
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
+
+      - run: sudo a2dissite 000-default
+      - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
+      - run: sudo a2ensite circleci
+      - run: sudo a2enmod rewrite
+      - run: sudo service apache2 restart
+      # run tests!
+      - run: composer test
