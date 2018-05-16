@@ -1,9 +1,10 @@
-<IfModule mod_shib>
-  AuthType shibboleth
-  require shibboleth
-  ShibRequireSession on
-</IfModule>
-
+<If "%{REQUEST_URI} == '/' || %{REQUEST_URI} == '/pay'">
+    <IfModule mod_shib>
+      AuthType shibboleth
+      require shibboleth
+      ShibRequireSession on
+    </IfModule>
+</If>
 <IfModule mod_rewrite.c>
     Options -MultiViews
     RewriteEngine On
