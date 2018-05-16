@@ -4,6 +4,10 @@ parameters:
     locale: 'en'
 
 services:
+    app.shibboleth_authenticator:
+      class: App\Security\ShibbolethAuthenticator
+      arguments:
+        - "@router"
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
