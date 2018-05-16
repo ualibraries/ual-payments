@@ -9,6 +9,7 @@ jobs:
       only:
         - master
         - develop
+        - /release*/
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2-apache
@@ -86,6 +87,6 @@ jobs:
       - run: sudo cp .circleci/circleci.conf /etc/apache2/sites-available
       - run: sudo a2ensite circleci
       - run: sudo a2enmod rewrite
-      - run: sudo service apache2 start
+      - run: sudo service apache2 restart
       # run tests!
       - run: composer test
