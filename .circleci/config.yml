@@ -9,6 +9,7 @@ jobs:
       only:
         - master
         - develop
+        - /release*/
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2-apache
