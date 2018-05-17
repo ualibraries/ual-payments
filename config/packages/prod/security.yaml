@@ -9,7 +9,6 @@ security:
             security: false
         main:
             stateless: true
-            anonymous: ~
             guard:
                 authenticators:
                     - app.shibboleth_authenticator
