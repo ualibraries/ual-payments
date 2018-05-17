@@ -4,7 +4,6 @@
     ShibUseHeaders On
     require shibboleth
 </IfModule>
-
 <IfModule mod_rewrite.c>
     Options -MultiViews
     RewriteEngine On
