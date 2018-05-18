@@ -29,5 +29,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/result, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/result, allow_if: "'173.0.81.1/255' == request.getClientIp() or '66.211.170.66' == request.getClientIp()"}
         - { path: ^/, roles: ROLE_USER }
