@@ -1,0 +1,15 @@
+.environment__wrapper {
+}
+
+.environment__inner {
+  margin: 0;
+}
+
+.environment__environment {
+  margin: 0;
+  font-size: 40px;
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--arizona-blue);
+  text-align: center;
+}

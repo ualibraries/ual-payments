@@ -10,7 +10,9 @@
 
 <body>
     <div id="header"></div>
-
+    {% if app.environment != "prod" %}
+        {% include 'partials/environment.html.twig' %}
+    {% endif %}
     <div class="body__wrapper">
         <div class="body__aside-column">
             {% include 'partials/menu.html.twig' %}
