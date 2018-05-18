@@ -58,6 +58,7 @@ class Transaction
     const STATUS_COMPLETED = 2;
     const STATUS_FAILED = 3;
     const STATUS_DECLINED = 4;
+    const STATUS_ERROR = 5;
 
     public function __construct($user_id, $invoice_number = null, $status = self::STATUS_PENDING, $date = null, $notified = false)
     {

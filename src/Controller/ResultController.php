@@ -40,7 +40,7 @@ class ResultController extends Controller
         //Amount does not match.
         $entityManager = $this->getDoctrine()->getManager();
         if ($transaction->getTotalBalance() != $request->request->get('AMOUNT')) {
-            $transaction->setStatus(Transaction::STATUS_FAILED);
+            $transaction->setStatus(Transaction::STATUS_ERROR);
             $entityManager->persist($transaction);
             $entityManager->flush();
             return new Response('Invalid amount', Response::HTTP_BAD_REQUEST);

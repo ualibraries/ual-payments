@@ -23,9 +23,11 @@
             {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
                 Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was successful. Thank you!
             {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
-                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was failed.
+                We received your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }}, but failed to update Alma.
             {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
                 Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
+            {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
+                There was a critical problem with your payment.
             {% endif %}
                 <a id="hiddenBar">X</a>
             </div>
