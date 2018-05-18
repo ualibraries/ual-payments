@@ -37,6 +37,12 @@ host('production')
     ->set('deploy_path', '/var/www')
     ->stage('prd'); 
     
+
+host('stage')
+    ->user('deploy')
+    ->hostname('pay-stg.library.arizona.edu')
+    ->set('deploy_path', '/var/www')
+    ->stage('stg');
 // Tasks
 
 task('build', function () {
@@ -74,7 +80,7 @@ task('deploy', [
     'deploy:symlink',
     'deploy:unlock',
     'cleanup',
-])->onStage(['prd']);
+]);
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');

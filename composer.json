@@ -73,6 +73,7 @@
   "scripts": {
     "assets:build": ["npm install", "npm run build"],
     "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
+    "deploy:stg": ["vendor/bin/dep --ansi deploy stg"],
     "deploy:rollback": ["vendor/bin/dep --ansi rollback prd"],
     "docs:preview": [
       "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
