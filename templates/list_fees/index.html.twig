@@ -4,12 +4,32 @@
 
 {% block javascripts %}
 <script src="{{ asset('build/total-selected-charges.js') }}"></script>
+    <script>
+        const snackbar = document.getElementById('snackbar');
+        const hiddenBar = document.getElementById('hiddenBar');
+        hiddenBar.addEventListener('click', () => snackbar.className = 'hide');
+    </script>
 {% endblock %}
 
 {% block body %}
 <div class="charges__wrapper">
     <div class="charges__inner">
         <div class="charges__title">Hi, {{ full_name }}!</div>
+
+        {% if transaction %}
+            <div id="snackbar">
+            {% if transaction.status == constant('STATUS_PAID', transaction) %}
+                We received your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }}. Updating Alma...
+            {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
+                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was successful. Thank you!
+            {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
+                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was failed.
+            {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
+                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
+            {% endif %}
+                <a id="hiddenBar">X</a>
+            </div>
+        {% endif %}
 
         {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
@@ -51,4 +71,27 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #snackbar {
+            visibility: visible;
+            min-width: 250px; /* Set a default minimum width */
+            margin-left: -125px; /* Divide value of min-width by 2 */
+            background-color: #333; /* Black background color */
+            color: #fff; /* White text color */
+            text-align: center; /* Centered text */
+            border-radius: 2px; /* Rounded borders */
+            padding: 16px; /* Padding */
+            position: fixed; /* Sit on top of the screen */
+            z-index: 1; /* Add a z-index if needed */
+            left: 50%; /* Center the snackbar */
+            bottom: 30px; /* 30px from the bottom */
+        }
+
+        #snackbar.hide {
+            visibility: hidden;
+        }
+    </style>
 {% endblock %}

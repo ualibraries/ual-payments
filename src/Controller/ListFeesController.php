@@ -11,13 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ListFeesController extends Controller
 {
-    private $user;
+    private $userId;
     private $api;
     private $userData;
 
     public function __construct(AlmaApi $api, AlmaUserData $userData)
     {
-        $this->user = new AlmaUser();
+        $user = new AlmaUser();
+        $this->userId = $user->getUserId();
         $this->api = $api;
         $this->userData = $userData;
     }
@@ -29,41 +30,56 @@ class ListFeesController extends Controller
      */
     public function index()
     {
-        $this->removePendingFees();
-        $userId = $this->user->getUserId();
-        $alma_user_exists = $this->userData->isValidUser($this->api->findUserById($userId));
+        $transactionToNotify = $this->processTransactions();
 
-        if ($userId === null || !$alma_user_exists) {
+        $alma_user_exists = $this->userData->isValidUser($this->api->findUserById($this->userId));
+
+        if ($this->userId === null || !$alma_user_exists) {
             return $this->render('unauthorized.html.twig');
         }
 
         $totalDue = 0;
-        $userFees = $this->userData->listFees($this->api->getUserFees($userId));
+        $userFees = $this->userData->listFees($this->api->getUserFees($this->userId));
         foreach ($userFees as $userFee) {
             $totalDue += $userFee['balance'];
         }
 
         return $this->render('list_fees/index.html.twig', [
-            'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
-            'user_id' => $this->user->getUserId(),
+            'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($this->userId)),
+            'user_id' => $this->userId,
             'user_fees' => $userFees,
-            'total_Due' => $totalDue
+            'total_Due' => $totalDue,
+            'transaction' => $transactionToNotify
         ]);
     }
 
-    private function removePendingFees()
+    /**
+     * Remove user's pending transactions and return the latest transaction if it has not been notified.
+     * @return Transaction|null
+     */
+    private function processTransactions()
     {
         $repository = $this->getDoctrine()->getRepository(Transaction::class);
         $entityManager = $this->getDoctrine()->getManager();
 
         $transactions = $repository->findBy([
-            'user_id' => $this->user->getUserId(),
+            'user_id' => $this->userId,
             'status' => Transaction::STATUS_PENDING
         ]);
 
         foreach ($transactions as $transaction) {
             $entityManager->remove($transaction);
         }
+
+        $latestTransaction = $repository->findOneBy(['user_id' => $this->userId], ['date' => 'DESC']);
+        if (is_null($latestTransaction) or $latestTransaction->getNotified()) {
+            return null;
+        } else {
+            $latestTransaction->setNotified(true);
+            $entityManager->persist($latestTransaction);
+        }
+
         $entityManager->flush();
+        return $latestTransaction;
     }
 }
