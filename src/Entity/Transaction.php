@@ -24,11 +24,6 @@ class Transaction
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="string", length=25)
      */
     private $invoice_number;
@@ -48,13 +43,30 @@ class Transaction
      */
     private $fees;
 
-    public function __construct($user_id, $invoice_number = null, $status = 'PENDING', $date = null)
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notified;
+
+    const STATUS_PENDING = 0;
+    const STATUS_PAID = 1;
+    const STATUS_COMPLETED = 2;
+    const STATUS_FAILED = 3;
+    const STATUS_DECLINED = 4;
+
+    public function __construct($user_id, $invoice_number = null, $status = self::STATUS_PENDING, $date = null, $notified = false)
     {
         $this->fees = new ArrayCollection();
         $this->user_id = $user_id;
         $this->status = $status;
         $this->invoice_number = $invoice_number ?: uniqid();
         $this->date = $date ?: new \DateTime();
+        $this->notified = $notified;
     }
 
     public function getId()
@@ -70,18 +82,6 @@ class Transaction
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -149,6 +149,30 @@ class Transaction
                 $fee->setTransaction(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getNotified(): ?bool
+    {
+        return $this->notified;
+    }
+
+    public function setNotified(?bool $notified): self
+    {
+        $this->notified = $notified;
 
         return $this;
     }

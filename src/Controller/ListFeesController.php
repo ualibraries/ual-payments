@@ -58,7 +58,7 @@ class ListFeesController extends Controller
 
         $transactions = $repository->findBy([
             'user_id' => $this->user->getUserId(),
-            'status' => 'PENDING'
+            'status' => Transaction::STATUS_PENDING
         ]);
 
         foreach ($transactions as $transaction) {
