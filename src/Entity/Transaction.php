@@ -44,21 +44,21 @@ class Transaction
     private $fees;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $notified;
 
-    const STATUS_PENDING = 0;
-    const STATUS_PAID = 1;
-    const STATUS_COMPLETED = 2;
-    const STATUS_FAILED = 3;
-    const STATUS_DECLINED = 4;
-    const STATUS_ERROR = 5;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $status;
+
+    const STATUS_PENDING = 'PENDING';
+    const STATUS_PAID = 'PAID';
+    const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_FAILED = 'FAILED';
+    const STATUS_DECLINED = 'DECLINED';
+    const STATUS_ERROR = 'ERROR';
 
     public function __construct($user_id, $invoice_number = null, $status = self::STATUS_PENDING, $date = null, $notified = false)
     {
@@ -154,18 +154,6 @@ class Transaction
         return $this;
     }
 
-    public function getStatus(): ?int
-    {
-        return $this->status;
-    }
-
-    public function setStatus(int $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getNotified(): ?bool
     {
         return $this->notified;
@@ -174,6 +162,21 @@ class Transaction
     public function setNotified(?bool $notified): self
     {
         $this->notified = $notified;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        if (!in_array($status, array(self::STATUS_PENDING, self::STATUS_PAID, self::STATUS_COMPLETED, self::STATUS_FAILED, self::STATUS_DECLINED, self::STATUS_ERROR))) {
+            throw new \InvalidArgumentException("Invalid status");
+        }
+        $this->status = $status;
 
         return $this;
     }
