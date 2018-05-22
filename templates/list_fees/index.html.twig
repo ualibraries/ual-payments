@@ -6,8 +6,8 @@
 <script src="{{ asset('build/total-selected-charges.js') }}"></script>
     <script>
         const snackbar = document.getElementById('snackbar');
-        const hiddenBar = document.getElementById('hiddenBar');
-        hiddenBar.addEventListener('click', () => snackbar.className = 'hide');
+        const hideBar = document.getElementById('hideBar');
+        hideBar.addEventListener('click', () => snackbar.className = 'hide');
     </script>
 {% endblock %}
 
@@ -19,17 +19,20 @@
         {% if transaction %}
             <div id="snackbar">
             {% if transaction.status == constant('STATUS_PAID', transaction) %}
-                We received your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }}. Updating Alma...
+                We’ve received your payment and in process of updating your account.
             {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
-                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was successful. Thank you!
+                Thanks for your payment.<br>
+                We’ve received your payment and applied it toward your account.
             {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
-                We received your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }}, but failed to update Alma.
+                Thanks for your payment.<br>
+                We’ve received your payment, but it can’t be applied toward your account at this time.<br>
+                Contact us at XXX-XXX-XXXX as soon as possible so we can help you.
             {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
                 Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
             {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
                 There was a critical problem with your payment.
             {% endif %}
-                <a id="hiddenBar">X</a>
+                <a id="hideBar">X</a>
             </div>
         {% endif %}
 
@@ -89,7 +92,7 @@
             position: fixed; /* Sit on top of the screen */
             z-index: 1; /* Add a z-index if needed */
             left: 50%; /* Center the snackbar */
-            bottom: 30px; /* 30px from the bottom */
+            top: 78px; /* Right below header */
         }
 
         #snackbar.hide {
