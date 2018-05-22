@@ -4,7 +4,7 @@ Feature: Pay for charges
   @javascript
   Scenario: Submitting pay form with no fees selected
     Given I am on "/"
-    When  I press "submitButton"
+    And I submit the "chargesList" form
     Then I should be on "/"
 
   @javascript
@@ -17,6 +17,6 @@ Feature: Pay for charges
   Scenario: Selecting multiple fees
     Given I am on "/"
     When I check all fees
-    And I press "submitButton"
+    And I submit the "chargesList" form
     Then I should be on "/pay"
     And I should see "You are about to pay $14.00"

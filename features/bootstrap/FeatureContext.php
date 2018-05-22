@@ -86,4 +86,16 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         }
     }
 
+    /**
+     * @Given I submit the :arg1 form
+     */
+    public function iSubmitTheForm($arg1)
+    {
+        $session = $this->getSession();
+        $page = $session->getPage();
+
+        $form = $page->findById('chargesList');
+        $form->submit();
+    }
+
 }
