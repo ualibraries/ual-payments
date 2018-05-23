@@ -2,6 +2,19 @@
   margin: 1rem;
 }
 
+.history__title {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.history__sign-out {
+  margin-bottom: 2rem;
+}
+
+.history__prompt {
+  font-weight: 600;
+}
+
 .history__list {
   margin: 0;
   padding: 0;
