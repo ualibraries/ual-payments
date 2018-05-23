@@ -14,10 +14,8 @@
         {% include 'partials/environment.html.twig' %}
     {% endif %}
     <div class="body__wrapper">
-        <div class="body__aside-column">
+        <div class="body__inner">
             {% include 'partials/menu.html.twig' %}
-        </div>
-        <div class="body__primary-column">
             {% include 'partials/title.html.twig' %}
             {% block body %}{% endblock %}
         </div>

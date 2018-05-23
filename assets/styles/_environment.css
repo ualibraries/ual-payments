@@ -1,15 +1,15 @@
-.environment__wrapper {
-}
-
 .environment__inner {
   margin: 0;
 }
 
 .environment__environment {
-  margin: 0;
-  font-size: 40px;
-  font-weight: bold;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+  padding: .5rem 1rem;
+  font-family: monospace;
   color: var(--white);
-  background-color: var(--arizona-blue);
+  background-color: var(--leaf);
   text-align: center;
 }
