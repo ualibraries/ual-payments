@@ -26,7 +26,7 @@ class AlmaApiTest extends TestCase
         $dotenv->load(__DIR__ . '/../../.env');
         $this->api = new AlmaApi();
         $this->userId = getenv('TEST_ID');
-        $this->userData = new AlmaUserData($this->userId);
+        $this->userData = new AlmaUserData();
         parent::setUp();
     }
 
@@ -58,7 +58,6 @@ class AlmaApiTest extends TestCase
 
     public function testPayUserFee()
     {
-        $feeNotRemoved = false;
         try {
             $testFeeBody = file_get_contents(__DIR__ . '/TestJSONData/fee1.json');
             $testFee = $this->createFeeForTesting($testFeeBody);
@@ -66,16 +65,16 @@ class AlmaApiTest extends TestCase
             $response = $this->api->getUserFees($this->userId);
             $userFees = $this->userData->listFees($response);
 
+            $feeNotRemoved = false;
             foreach ($userFees as $fee) {
                 if ($fee['id'] == $testFee->id) {
                     $feeNotRemoved = true;
                 }
             }
+            $this->assertFalse($feeNotRemoved);
         } catch (\Exception $e) {
             $this->fail('Unable to pay user test fee: ' . $e->getMessage());
         }
-
-        $this->assertFalse($feeNotRemoved);
     }
 
     public function testAuthenticateUser()
