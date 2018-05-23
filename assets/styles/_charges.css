@@ -77,6 +77,7 @@
 }
 
 .charges__item-balance {
+  flex: 1;
   font-weight: 600;
 }
 
