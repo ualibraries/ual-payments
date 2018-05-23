@@ -7,8 +7,9 @@ use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
-class ListFinesController extends Controller
+class ListFeesController extends Controller
 {
     private $user;
     private $api;
@@ -21,6 +22,11 @@ class ListFinesController extends Controller
         $this->userData = $userData;
     }
 
+    /**
+     * @Route("/", name="index")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function index()
     {
         $this->removePendingFees();
@@ -32,15 +38,15 @@ class ListFinesController extends Controller
         }
 
         $totalDue = 0;
-        $userFines = $this->userData->listFines($this->api->getUserFines($userId));
-        foreach ($userFines as $userFine) {
-            $totalDue += $userFine['balance'];
+        $userFees = $this->userData->listFees($this->api->getUserFees($userId));
+        foreach ($userFees as $userFee) {
+            $totalDue += $userFee['balance'];
         }
 
-        return $this->render('list_fines/index.html.twig', [
+        return $this->render('list_fees/index.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'user_id' => $this->user->getUserId(),
-            'user_fines' => $userFines,
+            'user_fees' => $userFees,
             'total_Due' => $totalDue
         ]);
     }

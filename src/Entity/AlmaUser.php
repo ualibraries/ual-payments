@@ -19,10 +19,9 @@ class AlmaUser
 
         $testUserId = getenv('TEST_ID');
         $app_env = getenv('APP_ENV');
-        $useTestId = getenv('USE_TEST_ID');
         
         // If the environment variable TEST_ID, in .env, is set use that as the user id
-        if ($testUserId !== "" && $app_env !== 'prod' && $useTestId == 'TRUE') {
+        if ($testUserId !== "" && $app_env !== 'prod') {
             return $testUserId;
         }
 

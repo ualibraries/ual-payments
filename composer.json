@@ -71,7 +71,9 @@
     "symfony/polyfill-php56": "*"
   },
   "scripts": {
+    "assets:build": ["npm install", "npm run build"],
     "deploy:prd": ["vendor/bin/dep --ansi deploy prd"],
+    "deploy:stg": ["vendor/bin/dep --ansi deploy stg"],
     "deploy:rollback": ["vendor/bin/dep --ansi rollback prd"],
     "docs:preview": [
       "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
@@ -81,6 +83,10 @@
     ],
     "docs:deploy": [
       "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
+    ],
+    "test": [
+      "bin/phpunit",
+      "vendor/bin/behat --colors"
     ],
     "auto-scripts": {
       "cache:clear": "symfony-cmd",

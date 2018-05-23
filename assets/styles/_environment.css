@@ -1,0 +1,15 @@
+.environment__inner {
+  margin: 0;
+}
+
+.environment__environment {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 36px;
+  padding: .5rem 1rem;
+  font-family: monospace;
+  color: var(--white);
+  background-color: var(--leaf);
+  text-align: center;
+}
