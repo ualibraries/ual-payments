@@ -7,6 +7,7 @@ use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HistoryController extends Controller
 {
@@ -21,6 +22,9 @@ class HistoryController extends Controller
         $this->userData = $userData;
     }
 
+    /**
+     * @Route("/history", name="history")
+     */
     public function index()
     {
         $userId = $this->user->getUserId();
