@@ -23,7 +23,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
     /**
      * @var null
      */
-    private $remoteUserVar;
+    private $shibUaid;
 
     /**
      * @var UrlGeneratorInterface
@@ -33,7 +33,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->idpUrl = 'https://shibboleth.arizona.edu';
-        $this->remoteUserVar = 'Shib-uaId';
+        $this->shibUaid = 'Shib-uaId';
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -64,7 +64,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
 
     public function supports(Request $request)
     {
-        return $request->server->has($this->remoteUserVar);
+        return $request->server->has($this->shibUaid);
     }
 
     /**
@@ -74,7 +74,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
      */
     public function getCredentials(Request $request)
     {
-        return ['uaid' => $request->server->get($this->remoteUserVar)];
+        return ['uaid' => $request->server->get($this->shibUaid)];
     }
 
     /**
