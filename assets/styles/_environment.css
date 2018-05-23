@@ -4,9 +4,9 @@
 
 .environment__environment {
   position: fixed;
-  left: 0;
   right: 0;
-  bottom: 36px;
+  transform: rotate(-90deg);
+  transform-origin: right bottom;
   padding: .5rem 1rem;
   font-family: monospace;
   color: var(--white);
