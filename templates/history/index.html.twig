@@ -6,7 +6,13 @@
 
 <div class="history__wrapper">
     <div class="history__inner">
-            <h3>Hi, {{ full_name }}!</h3>
+            <div class="history__title">Hi, {{ full_name }}! <br>
+                This is what we have on the books.</div>
+
+            <p class="history__sign-out">I am done with payments,
+                <a href="#">sign me out</a>.</p>
+
+            <p class="history__prompt">Payment history</p>
 
             {% if transactions %}
                 <ul class="history__list">
