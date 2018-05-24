@@ -6,13 +6,18 @@ use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
+use App\Entity\Transaction;
+use App\Entity\Fee;
 use Symfony\Component\Dotenv\Dotenv;
+use GuzzleHttp\Client;
+use Webmozart\Assert\Assert;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 {
+    use Behat\Symfony2Extension\Context\KernelDictionary;
     /**
      * Initializes context.
      *
@@ -24,6 +29,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     {
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__.'/../../.env');
+        $this->testTransaction = null;
     }
 
     /**
@@ -84,6 +90,117 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         foreach($fees as $fee) {
             $fee->check();
         }
+    }
+
+    /**
+     * @Given I have a transaction with :numFees fees of amount :amount
+     */
+    public function iHaveATransaction($numFees, $amount)
+    {
+
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
+        $testFee = json_decode($testFee);
+        $testFee->original_amount = $amount;
+        $api = new AlmaApi();
+        $userId = getenv('TEST_ID');
+        $transaction = new Transaction($userId);
+        $total = 0;
+
+        for($i = 0; $i < $numFees; $i++) {
+            $response = $api->createUserFee($userId, $testFee);
+            $sxml = new SimpleXMLElement($response->getBody());
+            $fee = new Fee((int)$sxml->id, (float)$sxml->original_amount, (string)$sxml->type);
+            $transaction->addFee($fee);
+            $em->persist($fee);
+            $total += $amount;
+        }
+        $transaction->setTotalBalance($total);
+        $em->persist($transaction);
+        $em->flush();
+        $this->testTransaction = $transaction;
+    }
+
+    /**
+     * @Given I successfully pay for the transaction in Payflow Link
+     */
+
+    public function iSuccessfullyPayForTheTransactionInPayflowLink()
+    {
+        if($this->testTransaction === null)
+        {
+            throw new \Exception("No test transaction id set.");
+        }
+
+
+        $url = rtrim($this->getMinkParameter('base_url'), '/');
+        $url .= $this->getContainer()->get('router')->generate('result');
+        $userId = getenv('TEST_ID');
+
+        $form_params = $this->getPayFlowSuccessPostArray();
+        $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
+        $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
+        $form_params['CUSTID'] = $userId;
+
+        $client = new Client();
+        $response = $client->request('POST', $url, [
+            'form_params' => $form_params
+        ]);
+
+
+        Assert::eq($response->getBody(), "Success");
+        Assert::eq($response->getStatusCode(), 200);
+    }
+
+    protected function getPayFlowSuccessPostArray()
+    {
+       return [
+           "STATE" =>"",
+           "CITYTOSHIP" =>"",
+           "COUNTRYTOSHIP" =>"",
+           "AVSDATA" => "YYY",
+           "AUTHCODE" => "010101",
+           "PHONE" =>"",
+           "NAMETOSHIP" =>"",
+           "RESULT" => "0",
+           "ZIP" => "23059",
+           "EMAILTOSHIP" =>"",
+           "EMAIL" => "foo@mailinator.com",
+           "RESPMSG" => "Approved",
+           "INVOICE" => "5aff688b7a291",
+           "PHONETOSHIP" =>"",
+           "FAX" =>"",
+           "TYPE" => "S",
+           "FAXTOSHIP" =>"",
+           "STATETOSHIP" =>"",
+           "TAX" =>"",
+           "CSCMATCH" => "Y",
+           "PONUM" =>"",
+           "NAME" =>"",
+           "DESCRIPTION" =>"",
+           "ORIGMETHOD" =>"",
+           "COUNTRY" =>"",
+           "ADDRESS" => "123 Fake St",
+           "CUSTID" => "test1234",
+           "USER10" =>"",
+           "PNREF" => "A10EAAE47E1D",
+           "AMOUNT" => "5.00",
+           "ZIPTOSHIP" =>"",
+           "USER4" =>"",
+           "ADDRESSTOSHIP" =>"",
+           "USER3" =>"",
+           "TRXTYPE" =>"",
+           "USER6" =>"",
+           "USER5" =>"",
+           "USER8" =>"",
+           "USER7" =>"",
+           "USER9" =>"",
+           "METHOD" => "CC",
+           "CITY" =>"",
+           "HOSTCODE" => "00",
+           "USER2" =>"",
+           "USER1" =>""
+       ];
     }
 
 }
