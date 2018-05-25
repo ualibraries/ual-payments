@@ -88,7 +88,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $session = $this->getSession();
         $page = $session->getPage();
         $fees = $page->findAll('named', ['checkbox', 'fee[]']);
-        foreach($fees as $fee) {
+        foreach ($fees as $fee) {
             $fee->check();
         }
     }
@@ -98,7 +98,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function iHaveATransaction($numFees, $amount)
     {
-
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
@@ -108,7 +107,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $transaction = new Transaction($userId);
         $total = 0;
 
-        for($i = 0; $i < $numFees; $i++) {
+        for ($i = 0; $i < $numFees; $i++) {
             $response = $api->createUserFee($userId, $testFee);
             $sxml = new SimpleXMLElement($response->getBody());
             $fee = new Fee((int)$sxml->id, (float)$sxml->original_amount, (string)$sxml->type);
@@ -128,8 +127,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     public function iSuccessfullyPayForTheTransactionInPayflowLink()
     {
-        if($this->testTransaction === null)
-        {
+        if ($this->testTransaction === null) {
             throw new \Exception("No test transaction id set.");
         }
 

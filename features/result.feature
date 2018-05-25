@@ -1,4 +1,3 @@
-@wip
 Feature: Processing the POST request from Payflow Link
 
 Scenario: A successful payment from Payflow Link is posted
