@@ -11,11 +11,9 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
-class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements LogoutSuccessHandlerInterface
+class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 {
-    private const IDP_URL = 'https://shibboleth.arizona.edu';
     private const SHIB_UAID = 'Shib-uaId';
 
     private $router;
@@ -107,18 +105,5 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
     public function supportsRememberMe()
     {
         return false;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Response never null
-     */
-    public function onLogoutSuccess(Request $request)
-    {
-        $redirectTo = $this->router->generate('shib_logout', array(
-            'return' => self::IDP_URL . '/cgi-bin/logout.pl'
-        ));
-        return new RedirectResponse($redirectTo);
     }
 }
