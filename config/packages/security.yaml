@@ -13,6 +13,9 @@ security:
             guard:
                 authenticators:
                     - app.alma_authenticator
+                    - app.shibboleth_authenticator
+
+                entry_point: app.shibboleth_authenticator
 
             logout:
                 path: /logout

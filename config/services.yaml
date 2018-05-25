@@ -6,8 +6,6 @@ parameters:
 services:
     app.shibboleth_authenticator:
         class: App\Security\ShibbolethAuthenticator
-        arguments:
-            - "@router"
     app.alma_authenticator:
         class: App\Security\AlmaAuthenticator
 
