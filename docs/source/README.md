@@ -36,7 +36,7 @@ $ ssh-copy-id deploy@pay-prd
 If you don't have the password for the deploy account, you can ask someone who already has server access to add your key.  Send them your public key (e.g. `~/.ssh/id_rsa.pub`) and have them append it to the `authorized_keys` file for the `deploy` user:
 
 ```
-deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/authorized_keys
+deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/.ssh/authorized_keys
 ```
 
 ## Rollback
