@@ -70,6 +70,7 @@ jobs:
           name: Configure .env
           command: |
             sed 's/\(^TEST_ID=\)/\1'$SHIB_TEST_UAID'/' -i .env
+            sed 's/\(^TEST_PASS=\)/\1'ALMA_CIRCLECI_TEST_USER_PASSWORD'/' -i .env
             sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
             sed 's/\(^DB_USER=\)/\1'root'/' -i .env
             sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env
