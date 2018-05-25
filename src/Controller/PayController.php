@@ -61,10 +61,7 @@ class PayController extends Controller
         $total = 0;
         foreach ($almaFees as $almaFee) {
             if (in_array($almaFee['id'], $feeIds)) {
-                $fee = new Fee();
-                $fee->setFeeId($almaFee['id']);
-                $fee->setBalance($almaFee['balance']);
-                $fee->setLabel($almaFee['label']);
+                $fee = new Fee($almaFee['id'], $almaFee['balance'], $almaFee['label']);
 
                 $this->getDoctrine()->getManager()->persist($fee);
                 $transaction->addFee($fee);

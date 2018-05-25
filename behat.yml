@@ -3,6 +3,10 @@ imports:
   - ./behat.local.yml
 default:
   extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        bootstrap: features/bootstrap/bootstrap.php
+        class: App\Kernel
     Behat\MinkExtension:
       sessions:
         default:
