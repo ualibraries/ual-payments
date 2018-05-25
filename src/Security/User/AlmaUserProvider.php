@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-class ShibbolethUserProvider implements UserProviderInterface
+class AlmaUserProvider implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {

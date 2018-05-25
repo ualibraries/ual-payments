@@ -1,8 +1,8 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        shibboleth:
-            id: App\Security\User\ShibbolethUserProvider
+        alma:
+            id: App\Security\User\AlmaUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
