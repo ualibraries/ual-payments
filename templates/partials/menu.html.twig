@@ -1,6 +1,6 @@
 <nav class="menu">
     <ul class="menu__items">
-        <li class="menu__item"><a href="{{ path('index') }}" class="menu__link menu__link--active">Charges</a></li>
-        <li class="menu__item"><a href="{{ path('history') }}" class="menu__link">Payment history</a></li>
+        <li class="menu__item"><a href="{{ path('index') }}" class="menu__link {{ app.request.get('_route') == 'index' ? "menu__link--active" : "" }}">Charges</a></li>
+        <li class="menu__item"><a href="{{ path('history') }}" class="menu__link {{ app.request.get('_route') == 'history' ? "menu__link--active" : "" }}">Payment history</a></li>
     </ul>
 </nav>
