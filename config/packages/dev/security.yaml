@@ -1,10 +1,25 @@
-# config/packages/security.yaml
 security:
     providers:
-        in_memory: { memory: ~ }
+        alma:
+            id: App\Security\User\AlmaUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: ~
+            access_denied_handler: App\Security\AccessDeniedHandler
+            guard:
+                authenticators:
+                    - app.alma_authenticator
+
+            logout:
+                path: /logout
+                target: /
+
+    access_control:
+        - { path: ^/result, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [173.0.81.1/24, 66.211.170.66] }
+        - { path: ^/result, roles: ROLE_NO_ACCESS }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

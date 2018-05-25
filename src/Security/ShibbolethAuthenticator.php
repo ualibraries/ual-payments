@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -152,7 +153,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
     public function onLogoutSuccess(Request $request)
     {
         $redirectTo = $this->urlGenerator->generate('shib_logout', array(
-            'return'  => $this->idpUrl . '/cgi-bin/logout.pl'
+            'return' => $this->idpUrl . '/cgi-bin/logout.pl'
         ));
         return new RedirectResponse($redirectTo);
     }

@@ -5,9 +5,12 @@ parameters:
 
 services:
     app.shibboleth_authenticator:
-      class: App\Security\ShibbolethAuthenticator
-      arguments:
-        - "@router"
+        class: App\Security\ShibbolethAuthenticator
+        arguments:
+            - "@router"
+    app.alma_authenticator:
+        class: App\Security\AlmaAuthenticator
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
