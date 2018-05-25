@@ -43,6 +43,8 @@ The configuration settings for CircleCI are stored in the `.circleci` directory.
 Our CircleCI environment is testing against PHP 7.2, Apache 2, and MySQL 5.7.  A build will be triggered each time we push to `master` or `develop` to ensure that
 we don't use up too many BrowserStack minutes.  Additionally, the following environment variables have been configured in the admin Web interface for our project for CircleCI:
 
+You can run a build manually (for any branch) by going to the settings for the project and going to `TestCommands` linked on the left. At the bottom of the page there is a option that says `Test settings on...` and from there you can select any branch that has been pushed to github. Once the branch is selected press `Save & Go!`.
+
 * BROWSERSTACK_ACCESS_KEY - The access key for our BrowserStack account
 * BROWSERSTACK_USERNAME  - The username for our BrowserStack account
 * SHIB_TEST_UAID - A UAID to be used in environments where Shibboleth is not available.  This value is set to `TEST_UAID`.
