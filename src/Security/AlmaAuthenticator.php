@@ -162,6 +162,7 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        $request->getSession()->set(Security::LAST_USERNAME, $request->request->get('_username'));
         $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         return new RedirectResponse($this->router->generate('login'));
     }
