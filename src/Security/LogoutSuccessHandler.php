@@ -7,15 +7,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
-use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
 
-class LogoutHandler extends SessionLogoutHandler implements LogoutSuccessHandlerInterface
+class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
     private $router;
+    private $shibUaid;
+    private $idpUrl;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, $shibUaid, $idpUrl)
     {
         $this->router = $router;
+        $this->shibUaid = $shibUaid;
+        $this->idpUrl = $idpUrl;
     }
 
     /**
@@ -26,11 +29,11 @@ class LogoutHandler extends SessionLogoutHandler implements LogoutSuccessHandler
      */
     public function onLogoutSuccess(Request $request)
     {
-        if ($request->server->has('Shib-uaId')) {
-            $redirectTo = $this->router->generate('shib_logout', array(
-                'return' => 'https://shibboleth.arizona.edu/cgi-bin/logout.pl'
-            ));
-            return new RedirectResponse($redirectTo);
+        if ($request->server->has($this->shibUaid)) {
+            return new RedirectResponse($this->router->generate('shib_logout',
+                array(
+                    'return' => $this->idpUrl . '/cgi-bin/logout.pl'
+                )));
         } else {
             return new RedirectResponse($this->router->generate('login'));
         }

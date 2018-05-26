@@ -2,11 +2,10 @@
 
 namespace App\Security;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
-use Psr\Log\LoggerInterface;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {

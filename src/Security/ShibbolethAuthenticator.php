@@ -14,13 +14,13 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 {
-    private const SHIB_UAID = 'Shib-uaId';
-
     private $router;
+    private $shibUaid;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, $shibUaid)
     {
         $this->router = $router;
+        $this->shibUaid = $shibUaid;
     }
 
     /**
@@ -36,7 +36,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request)
     {
-        return $request->server->has(self::SHIB_UAID);
+        return $request->server->has($this->shibUaid);
     }
 
     /**
@@ -46,7 +46,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        return ['uaid' => $request->server->get(self::SHIB_UAID)];
+        return ['uaid' => $request->server->get($this->shibUaid)];
     }
 
     /**
