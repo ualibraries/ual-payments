@@ -18,7 +18,7 @@ services:
         class: App\Security\LogoutSuccessHandler
         arguments:
             $shibUaid: '%shib_uaid%'
-            $idpUrl: 'idp_url'
+            $idpUrl: '%idp_url%'
 
     # default configuration for services in *this* file
     _defaults:
