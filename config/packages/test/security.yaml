@@ -1,0 +1,6 @@
+security:
+    access_control:
+        - { path: ^/result, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [173.0.81.1/24, 66.211.170.66] }
+        - { path: ^/result, roles: ROLE_NO_ACCESS }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
