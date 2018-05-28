@@ -15,7 +15,9 @@
     {% endif %}
     <div class="body__wrapper">
         <div class="body__inner">
-            {% include 'partials/menu.html.twig' %}
+            {% block menu %}
+                {% include 'partials/menu.html.twig' %}
+            {% endblock %}
             {% include 'partials/title.html.twig' %}
             {% block body %}{% endblock %}
         </div>
