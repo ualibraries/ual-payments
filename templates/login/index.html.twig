@@ -18,7 +18,7 @@
         </div>
         <div class="login__choice">
             <h3 class="form__title">Library card</h3>
-            <form action="{{ path('login') }}" method="post">
+            <form id="login_form" action="{{ path('login') }}" method="post">
                 <div class="form__control">
                     <label class="form__input-label" for="username">Username:</label>
                     <input class="form__input-text" type="text" id="username" name="_username" value="{{ last_username }}">
