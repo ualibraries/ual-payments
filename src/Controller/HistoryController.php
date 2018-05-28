@@ -17,7 +17,7 @@ class HistoryController extends Controller
 
     public function __construct(AlmaApi $api, AlmaUserData $userData)
     {
-        $this->user = new AlmaUser();
+        $this->user = $userId = $this->getUser();
         $this->api = $api;
         $this->userData = $userData;
     }
@@ -27,7 +27,7 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        $userId = $this->user->getUserId();
+        $userId = $this->user->getUsername();
         $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(['user_id' => $userId]);
         return $this->render('history/index.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
