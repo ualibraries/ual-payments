@@ -1,45 +1,26 @@
 <?php
+
 namespace App\Security;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 
-class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements LogoutSuccessHandlerInterface
+class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 {
-    /**
-     * @var
-     */
-    private $idpUrl;
+    private $router;
+    private $shibUaid;
 
-    /**
-     * @var null
-     */
-    private $remoteUserVar;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(RouterInterface $router, $shibUaid)
     {
-        $this->idpUrl = 'https://shibboleth.arizona.edu';
-        $this->remoteUserVar = 'Shib-uaId';
-        $this->urlGenerator = $urlGenerator;
-    }
-
-    protected function getRedirectUrl()
-    {
-        return $this->urlGenerator->generate('shib_login');
+        $this->router = $router;
+        $this->shibUaid = $shibUaid;
     }
 
     /**
@@ -50,21 +31,12 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $redirectTo = $this->getRedirectUrl();
-        if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return new JsonResponse(array(
-                'status' => 'error',
-                'message' => 'You are not authenticated.',
-                'redirect' => $redirectTo,
-            ), Response::HTTP_FORBIDDEN);
-        } else {
-            return new RedirectResponse($redirectTo);
-        }
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     public function supports(Request $request)
     {
-        return $request->server->has($this->remoteUserVar);
+        return $request->server->has($this->shibUaid);
     }
 
     /**
@@ -74,7 +46,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
      */
     public function getCredentials(Request $request)
     {
-        return ['uaid' => $request->server->get($this->remoteUserVar)];
+        return ['uaid' => $request->server->get($this->shibUaid)];
     }
 
     /**
@@ -112,16 +84,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $redirectTo = $this->getRedirectUrl();
-        if (in_array('application/json', $request->getAcceptableContentTypes())) {
-            return new JsonResponse(array(
-                'status' => 'error',
-                'message' => 'Authentication failed.',
-                'redirect' => $redirectTo,
-            ), Response::HTTP_FORBIDDEN);
-        } else {
-            return new RedirectResponse($redirectTo);
-        }
+        return new RedirectResponse($this->router->generate('login'));
     }
 
     /**
@@ -142,18 +105,5 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator implements Logo
     public function supportsRememberMe()
     {
         return false;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Response never null
-     */
-    public function onLogoutSuccess(Request $request)
-    {
-        $redirectTo = $this->urlGenerator->generate('shib_logout', array(
-            'return'  => $this->idpUrl . '/cgi-bin/logout.pl'
-        ));
-        return new RedirectResponse($redirectTo);
     }
 }

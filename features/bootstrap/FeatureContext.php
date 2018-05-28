@@ -42,6 +42,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     {
         $api = new AlmaApi();
         $userId = getenv('TEST_ID');
+        $userPassword = getenv('TEST_PASS');
         $testFeeBody = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $api->createUserFee($userId, json_decode($testFeeBody));
     }
@@ -104,7 +105,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $form = $page->findById('chargesList');
         $form->submit();
     }
-
 
     /**
      * @Given I have a transaction with :numFees fees of amount :amount
@@ -329,5 +329,22 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
             "USER2" => "",
             "USER1" => ""
         ];
+    }
+
+    /**
+     * @Given I fill in :arg1 with the ENV variable :arg2
+     */
+    public function iFillInWithTheEnvVariable($arg1, $arg2)
+    {
+        $session = $this->getSession();
+        $page = $session->getPage();
+
+        $form = $page->findById('login_form');
+        try {
+            $form->fillField($arg1, getenv($arg2));
+        } catch (\Behat\Mink\Exception\ElementNotFoundException $e) {
+            print($e);
+            return;
+        }
     }
 }

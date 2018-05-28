@@ -11,13 +11,13 @@
     <div class="charges__inner">
         <div class="charges__title">Hi, {{ full_name }}!</div>
 
+        <p class="charges__sign-out">I am done with payments,
+            <a href="{{ path('logout') }}">sign me out</a>.</p>
+
         {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
         </div>
-
-        <p class="charges__sign-out">I am done with payments,
-            <a href="#">sign me out</a>.</p>
 
         <p class="charges__prompt">Select charges you want to pay:</p>
 

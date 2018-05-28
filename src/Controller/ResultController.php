@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ResultController extends Controller
 {
@@ -83,10 +83,8 @@ class ResultController extends Controller
             try {
                 $api->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
                 $result = true;
-            } catch (\GuzzleHttp\Exception\TransferException $te) {
-                echo $te->getCode() . $te->getMessage();
-            } catch (\GuzzleHttp\Exception\GuzzleException $ge) {
-                echo $ge->getMessage();
+            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+                echo $e->getCode() . $e->getMessage();
             }
         }
 

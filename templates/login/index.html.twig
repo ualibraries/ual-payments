@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block menu %}{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+<div class="login__inner">
+    <div class="login__choices">
+        <div class="login__choice">
+            <h3 class="form__title">UA NetID</h3>
+            <p>
+                <a href="{{ path('shib_login') }}"><button class="button button-primary">Login with NetID</button></a>
+            </p>
+        </div>
+        <div class="login__choice">
+            <h3 class="form__title">Library card</h3>
+            <form id="login_form" action="{{ path('login') }}" method="post">
+                <div class="form__control">
+                    <label class="form__input-label" for="username">Username:</label>
+                    <input class="form__input-text" type="text" id="username" name="_username" value="{{ last_username }}">
+                </div>
+                <div class="form__control">
+                    <label class="form__input-label" for="password">Password:</label>
+                    <input class="form__input-text" type="password" id="password" name="_password">
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <div class="form__control">
+                    <input class="button button-primary" type="submit" value="Login">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
