@@ -48,7 +48,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     }
 
     /**
-     * @AfterFeature @fee
+     * @AfterFeature
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public static function removeFees()
