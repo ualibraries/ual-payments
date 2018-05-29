@@ -4,35 +4,33 @@
 
 {% block javascripts %}
 <script src="{{ asset('build/total-selected-charges.js') }}"></script>
-    <script>
-        const snackbar = document.getElementById('snackbar');
-        const hideBar = document.getElementById('hideBar');
-        hideBar.addEventListener('click', () => snackbar.className = 'hide');
-    </script>
+
+{% if transaction %}
+<script src="{{ asset('build/alert.js') }}"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
-    {% if transaction %}
-        <div id="snackbar">
-            {% if transaction.status == constant('STATUS_PAID', transaction) %}
-                We’ve received your payment and in process of updating your account.
-            {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
-                Thanks for your payment.<br>
-                We’ve received your payment and applied it toward your account.
-            {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
-                Thanks for your payment.<br>
-                We’ve received your payment, but it can’t be applied toward your account at this time.<br>
-                Contact us at XXX-XXX-XXXX as soon as possible so we can help you.
-            {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
-                Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
-            {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
-                There was a critical problem with your payment.
-            {% endif %}
-            <a id="hideBar">X</a>
-        </div>
-    {% endif %}
 <div class="charges__wrapper">
     <div class="charges__inner">
+        {% if transaction %}
+            <div class="alert" id="alert">
+                <span class="alert-text"></span>
+                {% if transaction.status == constant('STATUS_PAID', transaction) %}
+                    We’ve received your payment and are in process of updating your account.
+                {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
+                    <strong>Thanks for your payment.</strong> We’ve received your payment and applied it toward your account.
+                {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
+                    <strong>Thanks for your payment.</strong> We’ve received your payment, but it can’t be applied toward your account at this time.<br>
+                    Contact us at XXX-XXX-XXXX as soon as possible so we can help you.
+                {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
+                    Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
+                {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
+                    There was a critical problem with your payment.
+                {% endif %}
+                <button class="alert-close" id="alert-close">Close</button>
+            </div>
+        {% endif %}
         <div class="charges__title">Hi, {{ full_name }}!</div>
 
         <p class="charges__sign-out">I am done with payments,
@@ -75,27 +73,4 @@
         {% endif %}
     </div>
 </div>
-{% endblock %}
-
-{% block stylesheets %}
-    <style>
-        #snackbar {
-            visibility: visible;
-            min-width: 250px; /* Set a default minimum width */
-            margin-left: -125px; /* Divide value of min-width by 2 */
-            background-color: #333; /* Black background color */
-            color: #fff; /* White text color */
-            text-align: center; /* Centered text */
-            border-radius: 2px; /* Rounded borders */
-            padding: 16px; /* Padding */
-            position: fixed; /* Sit on top of the screen */
-            z-index: 1; /* Add a z-index if needed */
-            left: 50%; /* Center the snackbar */
-            top: 78px; /* Right below header */
-        }
-
-        #snackbar.hide {
-            visibility: hidden;
-        }
-    </style>
 {% endblock %}

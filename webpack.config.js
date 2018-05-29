@@ -11,6 +11,7 @@ Encore
   .addEntry('app', './assets/app.js')
   .addEntry('polyfill', './assets/polyfill.js')
   .addEntry('total-selected-charges', './assets/total-selected-charges.js')
+  .addEntry('alert', './assets/alert.js')
 
   .configureBabel(babelConfig => {
     babelConfig.presets.push('stage-0')
