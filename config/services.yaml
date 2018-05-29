@@ -2,12 +2,24 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    shib_uaid: 'Shib-uaId'
+    idp_url: 'https://shibboleth.arizona.edu'
 
 services:
     app.shibboleth_authenticator:
-      class: App\Security\ShibbolethAuthenticator
-      arguments:
-        - "@router"
+        class: App\Security\ShibbolethAuthenticator
+        arguments:
+            $shibUaid: '%shib_uaid%'
+
+    app.alma_authenticator:
+        class: App\Security\AlmaAuthenticator
+
+    app.logout_success_handler:
+        class: App\Security\LogoutSuccessHandler
+        arguments:
+            $shibUaid: '%shib_uaid%'
+            $idpUrl: '%idp_url%'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

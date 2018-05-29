@@ -1,5 +1,10 @@
 shib_login:
-  path: /Shibboleth.sso/Login
+    path: /Shibboleth.sso/Login
 
 shib_logout:
-  path: /Shibboleth.sso/Logout?return=https://shibboleth.arizona.edu
+
+    path: /Shibboleth.sso/Logout?return=https://shibboleth.arizona.edu
+
+logout:
+    path: /logout
+

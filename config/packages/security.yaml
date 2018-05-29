@@ -1,0 +1,24 @@
+security:
+    providers:
+        alma:
+            id: App\Security\User\AlmaUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: ~
+            access_denied_handler: App\Security\AccessDeniedHandler
+            guard:
+                authenticators:
+                    - app.alma_authenticator
+                    - app.shibboleth_authenticator
+
+                entry_point: app.shibboleth_authenticator
+
+            logout:
+                path: /logout
+                success_handler: app.logout_success_handler
+                
+            # Keep access_controll in environment specific security.yaml files

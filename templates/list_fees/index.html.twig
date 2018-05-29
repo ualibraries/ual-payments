@@ -12,12 +12,8 @@
 {% endblock %}
 
 {% block body %}
-<div class="charges__wrapper">
-    <div class="charges__inner">
-        <div class="charges__title">Hi, {{ full_name }}!</div>
-
-        {% if transaction %}
-            <div id="snackbar">
+    {% if transaction %}
+        <div id="snackbar">
             {% if transaction.status == constant('STATUS_PAID', transaction) %}
                 We’ve received your payment and in process of updating your account.
             {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
@@ -32,17 +28,20 @@
             {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
                 There was a critical problem with your payment.
             {% endif %}
-                <a id="hideBar">X</a>
-            </div>
-        {% endif %}
+            <a id="hideBar">X</a>
+        </div>
+    {% endif %}
+<div class="charges__wrapper">
+    <div class="charges__inner">
+        <div class="charges__title">Hi, {{ full_name }}!</div>
+
+        <p class="charges__sign-out">I am done with payments,
+            <a href="{{ path('logout') }}">sign me out</a>.</p>
 
         {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
         </div>
-
-        <p class="charges__sign-out">I am done with payments,
-            <a href="#">sign me out</a>.</p>
 
         <p class="charges__prompt">Select charges you want to pay:</p>
 
@@ -58,7 +57,7 @@
                         <li>{{ fee.title }}</li>
                         <li class="charges__item-balance">
                             ${{ fee.balance|number_format(2, '.', ',') }}</li>
-                        <li>| {{ fee.date|date('m/d/Y') }}</li>
+                        <li>{{ fee.date|date('m/d/Y') }}</li>
                     </ul>
                 </li>
                 {% endfor %}

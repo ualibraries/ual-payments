@@ -42,6 +42,13 @@ class Fee
      * @ORM\JoinColumn(nullable=false)
      */
 
+    public function __construct($fee_id, $balance, $label)
+    {
+        $this->fee_id = $fee_id;
+        $this->balance = $balance;
+        $this->label = $label;
+    }
+
     public function getId()
     {
         return $this->id;
