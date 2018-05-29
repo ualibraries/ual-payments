@@ -70,8 +70,8 @@ class ListFeesController extends Controller
         }
 
         $latestTransaction = $repository->findOneBy(['user_id' => $userId], ['date' => 'DESC']);
-        if (is_null($latestTransaction) or $latestTransaction->getNotified()) {
-            return null;
+        if (is_null($latestTransaction) or $latestTransaction->getNotified() or ($latestTransaction->getStatus() === Transaction::STATUS_PENDING)) {
+            $latestTransaction = null;
         } else {
             $latestTransaction->setNotified(true);
             $entityManager->persist($latestTransaction);

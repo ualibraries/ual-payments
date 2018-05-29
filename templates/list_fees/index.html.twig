@@ -15,7 +15,7 @@
     <div class="charges__inner">
         {% if transaction %}
             <div class="alert" id="alert">
-                <span class="alert-text"></span>
+                <span class="alert-text">
                 {% if transaction.status == constant('STATUS_PAID', transaction) %}
                     We’ve received your payment and are in process of updating your account.
                 {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
@@ -28,6 +28,7 @@
                 {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
                     There was a critical problem with your payment.
                 {% endif %}
+                </span>
                 <button class="alert-close" id="alert-close">Close</button>
             </div>
         {% endif %}

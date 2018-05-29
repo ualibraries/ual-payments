@@ -13,7 +13,7 @@
             <input type="hidden" name="TYPE" value="S">
             <input type="hidden" name="CUSTID" value="{{ user_id }}">
             <input type="hidden" name="INVOICE" value="{{ invoice_number }}">
-            <button class="button button-link" onclick="javascript:window.location='/';return false;">Cancel</button>
+            <a class="button button-link" href="{{ path('index') }}">Cancel</a>
             <input id="pay_form" type="submit" value="Continue" class="button button-primary">
         </form>
     </div>
