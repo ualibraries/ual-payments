@@ -31,4 +31,4 @@ Feature: Pay for charges
     When I check all fees
     And I submit the "chargesList" form
     Then I should be on "/pay"
-    And I should see "You are about to pay $14.00"
+    And I should see "You’re about to pay $14.00"
