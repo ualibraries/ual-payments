@@ -5,10 +5,7 @@
 .history__title {
   font-size: 1.5rem;
   font-weight: 500;
-}
-
-.history__sign-out {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .history__prompt {
