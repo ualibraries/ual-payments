@@ -9,11 +9,7 @@
 {% block body %}
 <div class="charges__wrapper">
     <div class="charges__inner">
-        <div class="charges__title">Hi, {{ full_name }}!</div>
-
-        <p class="charges__sign-out">I am done with payments,
-            <a href="{{ path('logout') }}">sign me out</a>.</p>
-
+        {% include 'partials/greetings-and-signout.html.twig' %}
         {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
@@ -47,7 +43,8 @@
             <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled="disabled" />
         </form>
         {% else %}
-        <p>You currently have no charges.</p>
+            <div class="charges__total-amount-due">Good news.</div>
+        <p>You don’t have any fees at this time.</p>
         {% endif %}
     </div>
 </div>
