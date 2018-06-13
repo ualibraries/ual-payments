@@ -15,6 +15,8 @@ University of Arizona Libraries - Payments
 
 * Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
 * Run `composer install`
+* Create a database and enter the connection string in `.env`.
+* Run `bin/console doctrine:migrations:migrate` to get the database structure in place.
 
 ## Deploying
 
