@@ -22,7 +22,7 @@
                     <strong>Thanks for your payment.</strong> We’ve received your payment and applied it toward your account.
                 {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
                     <strong>Thanks for your payment.</strong> We’ve received your payment, but it can’t be applied toward your account at this time.<br>
-                    Contact us at XXX-XXX-XXXX as soon as possible so we can help you.
+                    Contact us at (520) 621-6442 as soon as possible so we can help you.
                 {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
                     Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
                 {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
