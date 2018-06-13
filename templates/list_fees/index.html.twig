@@ -4,12 +4,37 @@
 
 {% block javascripts %}
 <script src="{{ asset('build/total-selected-charges.js') }}"></script>
+
+{% if transaction %}
+<script src="{{ asset('build/alert.js') }}"></script>
+{% endif %}
 {% endblock %}
 
 {% block body %}
 <div class="charges__wrapper">
     <div class="charges__inner">
+        {% if transaction %}
+            <div class="alert" id="alert">
+                <span class="alert-text">
+                {% if transaction.status == constant('STATUS_PAID', transaction) %}
+                    We’ve received your payment and are in process of updating your account.
+                {% elseif transaction.status == constant('STATUS_COMPLETED', transaction) %}
+                    <strong>Thanks for your payment.</strong> We’ve received your payment and applied it toward your account.
+                {% elseif transaction.status == constant('STATUS_FAILED', transaction) %}
+                    <strong>Thanks for your payment.</strong> We’ve received your payment, but it can’t be applied toward your account at this time.<br>
+                    Contact us at XXX-XXX-XXXX as soon as possible so we can help you.
+                {% elseif transaction.status == constant('STATUS_DECLINED', transaction) %}
+                    Your payment of ${{ transaction.totalBalance|number_format(2, '.', ',') }} was declined by PayPal.
+                {% elseif transaction.status == constant('STATUS_ERROR', transaction) %}
+                    There was a critical problem with your payment.
+                {% endif %}
+                </span>
+                <button class="alert-close" id="alert-close">Close</button>
+            </div>
+        {% endif %}
+
         {% include 'partials/greetings-and-signout.html.twig' %}
+
         {% if user_fees %}
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>

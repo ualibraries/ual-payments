@@ -26,7 +26,8 @@ class ListFeesController extends Controller
      */
     public function index()
     {
-        $this->removePendingFees();
+        $transactionToNotify = $this->processTransactions();
+
         $userId = $this->getUser()->getUsername();
         $alma_user_exists = $this->userData->isValidUser($this->api->findUserById($userId));
 
@@ -44,11 +45,16 @@ class ListFeesController extends Controller
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'user_id' => $userId,
             'user_fees' => $userFees,
-            'total_Due' => $totalDue
+            'total_Due' => $totalDue,
+            'transaction' => $transactionToNotify
         ]);
     }
 
-    private function removePendingFees()
+    /**
+     * Remove user's pending transactions and return the latest transaction if it has not been notified.
+     * @return Transaction|null
+     */
+    private function processTransactions()
     {
         $userId = $this->getUser()->getUsername();
         $repository = $this->getDoctrine()->getRepository(Transaction::class);
@@ -56,12 +62,22 @@ class ListFeesController extends Controller
 
         $transactions = $repository->findBy([
             'user_id' => $userId,
-            'status' => 'PENDING'
+            'status' => Transaction::STATUS_PENDING
         ]);
 
         foreach ($transactions as $transaction) {
             $entityManager->remove($transaction);
         }
+
+        $latestTransaction = $repository->findOneBy(['user_id' => $userId], ['date' => 'DESC']);
+        if (is_null($latestTransaction) or $latestTransaction->getNotified() or ($latestTransaction->getStatus() === Transaction::STATUS_PENDING)) {
+            $latestTransaction = null;
+        } else {
+            $latestTransaction->setNotified(true);
+            $entityManager->persist($latestTransaction);
+        }
+
         $entityManager->flush();
+        return $latestTransaction;
     }
 }
