@@ -25,6 +25,10 @@ function selectedTotal() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (!document.getElementsByClassName('charges__item-checkbox-input').length) {
+    return
+  }
+
   selectedTotal()
 
   forEach(

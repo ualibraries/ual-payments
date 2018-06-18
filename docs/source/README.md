@@ -10,11 +10,16 @@ University of Arizona Libraries - Payments
 * 💻
 * PHP >= 7.2
 * Composer
+* NodeJs
 
 ## Getting started
 
 * Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
 * Run `composer install`
+* Create a database and enter the connection string in `.env`.
+* Run `bin/console doctrine:migrations:migrate` to get the database structure in place.
+* Run `npm install`
+* Run `npm run build`
 
 ## Deploying
 
@@ -22,10 +27,13 @@ This project uses [Deployer](https://deployer.org/) for its deployments. Deploym
 
 * **Production:**  
 `composer deploy:prd`
+* **Staging:**  
+`composer deploy:stg`
 
 ## Environments
 
 * **Production** - pay-prd
+* **Staging** - pay-stg
 
 ## Authentication
 * If you don't already have an SSH key on your development machine, [generate one and add it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key).
@@ -36,7 +44,7 @@ $ ssh-copy-id deploy@pay-prd
 If you don't have the password for the deploy account, you can ask someone who already has server access to add your key.  Send them your public key (e.g. `~/.ssh/id_rsa.pub`) and have them append it to the `authorized_keys` file for the `deploy` user:
 
 ```
-deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/authorized_keys
+deploy@pay-prd:~$ cat your_id_rsa.pub >> /home/deploy/.ssh/authorized_keys
 ```
 
 ## Rollback

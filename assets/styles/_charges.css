@@ -5,11 +5,6 @@
   margin: 1rem;
 }
 
-.charges__title {
-  font-size: 1.5rem;
-  font-weight: 500;
-}
-
 .charges__total-amount-due {
   font-size: 1.5rem;
   font-weight: 500;
@@ -17,10 +12,6 @@
 
 .charges__total-amount-number {
   font-weight: 600;
-}
-
-.charges__sign-out {
-  margin-bottom: 2rem;
 }
 
 .charges__prompt {
@@ -77,6 +68,7 @@
 }
 
 .charges__item-balance {
+  flex: 1;
   font-weight: 600;
 }
 

@@ -198,4 +198,30 @@ class AlmaApi
         $requestParams = compact('curl', 'body', 'headers');
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
+
+    /**
+     * @param $userId - The numeric userId of the logged in user
+     * @param $userPassword - The numeric userPassword of the logged in user
+     * @return mixed|null|\Psr\Http\Message\ResponseInterface
+     * @throws GuzzleException
+     */
+    public function authenticateUser($userId, $userPassword)
+    {
+        $method = 'POST';
+        $urlPath = '/almaws/v1/users/{user_id}';
+        $templateParamNames = array('{user_id}');
+        $templateParamValues = array(urlencode($userId));
+        $query = [
+            'user_id_type' => 'all_unique',
+            'op' => 'auth'
+        ];
+
+        $headers = [
+            'Authorization' => 'apikey ' . $this->apiKey,
+            'Exl-User-Pw' => $userPassword
+        ];
+        $requestParams = compact('query', 'headers');
+
+        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
+    }
 }

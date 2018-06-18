@@ -45,5 +45,9 @@ we don't use up too many BrowserStack minutes.  Additionally, the following envi
 
 * BROWSERSTACK_ACCESS_KEY - The access key for our BrowserStack account
 * BROWSERSTACK_USERNAME  - The username for our BrowserStack account
-* SHIB_TEST_UAID - A UAID to be used in environments where Shibboleth is not available.  This value is set to `TEST_UAID`.
-* TEST_DATABASE_URL - A formatted MySQL URL that uses the default username and password for the [CircleCI MySQL Docker Container](https://hub.docker.com/r/circleci/mysql/).
+* SHIB_TEST_UAID - A test alma user id to be used in environments where Shibboleth is not available.  This value is set to `TEST_ID`.
+* ALMA_CIRCLECI_TEST_USER_PASSWORD - The password for the test alma user
+* ALMA_API_URL - The url for the Alma Api. This value is set to `API_URL`.
+* ALMA_API_KEY - The Api key for the Alma Api. This value is set to `API_KEY`.
+
+You can run a build manually (for any branch) by going to the settings for the project and going to `TestCommands` linked on the left. At the bottom of the page there is a option that says `Test settings on...` and from there you can select any branch that has been pushed to github. Once the branch is selected press `Save & Go!`.

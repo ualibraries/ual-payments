@@ -1,0 +1,22 @@
+.alert {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: var(--sky);
+  color: var(--midnight);
+  transition: opacity .2s ease;
+}
+
+.alert-close {
+  display: inline-block;
+  margin-left: .5rem;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  color: var(--midnight);
+  text-decoration: underline;
+}
+
+.alert-close:hover {
+  cursor: pointer;
+  color: var(--azurite);
+}

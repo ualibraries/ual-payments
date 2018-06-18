@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FeesRepository")
+ * @ORM\Entity
  */
 class Fee
 {
@@ -37,10 +37,12 @@ class Fee
      */
     private $transaction;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Transaction")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    public function __construct($fee_id, $balance, $label)
+    {
+        $this->fee_id = $fee_id;
+        $this->balance = $balance;
+        $this->label = $label;
+    }
 
     public function getId()
     {

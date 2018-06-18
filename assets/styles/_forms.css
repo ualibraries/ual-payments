@@ -21,6 +21,14 @@
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
+.form__input-text--state-invalid {
+  border-color: #ab0520;
+}
+
+.form__alert {
+  color: #ab0520;
+}
+
 .form__input-text:focus {
   border-color: #9eabae;
   outline: 0;

@@ -1,0 +1,5 @@
+security:
+    access_control:
+        - { path: ^/result, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

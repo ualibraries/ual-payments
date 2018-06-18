@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TransactionRepository")
+ * @ORM\Entity
  */
 class Transaction
 {
@@ -22,11 +22,6 @@ class Transaction
      * @ORM\Column(type="datetime")
      */
     private $date;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $status;
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -48,13 +43,31 @@ class Transaction
      */
     private $fees;
 
-    public function __construct($user_id, $invoice_number = null, $status = 'PENDING', $date = null)
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notified;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $status;
+
+    const STATUS_PENDING = 'PENDING';
+    const STATUS_PAID = 'PAID';
+    const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_FAILED = 'FAILED';
+    const STATUS_DECLINED = 'DECLINED';
+    const STATUS_ERROR = 'ERROR';
+
+    public function __construct($user_id, $invoice_number = null, $status = self::STATUS_PENDING, $date = null, $notified = false)
     {
         $this->fees = new ArrayCollection();
         $this->user_id = $user_id;
         $this->status = $status;
         $this->invoice_number = $invoice_number ?: uniqid();
         $this->date = $date ?: new \DateTime();
+        $this->notified = $notified;
     }
 
     public function getId()
@@ -70,18 +83,6 @@ class Transaction
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }
@@ -149,6 +150,33 @@ class Transaction
                 $fee->setTransaction(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNotified(): ?bool
+    {
+        return $this->notified;
+    }
+
+    public function setNotified(?bool $notified): self
+    {
+        $this->notified = $notified;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        if (!in_array($status, array(self::STATUS_PENDING, self::STATUS_PAID, self::STATUS_COMPLETED, self::STATUS_FAILED, self::STATUS_DECLINED, self::STATUS_ERROR))) {
+            throw new \InvalidArgumentException("Invalid status");
+        }
+        $this->status = $status;
 
         return $this;
     }

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment History{% endblock %}
+
+{% block body %}
+
+<div class="history__wrapper">
+    <div class="history__inner">
+        {% include 'partials/greetings-and-signout.html.twig' %}
+        <div class="history__title">This is what we have on the books.</div>
+        <p class="history__prompt">Payment history</p>
+
+        {% if transactions %}
+            <ul class="history__list">
+                {% for transaction in transactions %}
+                <li class="history__item">
+                    <dl class="history__item-details">
+                        <dt class="history__item-invoice">Invoice {{ transaction.invoiceNumber }}</dt>
+                        <dd class="history__item-amount">${{ transaction.totalBalance|number_format(2, '.', ',') }}</dd>
+                        <dd class="history__item-status">{{ transaction.status|capitalize }} on {{ transaction.date | date('m/d/Y') }}</dd>
+                    </dl>
+                </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>You currently have no payments.</p>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
