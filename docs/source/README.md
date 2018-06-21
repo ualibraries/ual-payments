@@ -10,6 +10,7 @@ University of Arizona Libraries - Payments
 * 💻
 * PHP >= 7.2
 * Composer
+* NodeJs
 
 ## Getting started
 
@@ -17,6 +18,8 @@ University of Arizona Libraries - Payments
 * Run `composer install`
 * Create a database and enter the connection string in `.env`.
 * Run `bin/console doctrine:migrations:migrate` to get the database structure in place.
+* Run `npm install`
+* Run `npm run build`
 
 ## Deploying
 
@@ -24,10 +27,13 @@ This project uses [Deployer](https://deployer.org/) for its deployments. Deploym
 
 * **Production:**  
 `composer deploy:prd`
+* **Staging:**  
+`composer deploy:stg`
 
 ## Environments
 
 * **Production** - pay-prd
+* **Staging** - pay-stg
 
 ## Authentication
 * If you don't already have an SSH key on your development machine, [generate one and add it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key).

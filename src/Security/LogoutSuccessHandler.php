@@ -12,13 +12,11 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
 {
     private $router;
     private $shibUaid;
-    private $idpUrl;
 
-    public function __construct(RouterInterface $router, $shibUaid, $idpUrl)
+    public function __construct(RouterInterface $router, $shibUaid)
     {
         $this->router = $router;
         $this->shibUaid = $shibUaid;
-        $this->idpUrl = $idpUrl;
     }
 
     /**
@@ -32,7 +30,7 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
         if ($request->server->has($this->shibUaid)) {
             return new RedirectResponse($this->router->generate('shib_logout',
                 array(
-                    'return' => $this->idpUrl . '/cgi-bin/logout.pl'
+                    'return' => $this->router->generate('login')
                 )));
         } else {
             return new RedirectResponse($this->router->generate('login'));

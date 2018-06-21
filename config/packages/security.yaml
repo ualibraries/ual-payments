@@ -8,6 +8,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            logout_on_user_change: true
             anonymous: ~
             access_denied_handler: App\Security\AccessDeniedHandler
             guard:
@@ -20,5 +21,5 @@ security:
             logout:
                 path: /logout
                 success_handler: app.logout_success_handler
-                
+
             # Keep access_controll in environment specific security.yaml files
