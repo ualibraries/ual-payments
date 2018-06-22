@@ -4,6 +4,9 @@ title: README
 ---
 University of Arizona Libraries - Payments
 ========================
+<a href="https://circleci.com/gh/ualibraries/ual-payments"><img src="https://travis-ci.org/deployphp/deployer.svg?branch=master" alt="Build Status"></a>
+<a href="https://scrutinizer-ci.com/g/ualibraries/ual-payments/"><img src="https://img.shields.io/scrutinizer/g/ualibraries/ual-payments.svg?style=flat" alt="Code Quality"></a>
+<a href="https://github.com/ualibraries/ual-payments"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License"></a>
 
 ## Requirements
 
@@ -63,6 +66,5 @@ Deploy the documentation by running `composer docs:deploy`. You may need to spec
 
 View the documentation at [UAL Payments Documentation](http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com) (`http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com`).
 
-## Licensing
-
-Copyright (C) The Arizona Board of Regents on Behalf of the University of Arizona - All Rights Reserved
+## License
+Licensed under the [MIT license](https://github.com/ualibraries/ual-payments/blob/master/LICENSE).
