@@ -34,7 +34,7 @@ class PayController extends Controller
         $entityManager->persist($transaction);
         $entityManager->flush();
 
-        return $this->render('pay/index.html.twig', [
+        return $this->render('views/pay.html.twig', [
             'user_id' => $transaction->getUserId(),
             'invoice_number' => $transaction->getInvoiceNumber(),
             'total_balance' => $transaction->getTotalBalance(),
