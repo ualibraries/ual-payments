@@ -41,7 +41,7 @@ class ListFeesController extends Controller
             $totalDue += $userFee['balance'];
         }
 
-        return $this->render('list_fees/index.html.twig', [
+        return $this->render('views/index.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'user_id' => $userId,
             'user_fees' => $userFees,
