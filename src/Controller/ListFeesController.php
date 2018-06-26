@@ -69,7 +69,7 @@ class ListFeesController extends Controller
             $entityManager->remove($transaction);
         }
 
-        $latestTransaction = $repository->findOneBy(['user_id' => $userId], ['date' => 'DESC']);
+        $latestTransaction = $repository->findBy(['user_id' => $userId], ['date' => 'DESC'], 1)[0];
         if (is_null($latestTransaction) or $latestTransaction->getNotified() or ($latestTransaction->getStatus() === Transaction::STATUS_PENDING)) {
             $latestTransaction = null;
         } else {
