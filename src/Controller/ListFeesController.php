@@ -52,7 +52,7 @@ class ListFeesController extends Controller
 
     /**
      * Remove user's pending transactions and return the latest transaction if it has not been notified.
-     * @return Transaction|null
+     * @return Transaction|null Return null if the latest transaction has been notified or in PENDING status.
      */
     private function processTransactions()
     {
@@ -69,15 +69,15 @@ class ListFeesController extends Controller
             $entityManager->remove($transaction);
         }
 
-        $latestTransaction = $repository->findBy(['user_id' => $userId], ['date' => 'DESC'], 1, 0)[0];
-        if (is_null($latestTransaction) or $latestTransaction->getNotified() or ($latestTransaction->getStatus() === Transaction::STATUS_PENDING)) {
-            $latestTransaction = null;
+        $latestTransaction = $repository->findBy(['user_id' => $userId], ['date' => 'DESC'], 1);
+        if (empty($latestTransaction) or $latestTransaction[0]->getNotified() or ($latestTransaction[0]->getStatus() === Transaction::STATUS_PENDING)) {
+            $entityManager->flush();
+            return null;
         } else {
-            $latestTransaction->setNotified(true);
-            $entityManager->persist($latestTransaction);
+            $latestTransaction[0]->setNotified(true);
+            $entityManager->persist($latestTransaction[0]);
+            $entityManager->flush();
+            return $latestTransaction[0];
         }
-
-        $entityManager->flush();
-        return $latestTransaction;
     }
 }
