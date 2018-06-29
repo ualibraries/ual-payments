@@ -2,6 +2,11 @@ imports:
   # settings specific to a particular machine
   - ./behat.local.yml
 default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext:
+           api: '@test.App\Service\AlmaApi'
   extensions:
     Behat\Symfony2Extension:
       kernel:

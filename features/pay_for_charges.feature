@@ -4,6 +4,7 @@ Feature: Pay for charges
   @javascript
   Scenario: Submitting pay form with no fees selected
     Given I am on "/login"
+    And I have a fee of amount 7.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
@@ -14,6 +15,7 @@ Feature: Pay for charges
   @javascript
   Scenario: Selecting a fee to pay
     Given I am on "/login"
+    And I have a fee of amount 7.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
@@ -24,6 +26,8 @@ Feature: Pay for charges
   @javascript @additionalfee
   Scenario: Selecting multiple fees
     Given I am on "/login"
+    And I have a fee of amount 6.00
+    And I have a fee of amount 8.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
