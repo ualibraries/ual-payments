@@ -4,9 +4,17 @@ namespace App\Service;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Log\LoggerInterface;
 
 class AlmaApi
 {
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * Wrapper for requests to Alma API
      *
@@ -28,7 +36,13 @@ class AlmaApi
                 'Authorization' => 'apikey ' . getenv('API_KEY'),
             ]
         ];
-        $response = $client->request($method, $url, array_merge_recursive($requestParams, $defaultRequestParams));
+
+        try {
+            $response = $client->request($method, $url, array_merge_recursive($requestParams, $defaultRequestParams));
+        } catch(\Exception $e) {
+            $this->logger->emergency("@web-irt-dev Critical Error: Unable to reach the Alma API! :fire:");
+            throw $e;
+        }
 
         return $response;
     }
