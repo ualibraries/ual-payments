@@ -38,6 +38,7 @@ jobs:
             sudo docker-php-ext-enable pdo_mysql
             sudo apt-get install libzip-dev
             sudo docker-php-ext-install zip
+            sudo docker-php-ext-install sockets
       - run:
           name: Set php.ini settings
           command: |
