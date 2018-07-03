@@ -44,6 +44,7 @@ jobs:
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
+      - run: cp behat.local.yml.dist behat.local.yml
       - run:
           name: Install npm
           command: |
@@ -57,7 +58,7 @@ jobs:
       - run:
           name: Configure .env
           command: |
-            sed 's/\(^APP_ENV=\)/\1'ci'/' -i .env
+            sed 's/\(^APP_ENV=\)dev/\1'ci'/' -i .env
             sed 's/\(^TEST_ID=\)/\1'$SHIB_TEST_UAID'/' -i .env
             sed 's/\(^TEST_PASS=\)/\1'$ALMA_CIRCLECI_TEST_USER_PASSWORD'/' -i .env
             sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
