@@ -2,7 +2,13 @@ imports:
   # settings specific to a particular machine
   - ./behat.local.yml
 default:
+  suites:
+    default:
+      contexts:
+        - behatch:context:browser
+        - \FeatureContext
   extensions:
+    Behatch\Extension: ~
     Behat\Symfony2Extension:
       kernel:
         bootstrap: features/bootstrap/bootstrap.php
@@ -12,7 +18,5 @@ default:
         default:
           goutte: ~
         javascript:
-          browser_stack:
-            capabilities:
-              browser: 'chrome'
-              browserstack-tunnel: true
+          zombie:
+            server_path: bin/mink-zombie-server.js
