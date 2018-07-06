@@ -93,7 +93,7 @@
       "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
     ],
     "test": [
-      "bin/phpunit",
+      "export SYMFONY_DEPRECATIONS_HELPER=weak && bin/phpunit",
       "vendor/bin/behat --colors"
     ],
     "auto-scripts": {

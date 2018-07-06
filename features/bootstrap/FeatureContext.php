@@ -25,41 +25,39 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct()
+    public function __construct(AlmaApi $api)
     {
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__.'/../../.env');
         $this->testTransaction = null;
         $this->paymentResponse = null;
+        $this->api = $api;
     }
 
     /**
-     * @BeforeFeature @fee
-     * @BeforeScenario @additionalfee
+     * @Given I have a fee
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function createFee()
+    public function createFee($event)
     {
-        $api = new AlmaApi();
         $userId = getenv('TEST_ID');
         $userPassword = getenv('TEST_PASS');
         $testFeeBody = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
-        $api->createUserFee($userId, json_decode($testFeeBody));
+        $this->api->createUserFee($userId, json_decode($testFeeBody));
     }
 
     /**
-     * @AfterFeature
+     * @AfterScenario @fee, @transactions
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public static function removeFees()
+    public function removeFees($event)
     {
-        $api = new AlmaApi();
         $userData = new AlmaUserData();
         $userId = getenv('TEST_ID');
-        $fees = $userData->listFees($api->getUserFees($userId));
+        $fees = $userData->listFees($this->api->getUserFees($userId));
 
         foreach ($fees as $fee) {
-            $api->payUserFee($userId, $fee['id'], $fee['balance']);
+            $this->api->payUserFee($userId, $fee['id'], $fee['balance']);
         }
     }
 
@@ -107,6 +105,19 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     }
 
     /**
+     * @Given I have a fee of amount :amount
+     */
+    public function iHaveAFee($amount)
+    {
+        $userId = getenv('TEST_ID');
+        $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
+        $testFee = json_decode($testFee);
+        $testFee->original_amount = $amount;
+        $response = $this->api->createUserFee($userId, $testFee);
+    }
+
+
+    /**
      * @Given I have a transaction with :numFees fees of amount :amount
      */
     public function iHaveATransaction($numFees, $amount)
@@ -115,13 +126,12 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
-        $api = new AlmaApi();
         $userId = getenv('TEST_ID');
         $transaction = new Transaction($userId);
         $total = 0;
 
         for ($i = 0; $i < $numFees; $i++) {
-            $response = $api->createUserFee($userId, $testFee);
+            $response = $this->api->createUserFee($userId, $testFee);
             $sxml = new SimpleXMLElement($response->getBody());
             $fee = new Fee((int)$sxml->id, (float)$sxml->original_amount, (string)$sxml->type);
             $transaction->addFee($fee);

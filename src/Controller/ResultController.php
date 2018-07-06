@@ -11,6 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResultController extends Controller
 {
+
+    private $almaApi;
+
+    public function __construct(AlmaApi $api)
+    {
+        $this->almaApi = $api;
+    }
+
     /**
      * @Route("/result", name="result")
      * @param Request $request
@@ -76,12 +84,11 @@ class ResultController extends Controller
     private function updateFeesOnAlma(Transaction $transaction)
     {
         $result = false;
-        $api = new AlmaApi();
 
         $fees = $transaction->getFees();
         foreach ($fees as $fee) {
             try {
-                $api->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
+                $this->almaApi->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
                 $result = true;
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
                 echo $e->getCode() . $e->getMessage();
