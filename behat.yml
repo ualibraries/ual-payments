@@ -6,7 +6,7 @@ default:
     default:
       contexts:
         - behatch:context:browser
-        - \FeatureContext
+        - \FeatureContext:
            api: '@test.App\Service\AlmaApi'
   extensions:
     Behatch\Extension: ~
