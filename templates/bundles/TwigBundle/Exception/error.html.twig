@@ -6,12 +6,10 @@
 
 {% block body %}
     <div class="unauthorized__wrapper">
-        <h2>Oops!</h2>
+        <h2>Something went wrong</h2>
         <p>
-            Something went wrong.
-            Please <a href="http://new.library.arizona.edu/contact">contact us</a>
-            and let us know what you were doing when you got this message.
+            It looks like we had a problem.  Let's see what happened.
         </p>
-        <a href="{{ path('index') }}"><button class="button button-primary">Back to the homepage</button></a>
+        <a href="http://new.library.arizona.edu/contact"><button class="button button-primary">Contact us so we can help</button></a>
     </div>
 {% endblock %}
