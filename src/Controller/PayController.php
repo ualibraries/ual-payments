@@ -12,10 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PayController extends Controller
 {
+    private $api;
 
     public function __construct(AlmaApi $api)
     {
-        $this->almaApi = $api;
+        $this->api = $api;
     }
 
     /**
@@ -61,7 +62,7 @@ class PayController extends Controller
         $userData = new AlmaUserData();
 
         $userId = $transaction->getUserId();
-        $almaFees = $userData->listFees($this->almaApi->getUserFees($userId));
+        $almaFees = $userData->listFees($this->api->getUserFees($userId));
 
         $total = 0;
         foreach ($almaFees as $almaFee) {
