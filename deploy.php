@@ -11,7 +11,7 @@ set('application', 'ual-payments');
 set('repository', 'ssh://git@github.com/ualibraries/ual-payments.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', true);
 
 // Keep all releases
 set('keep_releases', -1);
@@ -35,21 +35,15 @@ host('production')
     ->user('deploy')
     ->hostname('pay-prd.library.arizona.edu')
     ->set('deploy_path', '/var/www')
-    ->stage('prd'); 
-    
+    ->stage('prd');
 
 host('stage')
     ->user('deploy')
     ->hostname('pay-stg.library.arizona.edu')
     ->set('deploy_path', '/var/www')
     ->stage('stg');
+
 // Tasks
-
-task('build', function () {
-    run('cd {{release_path}} && build');
-});
-
-
 task('assets-build', function () {
     run('cd {{release_path}} && composer assets:build');
 });

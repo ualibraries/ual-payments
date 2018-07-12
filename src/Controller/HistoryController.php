@@ -25,7 +25,7 @@ class HistoryController extends Controller
     public function index()
     {
         $userId = $this->getUser()->getUsername();
-        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(['user_id' => $userId]);
+        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(['user_id' => $userId], ['date' => 'DESC']);
         return $this->render('views/history.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'transactions' => $transactions
