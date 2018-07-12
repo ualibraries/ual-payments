@@ -89,9 +89,16 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
             throw new InvalidCsrfTokenException('Invalid CSRF token.');
         }
 
+        $username = $request->request->get('_username');
+        $password = $request->request->get('_password');
+
+        if ($username == '' || $password == '') {
+            throw new CustomUserMessageAuthenticationException('Username or password cannot be empty.');
+        }
+
         return array(
-            'username' => $request->request->get('_username'),
-            'password' => $request->request->get('_password'),
+            'username' => $username,
+            'password' => $password
         );
     }
 
@@ -112,9 +119,6 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if ($credentials['username'] == '') {
-            throw new CustomUserMessageAuthenticationException('Username cannot be empty.');
-        }
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
