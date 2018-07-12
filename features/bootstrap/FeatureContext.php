@@ -1,15 +1,11 @@
 <?php
 
-use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\MinkContext;
+use App\Entity\Fee;
+use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
-use App\Entity\Transaction;
-use App\Entity\Fee;
-use Symfony\Component\Dotenv\Dotenv;
 use GuzzleHttp\Client;
+use Symfony\Component\Dotenv\Dotenv;
 use Webmozart\Assert\Assert;
 
 /**
@@ -18,17 +14,23 @@ use Webmozart\Assert\Assert;
 class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 {
     use Behat\Symfony2Extension\Context\KernelDictionary;
+
+    private $testTransaction;
+    private $paymentResponse;
+    private $api;
+
     /**
      * Initializes context.
      *
      * Every scenario gets its own context instance.
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
+     * @param AlmaApi $api
      */
     public function __construct(AlmaApi $api)
     {
         $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/../../.env');
+        $dotenv->load(__DIR__ . '/../../.env');
         $this->testTransaction = null;
         $this->paymentResponse = null;
         $this->api = $api;
@@ -41,7 +43,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     public function createFee($event)
     {
         $userId = getenv('TEST_ID');
-        $userPassword = getenv('TEST_PASS');
         $testFeeBody = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $this->api->createUserFee($userId, json_decode($testFeeBody));
     }
@@ -222,7 +223,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $this->checkFeesListForTestTransactionFeeIds();
     }
 
-    protected function checkFeesListForTestTransactionFeeIds($assertMethod= "true")
+    protected function checkFeesListForTestTransactionFeeIds($assertMethod = "true")
     {
         $page = $this->getSession()->getPage();
         $nodes = $page->findAll('css', "[name='fee[]']");
@@ -243,52 +244,52 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     protected function getPayFlowSuccessPostArray()
     {
         return [
-           "STATE" =>"",
-           "CITYTOSHIP" =>"",
-           "COUNTRYTOSHIP" =>"",
-           "AVSDATA" => "YYY",
-           "AUTHCODE" => "010101",
-           "PHONE" =>"",
-           "NAMETOSHIP" =>"",
-           "RESULT" => "0",
-           "ZIP" => "23059",
-           "EMAILTOSHIP" =>"",
-           "EMAIL" => "foo@mailinator.com",
-           "RESPMSG" => "Approved",
-           "INVOICE" => "5aff688b7a291",
-           "PHONETOSHIP" =>"",
-           "FAX" =>"",
-           "TYPE" => "S",
-           "FAXTOSHIP" =>"",
-           "STATETOSHIP" =>"",
-           "TAX" =>"",
-           "CSCMATCH" => "Y",
-           "PONUM" =>"",
-           "NAME" =>"",
-           "DESCRIPTION" =>"",
-           "ORIGMETHOD" =>"",
-           "COUNTRY" =>"",
-           "ADDRESS" => "123 Fake St",
-           "CUSTID" => "test1234",
-           "USER10" =>"",
-           "PNREF" => "A10EAAE47E1D",
-           "AMOUNT" => "5.00",
-           "ZIPTOSHIP" =>"",
-           "USER4" =>"",
-           "ADDRESSTOSHIP" =>"",
-           "USER3" =>"",
-           "TRXTYPE" =>"",
-           "USER6" =>"",
-           "USER5" =>"",
-           "USER8" =>"",
-           "USER7" =>"",
-           "USER9" =>"",
-           "METHOD" => "CC",
-           "CITY" =>"",
-           "HOSTCODE" => "00",
-           "USER2" =>"",
-           "USER1" =>""
-       ];
+            "STATE" => "",
+            "CITYTOSHIP" => "",
+            "COUNTRYTOSHIP" => "",
+            "AVSDATA" => "YYY",
+            "AUTHCODE" => "010101",
+            "PHONE" => "",
+            "NAMETOSHIP" => "",
+            "RESULT" => "0",
+            "ZIP" => "23059",
+            "EMAILTOSHIP" => "",
+            "EMAIL" => "foo@mailinator.com",
+            "RESPMSG" => "Approved",
+            "INVOICE" => "5aff688b7a291",
+            "PHONETOSHIP" => "",
+            "FAX" => "",
+            "TYPE" => "S",
+            "FAXTOSHIP" => "",
+            "STATETOSHIP" => "",
+            "TAX" => "",
+            "CSCMATCH" => "Y",
+            "PONUM" => "",
+            "NAME" => "",
+            "DESCRIPTION" => "",
+            "ORIGMETHOD" => "",
+            "COUNTRY" => "",
+            "ADDRESS" => "123 Fake St",
+            "CUSTID" => "test1234",
+            "USER10" => "",
+            "PNREF" => "A10EAAE47E1D",
+            "AMOUNT" => "5.00",
+            "ZIPTOSHIP" => "",
+            "USER4" => "",
+            "ADDRESSTOSHIP" => "",
+            "USER3" => "",
+            "TRXTYPE" => "",
+            "USER6" => "",
+            "USER5" => "",
+            "USER8" => "",
+            "USER7" => "",
+            "USER9" => "",
+            "METHOD" => "CC",
+            "CITY" => "",
+            "HOSTCODE" => "00",
+            "USER2" => "",
+            "USER1" => ""
+        ];
     }
 
     protected function getPayFlowDeclinedPostArray()
