@@ -22,17 +22,22 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
 {
     private $router;
     private $csrfTokenManager;
-    private $almaApi;
+    private $security;
+    private $api;
 
-    public function __construct(RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, AlmaApi $api)
+    public function __construct(RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, Security $security, AlmaApi $api)
     {
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->almaApi = $api;
+        $this->security = $security;
+        $this->api = $api;
     }
 
     public function supports(Request $request)
     {
+        if ($this->security->getUser()) {
+            return false;
+        }
         return $request->request->has('_username') && $request->request->has('_password');
     }
 
@@ -141,7 +146,7 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         try {
-            $response = $this->almaApi->authenticateUser($credentials['username'], $credentials['password']);
+            $response = $this->api->authenticateUser($credentials['username'], $credentials['password']);
             if ($response->getStatusCode() === 204) {
                 return true;
             }

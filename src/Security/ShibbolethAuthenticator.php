@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -15,12 +16,22 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 {
     private $router;
+    private $security;
     private $shibUaid;
 
-    public function __construct(RouterInterface $router, $shibUaid)
+    public function __construct(RouterInterface $router, Security $security, $shibUaid)
     {
         $this->router = $router;
+        $this->security = $security;
         $this->shibUaid = $shibUaid;
+    }
+
+    public function supports(Request $request)
+    {
+        if ($this->security->getUser()) {
+            return false;
+        }
+        return $request->server->has($this->shibUaid);
     }
 
     /**
@@ -32,11 +43,6 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         return new RedirectResponse($this->router->generate('login'));
-    }
-
-    public function supports(Request $request)
-    {
-        return $request->server->has($this->shibUaid);
     }
 
     /**
