@@ -14,13 +14,8 @@ class HistoryController extends Controller
     public function index()
     {
         $user = $this->getUser();
-        if (!$user->isValid()) {
-            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
-        }
-
-        $userId = $this->getUser()->getUsername();
-        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy([
-            'user_id' => $userId],
+        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(
+            ['user_id' => $user->getUsername()],
             ['date' => 'DESC']
         );
         return $this->render('views/history.html.twig', [

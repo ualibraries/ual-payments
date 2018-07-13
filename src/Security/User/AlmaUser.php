@@ -2,8 +2,6 @@
 
 namespace App\Security\User;
 
-use App\Service\AlmaApi;
-use App\Service\AlmaUserData;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -14,22 +12,12 @@ class AlmaUser implements UserInterface, EquatableInterface
     private $firstName;
     private $lastName;
 
-    private $valid = false;
-
-    public function __construct($username, array $roles, AlmaApi $api, AlmaUserData $userData)
+    public function __construct($username, array $roles, $firstName, $lastName)
     {
         $this->username = $username;
         $this->roles = $roles;
-
-        try {
-            $response = $api->findUserById($username);
-            if ($userData->isValidUser($response)) {
-                $this->valid = true;
-                list($this->firstName, $this->lastName) = $userData->getFirstLastName($response);
-            }
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-            echo $e->getCode() . $e->getMessage();
-        }
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
     }
 
     /**
@@ -136,13 +124,5 @@ class AlmaUser implements UserInterface, EquatableInterface
     public function getLastName()
     {
         return $this->lastName;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isValid()
-    {
-        return $this->valid;
     }
 }

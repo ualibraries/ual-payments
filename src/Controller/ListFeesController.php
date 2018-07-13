@@ -27,10 +27,6 @@ class ListFeesController extends Controller
     public function index()
     {
         $user = $this->getUser();
-        if (!$user->isValid()) {
-            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException();
-        }
-
         $transactionToNotify = $this->processTransactions();
 
         $totalDue = 0.0;
