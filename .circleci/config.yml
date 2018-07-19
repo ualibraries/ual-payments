@@ -32,25 +32,19 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
-          name: Run BrowserStack Local
-          background: true
-          command: |
-            wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
-            unzip BrowserStackLocal-linux-x64.zip
-            ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY}
-
-      - run:
           name: Install PHP extensions
           command: |
             sudo docker-php-ext-install pdo_mysql
             sudo docker-php-ext-enable pdo_mysql
             sudo apt-get install libzip-dev
             sudo docker-php-ext-install zip
+            sudo docker-php-ext-install sockets
       - run:
           name: Set php.ini settings
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
       - run: composer install -n --prefer-dist
+      - run: cp behat.local.yml.dist behat.local.yml
       - run:
           name: Install npm
           command: |
@@ -58,17 +52,13 @@ jobs:
             sudo apt-get install -y nodejs
       - run: npm install
       - run: npm run build
+      - run: sudo npm install -g zombie
       - run: sudo chmod -R 777 var/
       - run: cp .env.dist .env
       - run:
-          name: Configure behat.local.yml
-          command: |
-            cp behat.local.yml.dist behat.local.yml
-            sed 's/^\(\s*username\s*:\s*\).*/\1 '$BROWSERSTACK_USERNAME'/' -i behat.local.yml
-            sed 's/^\(\s*access_key\s*:\s*\).*/\1 '$BROWSERSTACK_ACCESS_KEY'/' -i behat.local.yml
-      - run:
           name: Configure .env
           command: |
+            sed 's/\(^APP_ENV=\)dev/\1'ci'/' -i .env
             sed 's/\(^TEST_ID=\)/\1'$SHIB_TEST_UAID'/' -i .env
             sed 's/\(^TEST_PASS=\)/\1'$ALMA_CIRCLECI_TEST_USER_PASSWORD'/' -i .env
             sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env

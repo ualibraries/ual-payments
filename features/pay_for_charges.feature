@@ -2,18 +2,19 @@
 Feature: Pay for charges
 
   @javascript
-  Scenario: Submitting pay form with no fees selected
+  Scenario: The submit button should be disabled if no fees are checked
     Given I am on "/login"
+    And I have a fee of amount 7.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
     And I am on "/"
-    And I submit the "chargesList" form
-    Then I should be on "/"
+    Then the element "#submitButton" should be disabled
 
   @javascript
   Scenario: Selecting a fee to pay
     Given I am on "/login"
+    And I have a fee of amount 7.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
@@ -24,11 +25,13 @@ Feature: Pay for charges
   @javascript @additionalfee
   Scenario: Selecting multiple fees
     Given I am on "/login"
+    And I have a fee of amount 6.00
+    And I have a fee of amount 8.00
     And I fill in "username" with the ENV variable "TEST_ID"
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
     And I am on "/"
     When I check all fees
-    And I submit the "chargesList" form
+    And I press "Pay now"
     Then I should be on "/pay"
     And I should see "You’re about to pay $14.00"

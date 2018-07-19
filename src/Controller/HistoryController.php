@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\AlmaUser;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
@@ -26,8 +25,8 @@ class HistoryController extends Controller
     public function index()
     {
         $userId = $this->getUser()->getUsername();
-        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(['user_id' => $userId]);
-        return $this->render('history/index.html.twig', [
+        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(['user_id' => $userId], ['date' => 'DESC']);
+        return $this->render('views/history.html.twig', [
             'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
             'transactions' => $transactions
         ]);

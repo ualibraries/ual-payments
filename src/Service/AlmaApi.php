@@ -4,23 +4,20 @@ namespace App\Service;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Psr\Log\LoggerInterface;
 
 class AlmaApi
 {
-    private $apiUrl;
-    private $apiKey;
+    private $logger;
 
-    /**
-     * HandleAlmaUserData constructor. Sets the apiUrl and apiKey variables that are set in .env
-     */
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
-        $this->apiUrl = getenv('API_URL');
-        $this->apiKey = getenv('API_KEY');
+        $this->logger = $logger;
     }
 
     /**
      * Wrapper for requests to Alma API
+     *
      * @param $urlPath
      * @param $method
      * @param $requestParams
@@ -31,21 +28,28 @@ class AlmaApi
      */
     protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues)
     {
-        $client = new Client(['base_uri' => $this->apiUrl]);
+        $client = new Client(['base_uri' => getenv('API_URL')]);
 
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
         $defaultRequestParams = [
             'headers' => [
-                'Authorization' => 'apikey ' . $this->apiKey,
+                'Authorization' => 'apikey ' . getenv('API_KEY'),
             ]
         ];
-        $response = $client->request($method, $url, $requestParams + $defaultRequestParams);
+
+        try {
+            $response = $client->request($method, $url, array_merge_recursive($requestParams, $defaultRequestParams));
+        } catch(\Exception $e) {
+            $this->logger->emergency("@web-irt-dev Critical Error: Unable to reach the Alma API! :fire:");
+            throw $e;
+        }
 
         return $response;
     }
 
     /**
      * Get the users list of fees from Alma
+     *
      * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
@@ -60,17 +64,14 @@ class AlmaApi
             'user_id_type' => 'all_unique',
             'status' => 'ACTIVE'
         ];
-        $curl = [
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-        $requestParams = compact('query', 'curl');
+        $requestParams = compact('query');
 
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
      * Get the user from alma by the user id. Returns 400 status code if user does not exist.
+     *
      * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
@@ -86,18 +87,15 @@ class AlmaApi
             'view' => 'full',
             'expand' => 'none'
         ];
-        $curl = [
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true
-        ];
+        $requestParams = compact('query');
 
-        $requestParams = compact('query', 'curl');
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
-     * Use the Alma api to search for the user by primary_id. This is how we will check that a the provided user id is found
-     * in Alma as a primary_id.
+     * Use the Alma api to search for the user by primary_id.
+     * This is how we will check that a the provided user id is found in Alma as a primary_id.
+     *
      * @param $userId
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
@@ -114,19 +112,14 @@ class AlmaApi
             'q' => 'primary_id~' . $userId,
             'order_by' => 'last_name first_name, primary_id'
         ];
+        $requestParams = compact('query');
 
-        $curl = [
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-
-        $requestParams = compact('query', 'curl');
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
-     * @param $userId - The numeric userId of the logged in user
-     * @param $feeId - The Alma specific fee id to be updated
+     * @param string $userId The alphanumeric userId of the logged in user
+     * @param string $feeId The Alma specific fee id to be updated
      * @param $amount
      * @param string $method
      * @param null $externalTransactionId
@@ -153,9 +146,9 @@ class AlmaApi
     }
 
     /**
-     * @param $userId - The numeric userId of the logged in user
-     * @param $feeId - The Alma specific fee id to be updated
-     * @param $query - The parameters for the query.
+     * @param string $userId The alphanumeric userId of the logged in user
+     * @param string $feeId The Alma specific fee id to be updated
+     * @param array $query The parameters for the query.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
@@ -165,17 +158,14 @@ class AlmaApi
         $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
         $templateParamNames = array('{user_id}', '{fee_id}');
         $templateParamValues = array(urlencode($userId), urlencode($feeId));
-        $curl = [
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-        $requestParams = compact('curl', 'query');
+        $requestParams = compact('query');
+
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
-     * @param $userId - The numeric userId of the logged in user
-     * @param $body - A plain PHP object representing a fee.
+     * @param string $userId The alphanumeric userId of the logged in user
+     * @param mixed $body A plain PHP object representing a fee.
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
@@ -185,23 +175,19 @@ class AlmaApi
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
         $templateParamValues = array(urlencode($userId));
-        $curl = [
-            CURLOPT_HEADER => false,
-            CURLOPT_RETURNTRANSFER => true
-        ];
 
         $headers = [
-            'Authorization' => 'apikey ' . $this->apiKey,
             'Content-Type' => 'application/json'
         ];
         $body = json_encode($body);
-        $requestParams = compact('curl', 'body', 'headers');
+        $requestParams = compact('body', 'headers');
+
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
     }
 
     /**
-     * @param $userId - The numeric userId of the logged in user
-     * @param $userPassword - The numeric userPassword of the logged in user
+     * @param string $userId The alphanumeric userId of the logged in user
+     * @param string $userPassword The alphanumeric userPassword of the logged in user
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
@@ -217,7 +203,6 @@ class AlmaApi
         ];
 
         $headers = [
-            'Authorization' => 'apikey ' . $this->apiKey,
             'Exl-User-Pw' => $userPassword
         ];
         $requestParams = compact('query', 'headers');

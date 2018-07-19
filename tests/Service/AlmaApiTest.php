@@ -11,10 +11,11 @@ namespace App\Tests\Service;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use SimpleXMLElement;
 use Symfony\Component\Dotenv\Dotenv;
 
-class AlmaApiTest extends TestCase
+class AlmaApiTest extends KernelTestCase
 {
     private $api;
     private $userId;
@@ -22,9 +23,11 @@ class AlmaApiTest extends TestCase
 
     public function setUp()
     {
+        $kernel = self::bootKernel();
+        $api = $kernel->getContainer()->get('test.App\Service\AlmaApi');
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/../../.env');
-        $this->api = new AlmaApi();
+        $this->api = $api;
         $this->userId = getenv('TEST_ID');
         $this->userData = new AlmaUserData();
         parent::setUp();

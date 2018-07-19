@@ -12,6 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PayController extends Controller
 {
+
+    public function __construct(AlmaApi $api)
+    {
+        $this->almaApi = $api;
+    }
+
     /**
      * @Route("/pay", name="payment_handler")
      * @param Request $request
@@ -34,7 +40,7 @@ class PayController extends Controller
         $entityManager->persist($transaction);
         $entityManager->flush();
 
-        return $this->render('pay/index.html.twig', [
+        return $this->render('views/pay.html.twig', [
             'user_id' => $transaction->getUserId(),
             'invoice_number' => $transaction->getInvoiceNumber(),
             'total_balance' => $transaction->getTotalBalance(),
@@ -53,10 +59,9 @@ class PayController extends Controller
     private function setUserFees(Transaction $transaction, $feeIds)
     {
         $userData = new AlmaUserData();
-        $api = new AlmaApi();
 
         $userId = $transaction->getUserId();
-        $almaFees = $userData->listFees($api->getUserFees($userId));
+        $almaFees = $userData->listFees($this->almaApi->getUserFees($userId));
 
         $total = 0;
         foreach ($almaFees as $almaFee) {

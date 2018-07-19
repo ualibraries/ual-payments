@@ -4,6 +4,5 @@ default:
       base_url: 'http://localhost'
       sessions:
         javascript:
-          browser_stack:
-            username:
-            access_key:
+          zombie:
+            node_modules_path: /usr/lib/node_modules/

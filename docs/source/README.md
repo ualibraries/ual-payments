@@ -4,9 +4,10 @@ title: README
 ---
 University of Arizona Libraries - Payments
 ========================
-<a href="https://circleci.com/gh/ualibraries/ual-payments"><img src="https://travis-ci.org/deployphp/deployer.svg?branch=master" alt="Build Status"></a>
-<a href="https://scrutinizer-ci.com/g/ualibraries/ual-payments/"><img src="https://img.shields.io/scrutinizer/g/ualibraries/ual-payments.svg?style=flat" alt="Code Quality"></a>
-<a href="https://github.com/ualibraries/ual-payments"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License"></a>
+
+[![CircleCI](https://circleci.com/gh/ualibraries/ual-payments.svg?style=svg)](https://circleci.com/gh/ualibraries/ual-payments)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/ualibraries/ual-payments.svg?style=flat)](https://scrutinizer-ci.com/g/ualibraries/ual-payments/)
+![license](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 ## Requirements
 
