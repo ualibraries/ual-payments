@@ -12,4 +12,4 @@ Feature: User wants to visit the homepage
     And I fill in "password" with the ENV variable "TEST_PASS"
     And I press "Login"
     Then I am on "/"
-    And I should see "Hi, tess test test!"
+    And I should see "Hi, TeSS Circleci!"
