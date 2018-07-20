@@ -5,6 +5,7 @@ namespace App\Service;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
+use SimpleXMLElement;
 
 class AlmaApi
 {
@@ -39,8 +40,46 @@ class AlmaApi
 
         try {
             $response = $client->request($method, $url, array_merge_recursive($requestParams, $defaultRequestParams));
-        } catch(\Exception $e) {
-            $this->logger->emergency("@web-irt-dev Critical Error: Unable to reach the Alma API! :fire:");
+        } catch (\Exception $e) {
+            $emergency = true;
+            $emergencyClientStatusCodes = ['404', '403', '401'];
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                $statusCode = $response->getStatusCode();
+                // 500 errors are always considered and emergency
+                if (!in_array($statusCode, $emergencyClientStatusCodes) && !preg_match('/5[0-9][0-9]/', $statusCode)) {
+                    $emergency = false;
+                }
+
+                $body = $response->getBody();
+                try {
+                    $sxml = new SimpleXMLElement($body);
+
+                    foreach ($sxml->errorList as $error) {
+                        $code = $error->error->errorCode;
+                        $msg = $error->error->errorMessage;
+                        $this->logger->error("Alma API error (HTTP status code: $statusCode Alma Error Code: $code): $msg");
+                    }
+                } catch (\Exception $e1) {
+                    /**
+                     *  The Alma API will return a 400 status code in the event that the API key is invalid.
+                     *  Unfortunately, this same status code is returned under many other circumstances, for
+                     *  example if a user provides incorrect credentials to log in.  The only way I can figure
+                     *  out how to distinguish the two is by checking the actual text of the body, which annoyingly
+                     *  isn't a valid XML response like all the other responses.
+                     */
+                    if ($body == 'Invalid API Key') {
+                        $this->logger->emergency("@web-irt-dev Critical Error: $body :fire:");
+                    } else {
+                        $this->logger->error("Unable to parse response from Alma API as XML.  Status code: $statusCode  Body: $body");
+                    }
+                }
+            }
+
+            if ($emergency) {
+                $this->logger->emergency("@web-irt-dev Critical Error: Unable to reach the Alma API! :fire:");
+            }
+
             throw $e;
         }
 
