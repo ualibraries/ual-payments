@@ -35,7 +35,7 @@ class SecuritySubscriber implements EventSubscriberInterface
     {
         $token = $event->getAuthenticationToken();
         if ($token->getUsername() != "anon") {
-            $this->logger->info("Login succeeeded: " . $token->getUsername());
+            $this->logger->info("Login succeeded: " . $token->getUsername());
         }
     }
 }
