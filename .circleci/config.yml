@@ -25,6 +25,7 @@ jobs:
       - checkout
 
 
+      - run: sudo usermod -a -G circleci www-data 
       # Download and cache dependencies
       - restore_cache:
           keys:
