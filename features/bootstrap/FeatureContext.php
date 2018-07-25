@@ -150,24 +150,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     public function iSuccessfullyPayForTheTransactionInPayflowLink()
     {
-        if ($this->testTransaction === null) {
-            throw new \Exception("No test transaction id set.");
-        }
-
-
-        $url = rtrim($this->getMinkParameter('base_url'), '/');
-        $url .= $this->getContainer()->get('router')->generate('result');
-        $userId = getenv('TEST_ID');
-
         $form_params = $this->getPayFlowSuccessPostArray();
-        $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
-        $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
-        $form_params['CUSTID'] = $userId;
-
-        $client = new Client();
-        $this->paymentResponse = $client->request('POST', $url, [
-            'form_params' => $form_params
-        ]);
+        $this->testPayflowLinkResult($form_params);
     }
 
     /**
@@ -186,6 +170,12 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     public function myTransactionInPayflowLinkIsDeclined()
     {
+        $form_params = $this->getPayFlowDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
+    protected function testPayflowLinkResult($form_params)
+    {
         if ($this->testTransaction === null) {
             throw new \Exception("No test transaction id set.");
         }
@@ -195,7 +185,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $url .= $this->getContainer()->get('router')->generate('result');
         $userId = getenv('TEST_ID');
 
-        $form_params = $this->getPayFlowDeclinedPostArray();
         $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
         $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
         $form_params['CUSTID'] = $userId;
