@@ -150,24 +150,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     public function iSuccessfullyPayForTheTransactionInPayflowLink()
     {
-        if ($this->testTransaction === null) {
-            throw new \Exception("No test transaction id set.");
-        }
-
-
-        $url = rtrim($this->getMinkParameter('base_url'), '/');
-        $url .= $this->getContainer()->get('router')->generate('result');
-        $userId = getenv('TEST_ID');
-
         $form_params = $this->getPayFlowSuccessPostArray();
-        $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
-        $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
-        $form_params['CUSTID'] = $userId;
-
-        $client = new Client();
-        $this->paymentResponse = $client->request('POST', $url, [
-            'form_params' => $form_params
-        ]);
+        $this->testPayflowLinkResult($form_params);
     }
 
     /**
@@ -186,6 +170,32 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
     public function myTransactionInPayflowLinkIsDeclined()
     {
+        $form_params = $this->getPayFlowDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
+    /**
+     * @Given my transaction in Payflow Link is AVS declined
+     */
+
+    public function myTransactionInPayflowLinkIsAvsDeclined()
+    {
+        $form_params = $this->getPayFlowAvsDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
+    /**
+     * @Given my transaction in Payflow Link is CSC declined
+     */
+
+    public function myTransactionInPayflowLinkIsCscDeclined()
+    {
+        $form_params = $this->getPayFlowCscDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
+    protected function testPayflowLinkResult($form_params)
+    {
         if ($this->testTransaction === null) {
             throw new \Exception("No test transaction id set.");
         }
@@ -195,7 +205,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $url .= $this->getContainer()->get('router')->generate('result');
         $userId = getenv('TEST_ID');
 
-        $form_params = $this->getPayFlowDeclinedPostArray();
         $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
         $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
         $form_params['CUSTID'] = $userId;
@@ -338,6 +347,108 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
             "HOSTCODE" => "05",
             "USER2" => "",
             "USER1" => ""
+        ];
+    }
+
+    protected function getPayFlowCscDeclinedPostArray()
+    {
+        return [
+            "STATE"=>"AZ",
+            "CITYTOSHIP"=>"",
+            "COUNTRYTOSHIP"=>"",
+            "AVSDATA"=>"YNY",
+            "AUTHCODE"=>"010101",
+            "PHONE"=>"",
+            "NAMETOSHIP"=>"",
+            "RESULT"=>"0",
+            "ZIP"=>"85721",
+            "EMAILTOSHIP"=>"",
+            "EMAIL"=>"foo%40mailinator.com",
+            "RESPMSG"=>"CSCDECLINED",
+            "INVOICE"=>"5b58c517d9e1e",
+            "PHONETOSHIP"=>"",
+            "FAX"=>"",
+            "TYPE"=>"S",
+            "FAXTOSHIP"=>"",
+            "STATETOSHIP"=>"",
+            "TAX"=>"",
+            "CSCMATCH"=>"N",
+            "PONUM"=>"",
+            "NAME"=>"William+S",
+            "DESCRIPTION"=>"",
+            "ORIGMETHOD"=>"",
+            "COUNTRY"=>"",
+            "ADDRESS"=>"123",
+            "CUSTID"=>"Circleci",
+            "USER10"=>"",
+            "PNREF"=>"A70EAA268924",
+            "AMOUNT"=>"7.00",
+            "ZIPTOSHIP"=>"",
+            "USER4"=>"",
+            "ADDRESSTOSHIP"=>"",
+            "USER3"=>"",
+            "TRXTYPE"=>"",
+            "USER6"=>"",
+            "USER5"=>"",
+            "USER8"=>"",
+            "USER7"=>"",
+            "USER9"=>"",
+            "METHOD"=>"CC",
+            "CITY"=>"Tucson",
+            "HOSTCODE"=>"00",
+            "USER2"=>"",
+            "USER1"=>""
+        ];
+    }
+
+    protected function getPayFlowAvsDeclinedPostArray()
+    {
+        return [
+            "STATE"=>"AZ",
+            "CITYTOSHIP"=>"",
+            "COUNTRYTOSHIP"=>"",
+            "AVSDATA"=>"NNN",
+            "AUTHCODE"=>"010101",
+            "PHONE"=>"",
+            "NAMETOSHIP"=>"",
+            "RESULT"=>"0",
+            "ZIP"=>"85721",
+            "EMAILTOSHIP"=>"",
+            "EMAIL"=>"foo%40mailinator.com",
+            "RESPMSG"=>"AVSDECLINED",
+            "INVOICE"=>"5b58c517d9e1e",
+            "PHONETOSHIP"=>"",
+            "FAX"=>"",
+            "TYPE"=>"S",
+            "FAXTOSHIP"=>"",
+            "STATETOSHIP"=>"",
+            "TAX"=>"",
+            "CSCMATCH"=>"Y",
+            "PONUM"=>"",
+            "NAME"=>"William+S",
+            "DESCRIPTION"=>"",
+            "ORIGMETHOD"=>"",
+            "COUNTRY"=>"",
+            "ADDRESS"=>"49354+Main",
+            "CUSTID"=>"Circleci",
+            "USER10"=>"",
+            "PNREF"=>"A70EAA26896D",
+            "AMOUNT"=>"7.00",
+            "ZIPTOSHIP"=>"",
+            "USER4"=>"",
+            "ADDRESSTOSHIP"=>"",
+            "USER3"=>"",
+            "TRXTYPE"=>"",
+            "USER6"=>"",
+            "USER5"=>"",
+            "USER8"=>"",
+            "USER7"=>"",
+            "USER9"=>"",
+            "METHOD"=>"CC",
+            "CITY"=>"Tucson",
+            "HOSTCODE"=>"00",
+            "USER2"=>"",
+            "USER1"=>""
         ];
     }
 
