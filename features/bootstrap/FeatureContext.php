@@ -174,6 +174,26 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $this->testPayflowLinkResult($form_params);
     }
 
+    /**
+     * @Given my transaction in Payflow Link is AVS declined
+     */
+
+    public function myTransactionInPayflowLinkIsAvsDeclined()
+    {
+        $form_params = $this->getPayFlowAvsDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
+    /**
+     * @Given my transaction in Payflow Link is CSC declined
+     */
+
+    public function myTransactionInPayflowLinkIsCscDeclined()
+    {
+        $form_params = $this->getPayFlowCscDeclinedPostArray();
+        $this->testPayflowLinkResult($form_params);
+    }
+
     protected function testPayflowLinkResult($form_params)
     {
         if ($this->testTransaction === null) {
@@ -327,6 +347,108 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
             "HOSTCODE" => "05",
             "USER2" => "",
             "USER1" => ""
+        ];
+    }
+
+    protected function getPayFlowCscDeclinedPostArray()
+    {
+        return [
+            "STATE"=>"AZ",
+            "CITYTOSHIP"=>"",
+            "COUNTRYTOSHIP"=>"",
+            "AVSDATA"=>"YNY",
+            "AUTHCODE"=>"010101",
+            "PHONE"=>"",
+            "NAMETOSHIP"=>"",
+            "RESULT"=>"0",
+            "ZIP"=>"85721",
+            "EMAILTOSHIP"=>"",
+            "EMAIL"=>"foo%40mailinator.com",
+            "RESPMSG"=>"CSCDECLINED",
+            "INVOICE"=>"5b58c517d9e1e",
+            "PHONETOSHIP"=>"",
+            "FAX"=>"",
+            "TYPE"=>"S",
+            "FAXTOSHIP"=>"",
+            "STATETOSHIP"=>"",
+            "TAX"=>"",
+            "CSCMATCH"=>"N",
+            "PONUM"=>"",
+            "NAME"=>"William+S",
+            "DESCRIPTION"=>"",
+            "ORIGMETHOD"=>"",
+            "COUNTRY"=>"",
+            "ADDRESS"=>"123",
+            "CUSTID"=>"Circleci",
+            "USER10"=>"",
+            "PNREF"=>"A70EAA268924",
+            "AMOUNT"=>"7.00",
+            "ZIPTOSHIP"=>"",
+            "USER4"=>"",
+            "ADDRESSTOSHIP"=>"",
+            "USER3"=>"",
+            "TRXTYPE"=>"",
+            "USER6"=>"",
+            "USER5"=>"",
+            "USER8"=>"",
+            "USER7"=>"",
+            "USER9"=>"",
+            "METHOD"=>"CC",
+            "CITY"=>"Tucson",
+            "HOSTCODE"=>"00",
+            "USER2"=>"",
+            "USER1"=>""
+        ];
+    }
+
+    protected function getPayFlowAvsDeclinedPostArray()
+    {
+        return [
+            "STATE"=>"AZ",
+            "CITYTOSHIP"=>"",
+            "COUNTRYTOSHIP"=>"",
+            "AVSDATA"=>"NNN",
+            "AUTHCODE"=>"010101",
+            "PHONE"=>"",
+            "NAMETOSHIP"=>"",
+            "RESULT"=>"0",
+            "ZIP"=>"85721",
+            "EMAILTOSHIP"=>"",
+            "EMAIL"=>"foo%40mailinator.com",
+            "RESPMSG"=>"AVSDECLINED",
+            "INVOICE"=>"5b58c517d9e1e",
+            "PHONETOSHIP"=>"",
+            "FAX"=>"",
+            "TYPE"=>"S",
+            "FAXTOSHIP"=>"",
+            "STATETOSHIP"=>"",
+            "TAX"=>"",
+            "CSCMATCH"=>"Y",
+            "PONUM"=>"",
+            "NAME"=>"William+S",
+            "DESCRIPTION"=>"",
+            "ORIGMETHOD"=>"",
+            "COUNTRY"=>"",
+            "ADDRESS"=>"49354+Main",
+            "CUSTID"=>"Circleci",
+            "USER10"=>"",
+            "PNREF"=>"A70EAA26896D",
+            "AMOUNT"=>"7.00",
+            "ZIPTOSHIP"=>"",
+            "USER4"=>"",
+            "ADDRESSTOSHIP"=>"",
+            "USER3"=>"",
+            "TRXTYPE"=>"",
+            "USER6"=>"",
+            "USER5"=>"",
+            "USER8"=>"",
+            "USER7"=>"",
+            "USER9"=>"",
+            "METHOD"=>"CC",
+            "CITY"=>"Tucson",
+            "HOSTCODE"=>"00",
+            "USER2"=>"",
+            "USER1"=>""
         ];
     }
 
