@@ -67,6 +67,15 @@ class ResultController extends Controller
             return new Response('Declined by Payflow', Response::HTTP_OK);
         }
 
+        //The transaction is declined by PayPal due to AVS or CSC check failed.
+        $responseMessage = $request->request->get('RESPMSG');
+        if ($resultCode == 0 && ($responseMessage == 'AVSDECLINED' || $responseMessage == 'CSCDECLINED')) {
+            $transaction->setStatus(Transaction::STATUS_DECLINED);
+            $entityManager->persist($transaction);
+            $entityManager->flush();
+            return new Response('Declined by Payflow', Response::HTTP_OK);
+        }
+
         $transaction->setStatus(Transaction::STATUS_PAID);
 
         if ($this->updateFeesOnAlma($transaction)) {
