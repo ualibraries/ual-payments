@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var net = require('net');
 var zombie = require('zombie');
-zombie.waitDuration = '10s';
+zombie.waitDuration = '15s';
 var Tough = require('zombie/node_modules/tough-cookie');
 var browser = null;
 var pointers = [];
