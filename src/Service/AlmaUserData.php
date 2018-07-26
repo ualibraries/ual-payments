@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cao89
- * Date: 5/2/18
- * Time: 8:32 AM
- */
 
 namespace App\Service;
 
@@ -16,6 +10,7 @@ class AlmaUserData
     /**
      * Given a guzzle response from Alma, return the list of fees as an associative array with each
      * fee and each fees properties
+     *
      * @param Response $response
      * @return array
      */
@@ -40,6 +35,7 @@ class AlmaUserData
 
     /**
      * Get the full name of user from Alma API response
+     *
      * @param Response $response
      * @return SimpleXMLElement
      */
@@ -51,6 +47,7 @@ class AlmaUserData
 
     /**
      * Checks that there is exactly one user has primary_id set to 'Shib-uaId' property (the user UA id)
+     *
      * @param Response $response
      * @return bool
      */
@@ -58,5 +55,17 @@ class AlmaUserData
     {
         $sxml = new SimpleXMLElement($response->getBody());
         return $sxml->attributes()->total_record_count == '1';
+    }
+
+    /**
+     * Get the first and the last name of user from Alma API response
+     *
+     * @param Response $response
+     * @return array
+     */
+    public function getFirstLastName(Response $response)
+    {
+        $sxml = new SimpleXMLElement($response->getBody());
+        return [$sxml->user[0]->first_name->__toString(), $sxml->user[0]->last_name->__toString()];
     }
 }

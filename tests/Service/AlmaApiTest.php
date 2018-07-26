@@ -1,18 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cao89
- * Date: 5/1/18
- * Time: 11:42 AM
- */
 
 namespace App\Tests\Service;
 
-use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use SimpleXMLElement;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Dotenv\Dotenv;
 
 class AlmaApiTest extends KernelTestCase
