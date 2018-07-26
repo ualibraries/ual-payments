@@ -22,17 +22,22 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
 {
     private $router;
     private $csrfTokenManager;
-    private $almaApi;
+    private $security;
+    private $api;
 
-    public function __construct(RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, AlmaApi $api)
+    public function __construct(RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, Security $security, AlmaApi $api)
     {
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
-        $this->almaApi = $api;
+        $this->security = $security;
+        $this->api = $api;
     }
 
     public function supports(Request $request)
     {
+        if ($this->security->getUser()) {
+            return false;
+        }
         return $request->request->has('_username') && $request->request->has('_password');
     }
 
@@ -89,9 +94,16 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
             throw new InvalidCsrfTokenException('Invalid CSRF token.');
         }
 
+        $username = $request->request->get('_username');
+        $password = $request->request->get('_password');
+
+        if ($username == '' || $password == '') {
+            throw new CustomUserMessageAuthenticationException('Username or password cannot be empty.');
+        }
+
         return array(
-            'username' => $request->request->get('_username'),
-            'password' => $request->request->get('_password'),
+            'username' => $username,
+            'password' => $password
         );
     }
 
@@ -112,9 +124,6 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if ($credentials['username'] == '') {
-            throw new CustomUserMessageAuthenticationException('Username cannot be empty.');
-        }
         return $userProvider->loadUserByUsername($credentials['username']);
     }
 
@@ -137,7 +146,7 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
     public function checkCredentials($credentials, UserInterface $user)
     {
         try {
-            $response = $this->almaApi->authenticateUser($credentials['username'], $credentials['password']);
+            $response = $this->api->authenticateUser($credentials['username'], $credentials['password']);
             if ($response->getStatusCode() === 204) {
                 return true;
             }

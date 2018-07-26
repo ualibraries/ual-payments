@@ -11,12 +11,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResultController extends Controller
 {
-
-    private $almaApi;
+    private $api;
 
     public function __construct(AlmaApi $api)
     {
-        $this->almaApi = $api;
+        $this->api = $api;
     }
 
     /**
@@ -97,7 +96,7 @@ class ResultController extends Controller
         $fees = $transaction->getFees();
         foreach ($fees as $fee) {
             try {
-                $this->almaApi->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
+                $this->api->payUserFee($transaction->getUserId(), $fee->getFeeId(), $fee->getBalance());
                 $result = true;
             } catch (\GuzzleHttp\Exception\GuzzleException $e) {
                 echo $e->getCode() . $e->getMessage();

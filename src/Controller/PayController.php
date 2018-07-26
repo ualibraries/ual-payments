@@ -12,10 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PayController extends Controller
 {
+    private $api;
+    private $userData;
 
-    public function __construct(AlmaApi $api)
+    public function __construct(AlmaApi $api, AlmaUserData $userData)
     {
-        $this->almaApi = $api;
+        $this->api = $api;
+        $this->userData = $userData;
     }
 
     /**
@@ -31,11 +34,12 @@ class PayController extends Controller
             return $this->redirectToRoute('index');
         }
 
-        $user_id = $request->request->get('user_id');
-        $transaction = new Transaction($user_id);
+        $transaction = new Transaction($this->getUser()->getUsername());
 
         $entityManager = $this->getDoctrine()->getManager();
-        $this->setUserFees($transaction, $feeIds);
+        if ($this->setUserFees($transaction, $feeIds) == 0) {
+            return $this->redirectToRoute('index');
+        }
 
         $entityManager->persist($transaction);
         $entityManager->flush();
@@ -54,16 +58,15 @@ class PayController extends Controller
      * Use the fee id to get the information about the fee (including balance) from Alma, than add them to the transaction.
      * @param Transaction $transaction
      * @param $feeIds
+     * @return float
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function setUserFees(Transaction $transaction, $feeIds)
     {
-        $userData = new AlmaUserData();
-
         $userId = $transaction->getUserId();
-        $almaFees = $userData->listFees($this->almaApi->getUserFees($userId));
+        $almaFees = $this->userData->listFees($this->api->getUserFees($userId));
 
-        $total = 0;
+        $total = 0.0;
         foreach ($almaFees as $almaFee) {
             if (in_array($almaFee['id'], $feeIds)) {
                 $fee = new Fee($almaFee['id'], $almaFee['balance'], $almaFee['label']);
@@ -74,5 +77,7 @@ class PayController extends Controller
             }
         }
         $transaction->setTotalBalance($total);
+
+        return $total;
     }
 }

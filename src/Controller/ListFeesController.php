@@ -26,24 +26,17 @@ class ListFeesController extends Controller
      */
     public function index()
     {
+        $user = $this->getUser();
         $transactionToNotify = $this->processTransactions();
 
-        $userId = $this->getUser()->getUsername();
-        $alma_user_exists = $this->userData->isValidUser($this->api->findUserById($userId));
-
-        if ($userId === null || !$alma_user_exists) {
-            return $this->render('unauthorized.html.twig');
-        }
-
-        $totalDue = 0;
-        $userFees = $this->userData->listFees($this->api->getUserFees($userId));
+        $totalDue = 0.0;
+        $userFees = $this->userData->listFees($this->api->getUserFees($user->getUsername()));
         foreach ($userFees as $userFee) {
             $totalDue += $userFee['balance'];
         }
 
         return $this->render('views/index.html.twig', [
-            'full_name' => $this->userData->getFullNameAsString($this->api->getUserById($userId)),
-            'user_id' => $userId,
+            'full_name' => $user->getFirstName() . ' ' . $user->getLastName(),
             'user_fees' => $userFees,
             'total_Due' => $totalDue,
             'transaction' => $transactionToNotify
