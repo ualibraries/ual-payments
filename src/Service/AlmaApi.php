@@ -98,7 +98,7 @@ class AlmaApi
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($userId));
+        $templateParamValues = array(rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'status' => 'ACTIVE'
@@ -120,7 +120,7 @@ class AlmaApi
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($userId));
+        $templateParamValues = array(rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'view' => 'full',
@@ -148,7 +148,7 @@ class AlmaApi
         $query = [
             'limit' => '10',
             'offset' => '0',
-            'q' => 'primary_id~' . $userId,
+            'q' => 'primary_id~' . rawurlencode($userId),
             'order_by' => 'last_name first_name, primary_id'
         ];
         $requestParams = compact('query');
@@ -196,7 +196,7 @@ class AlmaApi
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
         $templateParamNames = array('{user_id}', '{fee_id}');
-        $templateParamValues = array(urlencode($userId), urlencode($feeId));
+        $templateParamValues = array(rawurlencode($userId), rawurlencode($feeId));
         $requestParams = compact('query');
 
         return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
@@ -213,7 +213,7 @@ class AlmaApi
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($userId));
+        $templateParamValues = array(rawurlencode($userId));
 
         $headers = [
             'Content-Type' => 'application/json'
@@ -235,7 +235,8 @@ class AlmaApi
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
-        $templateParamValues = array(urlencode($userId));
+        $templateParamValues = array(rawurlencode($userId));
+        $this->logger->info('User ID: ' . rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'op' => 'auth'
