@@ -236,7 +236,6 @@ class AlmaApi
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
         $templateParamValues = array(rawurlencode($userId));
-        $this->logger->info('User ID: ' . rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
             'op' => 'auth'
