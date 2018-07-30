@@ -37,12 +37,12 @@ class AlmaUserData
      * Get the full name of user from Alma API response
      *
      * @param Response $response
-     * @return SimpleXMLElement
+     * @return string
      */
     public function getFullNameAsString(Response $response)
     {
         $sxml = new SimpleXMLElement($response->getBody());
-        return $sxml->full_name;
+        return $sxml->full_name->__toString();
     }
 
     /**
@@ -55,17 +55,5 @@ class AlmaUserData
     {
         $sxml = new SimpleXMLElement($response->getBody());
         return $sxml->attributes()->total_record_count == '1';
-    }
-
-    /**
-     * Get the first and the last name of user from Alma API response
-     *
-     * @param Response $response
-     * @return array
-     */
-    public function getFirstLastName(Response $response)
-    {
-        $sxml = new SimpleXMLElement($response->getBody());
-        return [$sxml->user[0]->first_name->__toString(), $sxml->user[0]->last_name->__toString()];
     }
 }
