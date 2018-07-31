@@ -132,31 +132,6 @@ class AlmaApi
     }
 
     /**
-     * Use the Alma api to search for the user by primary_id.
-     * This is how we will check that a the provided user id is found in Alma as a primary_id.
-     *
-     * @param $userId
-     * @return mixed|null|\Psr\Http\Message\ResponseInterface
-     * @throws GuzzleException
-     */
-    public function findUserById($userId)
-    {
-        $method = 'GET';
-        $urlPath = '/almaws/v1/users';
-        $templateParamNames = array();
-        $templateParamValues = array();
-        $query = [
-            'limit' => '10',
-            'offset' => '0',
-            'q' => 'primary_id~' . rawurlencode($userId),
-            'order_by' => 'last_name first_name, primary_id'
-        ];
-        $requestParams = compact('query');
-
-        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
-    }
-
-    /**
      * @param string $userId The alphanumeric userId of the logged in user
      * @param string $feeId The Alma specific fee id to be updated
      * @param $amount
