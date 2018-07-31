@@ -15,11 +15,10 @@ class AlmaApiTest extends KernelTestCase
 
     public function setUp()
     {
-        $kernel = self::bootKernel();
-        $api = $kernel->getContainer()->get('test.App\Service\AlmaApi');
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/../../.env');
-        $this->api = $api;
+        $kernel = self::bootKernel();
+        $this->api = $kernel->getContainer()->get('test.App\Service\AlmaApi');
         $this->userId = getenv('TEST_ID');
         $this->userData = new AlmaUserData();
         parent::setUp();
@@ -35,18 +34,11 @@ class AlmaApiTest extends KernelTestCase
     }
 
     /**
-     * Test that a 200 response code is provided in the response object returned by getUsersFullName.
+     * Test that a 200 response code is provided in the response object returned by getUserById.
      */
     public function testGetUserById()
     {
         $user = $this->api->getUserById($this->userId);
-
-        $this->assertEquals(200, $user->getStatusCode());
-    }
-
-    public function testFindUserById()
-    {
-        $user = $this->api->findUserById($this->userId);
 
         $this->assertEquals(200, $user->getStatusCode());
     }

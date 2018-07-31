@@ -14,6 +14,7 @@ class AlmaUserProvider implements UserProviderInterface
 {
     private $api;
     private $userData;
+    private $logger;
 
     public function __construct(AlmaApi $api, AlmaUserData $userData, LoggerInterface $logger)
     {
@@ -25,12 +26,8 @@ class AlmaUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         try {
-            $response = $this->api->findUserById($username);
-            if ($this->userData->isValidUser($response)) {
-                list($firstName, $lastName) = $this->userData->getFirstLastName($response);
-
-                return new AlmaUser($username, array('ROLE_USER'), $firstName, $lastName);
-            }
+            $response = $this->api->getUserById($username);
+            return new AlmaUser($username, array('ROLE_USER'), $this->userData->getFullNameAsString($response));
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             $this->logger->error($e->getCode() . $e->getMessage());
         }
