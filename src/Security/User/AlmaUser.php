@@ -9,15 +9,13 @@ class AlmaUser implements UserInterface, EquatableInterface
 {
     private $username;
     private $roles;
-    private $firstName;
-    private $lastName;
+    private $fullName;
 
-    public function __construct($username, array $roles, $firstName, $lastName)
+    public function __construct($username, array $roles, $fullName)
     {
         $this->username = $username;
         $this->roles = $roles;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->fullName = $fullName;
     }
 
     /**
@@ -113,16 +111,8 @@ class AlmaUser implements UserInterface, EquatableInterface
     /**
      * @return string
      */
-    public function getFirstName()
+    public function getFullName()
     {
-        return $this->firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
+        return $this->fullName;
     }
 }

@@ -19,7 +19,7 @@ class HistoryController extends Controller
             ['date' => 'DESC']
         );
         return $this->render('views/history.html.twig', [
-            'full_name' => $user->getFirstName() . ' ' . $user->getLastName(),
+            'full_name' => $user->getFullName(),
             'transactions' => $transactions
         ]);
     }

@@ -36,7 +36,7 @@ class ListFeesController extends Controller
         }
 
         return $this->render('views/index.html.twig', [
-            'full_name' => $user->getFirstName() . ' ' . $user->getLastName(),
+            'full_name' => $user->getFullName(),
             'user_fees' => $userFees,
             'total_Due' => $totalDue,
             'transaction' => $transactionToNotify
