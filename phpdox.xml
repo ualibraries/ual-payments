@@ -116,8 +116,8 @@
 
             <!--  default engine "html" -->
             <build engine="html" enabled="true" output="api">
-                <template dir="${phpDox.home}/templates/html" />
-                <file extension="xhtml" />
+                <template dir="docs/phpdox/templates/html" />
+                <file extension="html" />
             </build>
 
         </generator>

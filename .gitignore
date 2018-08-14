@@ -46,4 +46,4 @@ behat.local.yml
 phploc.xml
 
 ###< Generated code documentation###
-docs/phpdox
+docs/phpdox/build
