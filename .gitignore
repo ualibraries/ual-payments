@@ -44,3 +44,6 @@ behat.local.yml
 
 ###< PHP Lines of Code Analyzer Output###
 phploc.xml
+
+###< Generated code documentation###
+docs/phpdox
