@@ -90,7 +90,9 @@
       "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
     ],
     "docs:build": [
-      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod"
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod",
+      "vendor/bin/phploc src/ --log-xml phploc.xml && vendor/bin/phpdox",
+      "mv docs/api/ docs/output_prod"
     ],
     "docs:deploy": [
       "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
