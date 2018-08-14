@@ -8,6 +8,11 @@ use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
 use Symfony\Component\Security\Core\Event\AuthenticationEvent;
 use Psr\Log\LoggerInterface;
 
+
+/**
+ * This event subscriber monitors and logs user authentication attempts.
+ *
+ */
 class SecuritySubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()

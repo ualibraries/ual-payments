@@ -8,6 +8,10 @@ use App\Service\AlmaUserData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ * List the Alma fees for a particular user.
+ */
 class ListFeesController extends Controller
 {
     private $api;

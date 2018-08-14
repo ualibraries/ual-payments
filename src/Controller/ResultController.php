@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ * This controller processes the "Silent POST" requests send back from Payflow Link
+ * after a payment has been processed.
+ */
 class ResultController extends Controller
 {
     private $api;
@@ -19,6 +24,13 @@ class ResultController extends Controller
     }
 
     /**
+     * Process a "Silent POST" request from Payflow Link and updated the status of
+     * the transaction within the Payments Application and the fees in Alma.
+     *
+     * See "Data Returned by the Post and Silent Post Features" on page 56 of the
+     * Payflow Link User's Guide (https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/pp_payflowlink_guide.pdf)
+     * for more information.
+     *
      * @Route("/result", name="result")
      * @param Request $request
      * @return Response
@@ -89,6 +101,12 @@ class ResultController extends Controller
         return new Response("Success", Response::HTTP_OK);
     }
 
+    /**
+     * Update the fees in a given transaction using the Alma API.
+     *
+     * @param Transaction $transaction
+     * @return $result -- true if the update succeeded, false otherwise.
+     */
     private function updateFeesOnAlma(Transaction $transaction)
     {
         $result = false;

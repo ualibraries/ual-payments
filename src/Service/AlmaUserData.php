@@ -5,6 +5,9 @@ namespace App\Service;
 use GuzzleHttp\Psr7\Response;
 use SimpleXMLElement;
 
+/**
+ * Ultilty class used for parsing responses from the Alma API.
+ */
 class AlmaUserData
 {
     /**

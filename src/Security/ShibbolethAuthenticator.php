@@ -13,6 +13,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+
+/**
+ * Provides authentication using Shibboleth.
+ */
 class ShibbolethAuthenticator extends AbstractGuardAuthenticator
 {
     private $router;

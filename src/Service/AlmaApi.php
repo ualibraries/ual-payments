@@ -7,6 +7,9 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
 
+/**
+ * Provides functionality for accessing the Alma API.
+ */
 class AlmaApi
 {
     private $logger;
