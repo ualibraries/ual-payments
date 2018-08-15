@@ -40,6 +40,8 @@ jobs:
             sudo apt-get install libzip-dev
             sudo docker-php-ext-install zip
             sudo docker-php-ext-install sockets
+            sudo apt-get install libxslt1-dev
+            sudo docker-php-ext-install xsl
       - run:
           name: Set php.ini settings
           command: |
