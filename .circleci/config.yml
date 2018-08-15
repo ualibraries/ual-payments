@@ -5,11 +5,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - develop
-        - /release*/
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2-apache
@@ -85,10 +80,6 @@ jobs:
       # run tests!
       - run: composer test
   deploy-docs:
-    branches:
-      only:
-        - master
-        - /release*/
     working_directory: ~/repo
     steps:
       - restore_cache:
@@ -104,6 +95,15 @@ jobs:
 
 workflows:
   version: 2
+  build-test:
+    jobs:
+      - build
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+                - /release*/
   build-deploy-docs:
     jobs:
       - build
