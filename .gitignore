@@ -41,3 +41,9 @@ behat.local.yml
 
 ###< macOS Finder config files ###
 .DS_Store
+
+###< PHP Lines of Code Analyzer Output###
+phploc.xml
+
+###< Generated code documentation###
+docs/phpdox/build

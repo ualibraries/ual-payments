@@ -41,13 +41,15 @@
     "behatch/contexts": "^3.1",
     "deployer/dist": "^6.1",
     "deployer/recipes": "^6.1",
+    "phploc/phploc": "^4.0",
     "symfony/browser-kit": "^3.4",
     "symfony/css-selector": "^3.4",
     "symfony/debug-pack": "^1.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/phpunit-bridge": "^3.4",
     "symfony/profiler-pack": "^1.0",
-    "symfony/web-server-bundle": "^3.4"
+    "symfony/web-server-bundle": "^3.4",
+    "theseer/phpdox": "0.11@dev"
   },
   "config": {
     "preferred-install": {
@@ -85,10 +87,17 @@
       "vendor/bin/dep --ansi rollback prd"
     ],
     "docs:preview": [
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=dev",
+      "vendor/bin/phploc src/ --log-xml phploc.xml && vendor/bin/phpdox",
+      "rm -rf docs/output_dev/api",
+      "mv docs/api/ docs/output_dev",
       "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
     ],
     "docs:build": [
-      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod"
+      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod",
+      "vendor/bin/phploc src/ --log-xml phploc.xml && vendor/bin/phpdox",
+      "rm -rf docs/output_prod/api",
+      "mv docs/api/ docs/output_prod"
     ],
     "docs:deploy": [
       "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"

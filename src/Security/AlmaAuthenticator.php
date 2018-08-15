@@ -18,6 +18,11 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
+
+/**
+ * Provides direct authentication using the Alma API.
+ */
+
 class AlmaAuthenticator extends AbstractGuardAuthenticator
 {
     private $router;

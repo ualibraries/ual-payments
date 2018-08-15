@@ -10,6 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Displays payments about to be sent to the payment processor.
+ */
+
 class PayController extends Controller
 {
     private $api;
