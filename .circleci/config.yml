@@ -82,3 +82,32 @@ jobs:
       - run: sudo service apache2 restart
       # run tests!
       - run: composer test
+  deploy-docs:
+    branches:
+      only:
+        - master
+        - /release*/
+    working_directory: ~/repo
+    steps:
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+      - run:
+        name: Install awscli
+        command: sudo pip install awscli
+      - run: composer install -n --prefer-dist
+      - run:
+        name: Deploy docs to S3
+        command: composer docs:build && composer docs:deploy
+
+workflows:
+  version: 2
+  build-deploy-docs:
+    jobs:
+      - build
+      - deploy-docs:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
