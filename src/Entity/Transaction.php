@@ -171,6 +171,13 @@ class Transaction
         return $this->status;
     }
 
+    /**
+     * Set the status of this Transaction to one of the defined available statuses.
+     *
+     * @param string $status -- A string containing one of the available statuses.
+     * @throws InvalidArgumentException
+     * @return $this
+     */
     public function setStatus(string $status): self
     {
         if (!in_array($status, array(self::STATUS_PENDING, self::STATUS_PAID, self::STATUS_COMPLETED, self::STATUS_FAILED, self::STATUS_DECLINED, self::STATUS_ERROR))) {
