@@ -20,11 +20,18 @@ University of Arizona Libraries - Payments
 
 * Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
 * Run `composer install`
-* Create a database and enter the connection string in `.env`.
+* Copy `.env.dist` to `.env` and open it in a text editor.
+* Create an empty database.
+* Replace the `DB_*` with the correct credentials for your database connection.
 * Run `bin/console doctrine:migrations:migrate` to get the database structure in place.
 * Run `npm install`
 * Run `npm run build`
-
+* Generate an Alma API key with read/write access to the Users API in the appropriate environment (sandbox or prod) and add the correct `API_URL` and `API_KEY` values.
+* Update the `PAYFLOW_*` properties with correct credentials for your Payflow Link account.
+* Log in to your Payflow Link account and navigate to Service Settings > Configuration.  Under "Form Configuration", set "Return URL" to be the root of your application (e.g. `http://www.example.com`) and set the "Silent POST URL" value to the `/result` endpoint of the application (e.g. `http://www.example.com/result`).  In order for Payflow to successfully post success and failure messages to your application, your server *must* be publicly available.  For local development, a tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel) can provide public URLs for Payflow.
+* (Optional) Set `TEST_ID` and `TEST_PASS` to the credentials for a test user in your Alma system.  These credentials will be used while running automated tests.
+* (Optional) Install Zombie.js globally: `npm install -g zombie`.  This is necessary for running automated tests due to [a quirk in the Mink ZombieDriver](http://mink.behat.org/en/latest/drivers/zombie.html).
+* (Optional) Enable emergency logging in Slack for production environments by adding a new Slackbot configuration in the admin section of your Slack workspace and copying the token to the `SLACK_TOKEN` parameter in `.env`.  Update `SLACK_TEAM` with the name of your Slack team (e.g. ualib) and `SLACK_CHANNEL` with the name of the channel you want the emergency logs to go to.  Make sure `SLACK_CHANNEL` doesn't start with a #, otherwise the `.env` file will interpret the line as a comment!
 ## Deploying
 
 This project uses [Deployer](https://deployer.org/) for its deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
@@ -63,7 +70,7 @@ Preview the documentation by running `composer docs:preview`. Then go to http://
 
 Build the documentation by running `composer docs:build`.
 
-Deploy the documentation by running `composer docs:deploy`. You may need to specify your AWS profile: `composer docs:deploy -- --profile=ual`.
+The documentation is automatically built and deployed by CircleCI whenever changes are pushed to `master`.  If for some reason you want to manually deploy a change to the documentation, you can do it by running `composer docs:deploy`. You may need to specify your AWS profile: `composer docs:deploy -- --profile=ual`.
 
 View the documentation at [UAL Payments Documentation](http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com) (`http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com`).
 
