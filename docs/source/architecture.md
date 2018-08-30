@@ -16,4 +16,4 @@ transaction.
 3. If the user's credit card information is valid, a "silent POST" request is sent to the `/result` endpoint of the application by Payflow indicating that the payment succeeded.
 4. The UAL payments application then looks up which fees were associated with the transaction and removes them from Alma. 
 
-![A successful payment](images/successful_payment.png)
+![A successful payment](images/successful_payment.svg)
