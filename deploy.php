@@ -13,8 +13,8 @@ set('repository', 'ssh://git@github.com/ualibraries/ual-payments.git');
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
 
-// Keep all releases
-set('keep_releases', -1);
+// Keep last 30 releases
+set('keep_releases', 30);
 
 // Default branch to deploy from
 set('branch', 'master');
