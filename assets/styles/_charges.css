@@ -67,6 +67,14 @@
   flex: 1;
 }
 
+.charges__item-comment {
+  flex: 1;
+}
+
+.charges__item-title {
+  flex: 1;
+}
+
 .charges__item-balance {
   flex: 1;
   font-weight: 600;
