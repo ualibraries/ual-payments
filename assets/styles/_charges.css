@@ -64,23 +64,25 @@
 }
 
 .charges__item-label {
-  flex: 1;
+  flex: 2;
 }
 
 .charges__item-comment {
-  flex: 1;
+  flex: 2;
   word-break: break-word;
 }
 
 .charges__item-title {
-  flex: 1;
+  flex: 2;
   word-break: break-word;
 }
 
 .charges__item-balance {
   flex: 1;
   font-weight: 600;
-  margin-left: 0.5rem;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .charges__item-date {
