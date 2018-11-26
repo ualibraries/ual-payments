@@ -57,7 +57,7 @@
                             ${{ fee.balance|number_format(2, '.', ',') }}</li>
                         <li class="charges__item-comment">
                             {{ fee.comment }}</li>
-                        <li>{{ fee.date|date('m/d/Y') }}</li>
+                        <li class="charges__item-date">{{ fee.date|date('m/d/Y') }}</li>
                     </ul>
                 </li>
                 {% endfor %}
