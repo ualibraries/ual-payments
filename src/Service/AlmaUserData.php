@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use SimpleXMLElement;
 
 /**
- * Ultilty class used for parsing responses from the Alma API.
+ * Utility class used for parsing responses from the Alma API.
  */
 class AlmaUserData
 {
@@ -30,7 +30,8 @@ class AlmaUserData
                 'label' => (string)$indv_fee->type->attributes()->desc,
                 'balance' => (string)$indv_fee->balance,
                 'title' => (string)$indv_fee->title,
-                'date' => new \DateTime($indv_fee->creation_time)
+                'date' => new \DateTime($indv_fee->creation_time),
+                'comment' => (string)$indv_fee->comment
             ];
         }
         return $list_fees;
