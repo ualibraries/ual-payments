@@ -51,10 +51,13 @@
                             <input type="checkbox" name="fee[]" value="{{ fee.id }}" data-fee-balance="{{ fee.balance }}" class="charges__item-checkbox-input" />
                         </li>
                         <li class="charges__item-label">{{ fee.label }}</li>
-                        <li>{{ fee.title }}</li>
+                        <li class="charges__item-title">
+                            {{ fee.title }}</li>
                         <li class="charges__item-balance">
                             ${{ fee.balance|number_format(2, '.', ',') }}</li>
-                        <li>{{ fee.date|date('m/d/Y') }}</li>
+                        <li class="charges__item-comment">
+                            {{ fee.comment }}</li>
+                        <li class="charges__item-date">{{ fee.date|date('m/d/Y') }}</li>
                     </ul>
                 </li>
                 {% endfor %}
