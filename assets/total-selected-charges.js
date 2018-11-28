@@ -8,7 +8,7 @@ function selectedTotal() {
     document.getElementsByClassName('charges__item-checkbox-input'),
     element => {
       if (element.checked) {
-        total += Number.parseFloat(element.dataset.feeBalance)
+        total += parseFloat(element.dataset.feeBalance)
       }
     }
   )
