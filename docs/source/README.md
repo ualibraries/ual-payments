@@ -18,6 +18,7 @@ University of Arizona Libraries - Payments
 
 ## Getting started
 
+* NOTE: For MacOS Mojave users, visit [here](https://getgrav.org/blog/macos-mojave-apache-multiple-php-versions) and [here](https://github.com/liip/php-osx/issues/249) first.
 * Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
 * Run `composer install`
 * Copy `.env.dist` to `.env` and open it in a text editor.
