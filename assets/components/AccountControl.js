@@ -6,7 +6,7 @@ import account from '../images/account.svg'
 class HelpControl extends React.Component {
   handleButtonClick() {
     location.href =
-      'https://arizona-primo.hosted.exlibrisgroup.com/primo-explore/search?sortby=rank&vid=01UA&lang=en_US&pcAvailability=true'
+      'https://arizona-primo.hosted.exlibrisgroup.com/primo-explore/account?vid=01UA&section=overview'
   }
 
   render() {
