@@ -407,8 +407,14 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.7.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.7.0"
+    },
+    "symfony/polyfill-php72": {
+        "version": "v1.11.0"
     },
     "symfony/process": {
         "version": "v3.4.8"
