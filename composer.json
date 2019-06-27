@@ -9,7 +9,6 @@
     "ext-json": "*",
     "ext-SimpleXML": "*",
     "guzzlehttp/guzzle": "^6.3",
-    "sculpin/sculpin": "^3.0@dev",
     "sensio/framework-extra-bundle": "5.2.*",
     "symfony/asset": "^3.4",
     "symfony/console": "^3.4",
@@ -86,21 +85,12 @@
     "deploy:rollback": [
       "vendor/bin/dep --ansi rollback prd"
     ],
-    "docs:preview": [
-      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=dev",
-      "vendor/bin/phploc src/ --log-xml phploc.xml && vendor/bin/phpdox",
-      "rm -rf docs/output_dev/api",
-      "mv docs/api/ docs/output_dev",
-      "vendor/bin/sculpin generate --ansi --project-dir=docs --server --watch"
-    ],
     "docs:build": [
-      "vendor/bin/sculpin generate --ansi --project-dir=docs --env=prod",
       "vendor/bin/phploc src/ --log-xml phploc.xml && vendor/bin/phpdox",
-      "rm -rf docs/output_prod/api",
-      "mv docs/api/ docs/output_prod"
+      "cp docs/robots.txt docs/phpdox_out/"
     ],
     "docs:deploy": [
-      "aws s3 sync docs/output_prod s3://ualibr-payments-documentation --delete"
+      "aws s3 sync docs/phpdox_out s3://ualibr-payments-documentation --delete"
     ],
     "test": [
       "bin/phpunit",
