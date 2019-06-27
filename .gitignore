@@ -22,17 +22,6 @@ yarn-error.log
 /.web-server-pid
 ###< symfony/web-server-bundle ###
 
-###> Sculpin ###
-docs/.sculpin/
-docs/app/cache/*
-docs/app/config/sculpin_kernel_*.yml
-docs/app/config/sculpin_site_*.yml
-docs/app/logs/*
-docs/output_*/
-docs/source/components/
-docs/s3.conf
-###< Sculpin ###
-
 ###> Editor Configs ###
 .idea
 
@@ -47,3 +36,5 @@ phploc.xml
 
 ###< Generated code documentation###
 docs/phpdox/build
+docs/phpdox_out
+docs/s3.conf
