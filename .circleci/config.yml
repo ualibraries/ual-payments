@@ -20,7 +20,7 @@ jobs:
       - checkout
 
 
-      - run: sudo usermod -a -G circleci www-data 
+      - run: sudo usermod -a -G circleci www-data
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -30,13 +30,12 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
+            sudo -E apt-get update
             sudo -E docker-php-ext-install pdo_mysql
             sudo -E docker-php-ext-enable pdo_mysql
             sudo -E apt-get install libzip-dev
             sudo -E docker-php-ext-install zip
             sudo -E docker-php-ext-install sockets
-            sudo -E apt-get install libxslt1-dev
-            sudo -E docker-php-ext-install xsl
       - run:
           name: Set php.ini settings
           command: |
@@ -96,8 +95,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
-            sudo -E docker-php-ext-install pdo_mysql
-            sudo -E docker-php-ext-enable pdo_mysql
+            sudo -E apt-get update
             sudo -E apt-get install libzip-dev
             sudo -E docker-php-ext-install zip
             sudo -E docker-php-ext-install sockets
