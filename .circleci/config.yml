@@ -68,6 +68,7 @@ jobs:
             sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
       - run: php bin/console doctrine:migrations:migrate --no-interaction
 
+      - run: sudo sed 's/\(^CipherString = DEFAULT@SECLEVEL=\)2/\1'1'/' -i /etc/ssl/openssl.cnf
 
       - save_cache:
           paths:
