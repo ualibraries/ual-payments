@@ -20,7 +20,7 @@ jobs:
       - checkout
 
 
-      - run: sudo usermod -a -G circleci www-data 
+      - run: sudo usermod -a -G circleci www-data
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
+            sudo -E apt-get update
             sudo -E docker-php-ext-install pdo_mysql
             sudo -E docker-php-ext-enable pdo_mysql
             sudo -E apt-get install libzip-dev
@@ -47,6 +48,7 @@ jobs:
           name: Install npm
           command: |
             curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+            echo -e "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" | sudo tee /etc/apt/preferences.d/nodejs > /dev/null
             sudo apt-get install -y nodejs
       - run: npm install
       - run: npm run build
@@ -66,6 +68,7 @@ jobs:
             sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
       - run: php bin/console doctrine:migrations:migrate --no-interaction
 
+      - run: sudo sed 's/\(^CipherString = DEFAULT@SECLEVEL=\)2/\1'1'/' -i /etc/ssl/openssl.cnf
 
       - save_cache:
           paths:
@@ -96,8 +99,7 @@ jobs:
       - run:
           name: Install PHP extensions
           command: |
-            sudo -E docker-php-ext-install pdo_mysql
-            sudo -E docker-php-ext-enable pdo_mysql
+            sudo -E apt-get update
             sudo -E apt-get install libzip-dev
             sudo -E docker-php-ext-install zip
             sudo -E docker-php-ext-install sockets
