@@ -128,6 +128,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "friends-of-behat/mink-extension": {
+        "version": "2.3.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.3-dev"
     },
@@ -406,6 +409,9 @@
     },
     "symfony/serializer-pack": {
         "version": "v1.0.1"
+    },
+    "symfony/service-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/stopwatch": {
         "version": "v3.4.8"
