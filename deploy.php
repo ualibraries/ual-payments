@@ -4,6 +4,9 @@ namespace Deployer;
 require 'recipe/symfony4.php';
 require 'vendor/deployer/recipes/recipe/slack.php';
 
+require_once __DIR__.'/vendor/autoload.php';
+(new \Symfony\Component\Dotenv\Dotenv())->load('.env');
+
 // Project name
 set('application', 'ual-payments');
 
@@ -28,7 +31,7 @@ set('writable_dirs', ['var']);
 // We're not allowing anonymous stats
 set('allow_anonymous_stats', false);
 
-set('slack_webhook', 'https://hooks.slack.com/services/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');
+set('slack_webhook', getenv('SLACK_WEBHOOK'));
 
 // Hosts
 host('production')
