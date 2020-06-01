@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f4ef87590c538b975054df01903fa2b",
+    "content-hash": "0b64ae0ae6c74271f8888ab2c9c75a1d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7872,16 +7872,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.4.41",
+            "version": "v3.4.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "f926812c6b3d456dfbd13c706293f49e9a10bc2a"
+                "reference": "58c7de42b8b13c3bec82dbb8a87d00e4d83dd7c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/f926812c6b3d456dfbd13c706293f49e9a10bc2a",
-                "reference": "f926812c6b3d456dfbd13c706293f49e9a10bc2a",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/58c7de42b8b13c3bec82dbb8a87d00e4d83dd7c2",
+                "reference": "58c7de42b8b13c3bec82dbb8a87d00e4d83dd7c2",
                 "shasum": ""
             },
             "require": {
@@ -7947,7 +7947,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-21T18:33:26+00:00"
+            "time": "2020-04-25T12:18:34+00:00"
         },
         {
             "name": "symfony/profiler-pack",
