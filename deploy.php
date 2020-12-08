@@ -36,7 +36,7 @@ set('slack_webhook', getenv('SLACK_WEBHOOK'));
 // Hosts
 host('production')
     ->user('deploy')
-    ->hostname('pay-prd.library.arizona.edu')
+    ->hostname('payments.library.arizona.edu')
     ->set('deploy_path', '/var/www')
     ->stage('prd');
 
