@@ -110,6 +110,10 @@ jobs:
             sudo -E apt-get install libxslt1-dev
             sudo -E docker-php-ext-install xsl
       - run:
+          name: Disable xdebug
+          command: |
+            sudo sed -i 's/^zend_extension/;zend_extension/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run:
           name: Deploy docs to S3
           command: |
               composer docs:build && composer docs:deploy
