@@ -7,10 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- *
  * Displays previous payments the user has made.
  */
-
 class HistoryController extends AbstractController
 {
     /**
