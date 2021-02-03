@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Transaction;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Displays previous payments the user has made.
  */
 
-class HistoryController extends Controller
+class HistoryController extends AbstractController
 {
     /**
      * @Route("/history", name="history")

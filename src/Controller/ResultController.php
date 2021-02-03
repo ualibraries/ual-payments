@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * This controller processes the "Silent POST" requests send back from Payflow Link
  * after a payment has been processed.
  */
-class ResultController extends Controller
+class ResultController extends AbstractController
 {
     private $api;
 

@@ -6,7 +6,7 @@ use App\Entity\Fee;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Displays payments about to be sent to the payment processor.
  */
 
-class PayController extends Controller
+class PayController extends AbstractController
 {
     private $api;
     private $userData;
