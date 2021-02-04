@@ -470,18 +470,6 @@
             "ref": "3db029c03e452b4a23f7fc45cec7c922c2247eb8"
         }
     },
-    "symfony/translation": {
-        "version": "3.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.3",
-            "ref": "6bcd6c570c017ea6ae5a7a6a027c929fd3542cd8"
-        }
-    },
-    "symfony/translation-contracts": {
-        "version": "v2.3.0"
-    },
     "symfony/twig-bridge": {
         "version": "v3.4.8"
     },
