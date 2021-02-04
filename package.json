@@ -32,7 +32,6 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-svg": "^3.0.2",
-    "stylelint": "^9.2.0",
     "webfontloader": "^1.6.28"
   },
   "browserslist": [
