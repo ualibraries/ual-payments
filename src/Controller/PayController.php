@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Displays payments about to be sent to the payment processor.
  */
-
 class PayController extends AbstractController
 {
     private $api;
