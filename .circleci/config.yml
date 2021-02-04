@@ -51,8 +51,7 @@ jobs:
       - run:
           name: Install npm
           command: |
-            curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-            echo -e "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" | sudo tee /etc/apt/preferences.d/nodejs > /dev/null
+            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             sudo apt-get install -y nodejs
       - run: npm install
       - run: npm run build
