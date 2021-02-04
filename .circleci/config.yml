@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.2-apache
+      - image: circleci/php:7.4-apache
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -89,7 +89,7 @@ jobs:
   deploy-docs:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.2-apache
+      - image: circleci/php:7.4-apache
     working_directory: ~/repo
     steps:
       - checkout
