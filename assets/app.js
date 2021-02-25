@@ -9,9 +9,9 @@ const WebFontConfig = {
   custom: {
     families: ['MiloWeb', 'MiloSerifWeb'],
     urls: [
-      'https://cdn.uadigital.arizona.edu/lib/ua-brand-fonts/1.0.0/milo.min.css'
-    ]
-  }
+      'https://cdn.uadigital.arizona.edu/lib/ua-brand-fonts/1.0.0/milo.min.css',
+    ],
+  },
 }
 
 document.addEventListener('DOMContentLoaded', () => {

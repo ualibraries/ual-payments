@@ -16,8 +16,7 @@ monolog:
             process_psr_3_messages: false
             channels: ["!event", "!doctrine"]
         slack:
-            type: slackbot
+            type: slackwebhook
             level: emergency
-            token: '%env(SLACK_TOKEN)%'
-            team: '%env(SLACK_TEAM)%'
-            channel: '%env(SLACK_CHANNEL)%'
+            webhook_url: '%env(SLACK_LOGGING)%'
+            channel: '#%env(SLACK_CHANNEL)%'

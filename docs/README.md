@@ -12,7 +12,7 @@ University of Arizona Libraries - Payments
 ## Requirements
 
 * 💻
-* PHP >= 7.2
+* PHP >= 7.4
 * Composer
 * NodeJs
 
@@ -32,14 +32,15 @@ University of Arizona Libraries - Payments
 * Log in to your Payflow Link account and navigate to Service Settings > Configuration.  Under "Form Configuration", set "Return URL" to be the root of your application (e.g. `http://www.example.com`) and set the "Silent POST URL" value to the `/result` endpoint of the application (e.g. `http://www.example.com/result`).  In order for Payflow to successfully post success and failure messages to your application, your server *must* be publicly available.  For local development, a tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel) can provide public URLs for Payflow.
 * (Optional) Set `TEST_ID` and `TEST_PASS` to the credentials for a test user in your Alma system.  These credentials will be used while running automated tests.
 * (Optional) Install Zombie.js globally: `npm install -g zombie`.  This is necessary for running automated tests due to [a quirk in the Mink ZombieDriver](http://mink.behat.org/en/latest/drivers/zombie.html).
-* (Optional) Enable emergency logging in Slack for production environments by adding a new Slackbot configuration in the admin section of your Slack workspace and copying the token to the `SLACK_TOKEN` parameter in `.env`.  Update `SLACK_TEAM` with the name of your Slack team (e.g. ualib) and `SLACK_CHANNEL` with the name of the channel you want the emergency logs to go to.  Make sure `SLACK_CHANNEL` doesn't start with a #, otherwise the `.env` file will interpret the line as a comment!
+* (Optional) Enable emergency logging in Slack for production environments by creating a new Slack incoming webhook and copying the webhook url to the `SLACK_LOGGING` parameter in `.env`.  Update `SLACK_CHANNEL` with the name of the channel you want the emergency logs to go to.  Make sure `SLACK_CHANNEL` doesn't start with a #, otherwise the `.env` file will interpret the line as a comment!
+
 ## Deploying
 
 This project uses [Deployer](https://deployer.org/) for its deployments. Deployment commands are scripted in `composer.json`. To deploy, use the following commands:
 
-* **Production:**  
+* **Production:**
 `composer deploy:prd`
-* **Staging:**  
+* **Staging:**
 `composer deploy:stg`
 
 ## Environments
@@ -48,11 +49,14 @@ This project uses [Deployer](https://deployer.org/) for its deployments. Deploym
 * **Staging** - pay-stg
 
 ## Authentication
+
 * If you don't already have an SSH key on your development machine, [generate one and add it to the ssh-agent](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#generating-a-new-ssh-key).
 * Add your SSH key to the server environment for the `deploy` user.  You can do this using `ssh-copy-id`:
+
 ```
-$ ssh-copy-id deploy@pay-prd
+ssh-copy-id deploy@pay-prd
 ```
+
 If you don't have the password for the deploy account, you can ask someone who already has server access to add your key.  Send them your public key (e.g. `~/.ssh/id_rsa.pub`) and have them append it to the `authorized_keys` file for the `deploy` user:
 
 ```
@@ -76,4 +80,5 @@ The phpDox documentation is automatically built and deployed by CircleCI wheneve
 View the phpDox documentation at [UAL Payments Documentation](http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com) (`http://ualibr-payments-documentation.s3-website-us-west-2.amazonaws.com`).
 
 ## License
+
 Licensed under the [MIT license](https://github.com/ualibraries/ual-payments/blob/master/LICENSE).

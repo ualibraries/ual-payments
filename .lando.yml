@@ -1,0 +1,26 @@
+name: payments
+recipe: symfony
+services:
+  appserver:
+    build_as_root:
+      - apt-get update -y
+      - docker-php-ext-install sockets
+      - apt-get install -y libxslt1-dev
+      - docker-php-ext-install xsl
+  node:
+    type: node
+    build:
+      - npm install
+config:
+  php: '7.4'
+  via: apache:2.4
+  webroot: ./public
+  database: mysql:5.7
+  xdebug: false
+tooling:
+  npm:
+    service: node
+  node:
+    service: node
+  yarn:
+    service: node

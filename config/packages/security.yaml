@@ -8,7 +8,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            logout_on_user_change: true
             anonymous: ~
             access_denied_handler: App\Security\AccessDeniedHandler
             guard:

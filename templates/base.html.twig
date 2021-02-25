@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} - University of Arizona Libraries</title>
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {{ encore_entry_link_tags('app') }}
     {% block stylesheets %}{% endblock %}
 
     {% if ga_tracking != "" %}
@@ -37,9 +37,8 @@
 
     {% include 'partials/footer.html.twig' %}
 
-    <script src="{{ asset('build/polyfill.js') }}"></script>
-    <script src="{{ asset('build/app.js') }}"></script>
-
+    {{ encore_entry_script_tags('polyfill') }}
+    {{ encore_entry_script_tags('app') }}
     {% block javascripts %}{% endblock %}
 </body>
 

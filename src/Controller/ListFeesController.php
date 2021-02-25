@@ -5,14 +5,13 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 /**
  * List the Alma fees for a particular user.
  */
-class ListFeesController extends Controller
+class ListFeesController extends AbstractController
 {
     private $api;
     private $userData;
