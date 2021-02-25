@@ -15,7 +15,7 @@ class AlmaApiTest extends KernelTestCase
 
     public function setUp()
     {
-        $dotenv = new Dotenv();
+        $dotenv = new Dotenv(true);
         $dotenv->load(__DIR__ . '/../../.env');
         $kernel = self::bootKernel();
         $this->api = $kernel->getContainer()->get('test.App\Service\AlmaApi');

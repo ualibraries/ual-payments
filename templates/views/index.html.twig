@@ -3,11 +3,11 @@
 {% block title %}Charges{% endblock %}
 
 {% block javascripts %}
-<script src="{{ asset('build/total-selected-charges.js') }}"></script>
+    {{ encore_entry_script_tags('total-selected-charges') }}
 
-{% if transaction %}
-<script src="{{ asset('build/alert.js') }}"></script>
-{% endif %}
+    {% if transaction %}
+        {{ encore_entry_script_tags('alert') }}
+    {% endif %}
 {% endblock %}
 
 {% block body %}
