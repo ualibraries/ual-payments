@@ -4,7 +4,7 @@
   "description": "Payments for UA Libraries",
   "type": "project",
   "require": {
-    "php": "^7.4",
+    "php": ">=7.4",
     "ext-SimpleXML": "*",
     "ext-ctype": "*",
     "ext-iconv": "*",
