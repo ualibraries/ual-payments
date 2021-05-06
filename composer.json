@@ -61,7 +61,12 @@
     "preferred-install": {
       "*": "dist"
     },
-    "sort-packages": true
+    "sort-packages": true,
+    "platform": {
+      "php": "7.4",
+      "ext-sockets": "7.4",
+      "ext-xsl": "7.4"
+    }
   },
   "autoload": {
     "psr-4": {
