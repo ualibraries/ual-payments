@@ -46,7 +46,7 @@ jobs:
           name: Set php.ini settings
           command: |
             echo -e "[Date]\ndate.timezone = 'America/Phoenix'" | sudo tee /usr/local/etc/php/php.ini > /dev/null
-      - run: sudo composer self-update
+      - run: composer update symfony/flex --no-plugins --no-scripts
       - run: composer install -n --prefer-dist
       - run: cp behat.local.yml.dist behat.local.yml
       - run:
