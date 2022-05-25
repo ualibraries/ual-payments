@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ua-payments-charts.fullname" . }}-app
+  labels:
+    {{- include "ua-payments-charts.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "ua-payments-charts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ua-payments-charts.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "ua-payments-charts.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-app
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.images.app.repository }}:{{ .Values.images.app.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.images.app.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: APP_ENV
+              value: "dev"
+            - name: DB_USER
+              value: "payments"
+            - name: DB_PASSWORD
+              value: "payments"
+            - name: DB_HOST
+              value: "ual-payments-mysql.svc.cluster.local"
+            - name: DB_NAME
+              value: "payments"
+            - name: DATABASE_URL
+              value: "mysql://payments:payments@ual-payments-mysql.svc.cluster.local:3306/$DB_NAME"
+            - name: API_URL
+              value: "https://api-na.hosted.exlibrisgroup.com"
+            - name: API_KEY
+              value: "l8xx7f77225dac5545d5b6f31fd7dfffbea8"
+            - name: PAYFLOW_URL
+              value: "Hello from the environment"
+            - name: PAYFLOW_LOGIN
+              value: "Hello from the environment"
+            - name: PAYFLOW_PARTNER
+              value: "Hello from the environment"
+            - name: PAYFLOW_LOGIN
+              value: "Hello from the environment"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

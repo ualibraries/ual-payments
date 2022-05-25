@@ -18,7 +18,7 @@ WORKDIR /app
 RUN npm install && npm run build
 
 
-FROM php:alpine3.14 AS prod
+FROM php:8.1-apache-buster AS prod
 
 COPY . /app
 
