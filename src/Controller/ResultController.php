@@ -130,9 +130,13 @@ class ResultController extends AbstractController
         $transaction->setStatus(Transaction::STATUS_PAID);
 
         if ($this->updateFeesOnAlma($transaction)) {
-            $transaction->setStatus(Transaction::STATUS_COMPLETED);
+            $status = Transaction::STATUS_COMPLETED;
+            $transaction->setStatus($status);
+            $struct_log['transaction_status'] =$status;
         } else {
-            $transaction->setStatus(Transaction::STATUS_FAILED);
+            $status =Transaction::STATUS_FAILED;
+            $transaction->setStatus($status);
+            $struct_log['transaction_status'] = $status;
         }
 
         $entityManager->persist($transaction);
