@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Psr\Log\LoggerInterface;
 
 /**
  * This controller processes the "Silent POST" requests send back from Payflow Link
@@ -32,27 +33,47 @@ class ResultController extends AbstractController
      *
      * @Route("/result", name="result")
      * @param Request $request
+     * @param LoggerInterface $logger
      * @return Response
      */
-    public function result(Request $request)
+    public function result(Request $request, LoggerInterface $logger)
     {
+        $struct_log = [];
         //No result code in the request
         $resultCode = $request->request->get('RESULT');
+        $struct_log['result_code'] = $resultCode;
         if (is_null($resultCode)) {
-            return new Response('Missing result code', Response::HTTP_BAD_REQUEST);
+            $msg = 'Missing result code';
+            $response_status = Response::HTTP_BAD_REQUEST;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //Cannot find the transaction in the database
         $invoiceNumber = $request->request->get('INVOICE');
         $transaction = $this->getDoctrine()->getRepository(Transaction::class)->findOneBy(['invoice_number' => $invoiceNumber]);
+        $struct_log['invoice_number'] = $invoiceNumber;
         if (!$transaction) {
-            return new Response('Cannot find the transaction', Response::HTTP_BAD_REQUEST);
+            $msg = 'Cannot find the transaction';
+            $response_status = Response::HTTP_BAD_REQUEST;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //The transaction is already paid or updated.
         $status = $transaction->getStatus();
+        $struct_log['transaction_status'] = $status;
         if ($status === Transaction::STATUS_PAID || $status === Transaction::STATUS_COMPLETED) {
-            return new Response('The transaction is completed.', Response::HTTP_BAD_REQUEST);
+            $msg = 'The transaction is completed.';
+            $response_status = Response::HTTP_BAD_REQUEST;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //Amount does not match.
@@ -61,12 +82,22 @@ class ResultController extends AbstractController
             $transaction->setStatus(Transaction::STATUS_ERROR);
             $entityManager->persist($transaction);
             $entityManager->flush();
-            return new Response('Invalid amount', Response::HTTP_BAD_REQUEST);
+            $msg = 'Invalid amount';
+            $response_status = Response::HTTP_BAD_REQUEST;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //Communication error
         if ($resultCode < 0) {
-            return new Response('Communication error', Response::HTTP_OK);
+            $msg = 'Communication error';
+            $response_status = Response::HTTP_OK;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //The transaction is declined on Payflow.
@@ -74,7 +105,12 @@ class ResultController extends AbstractController
             $transaction->setStatus(Transaction::STATUS_DECLINED);
             $entityManager->persist($transaction);
             $entityManager->flush();
-            return new Response('Declined by Payflow', Response::HTTP_OK);
+            $msg = 'Declined by Payflow';
+            $response_status = Response::HTTP_OK;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         //The transaction is declined by PayPal due to AVS or CSC check failed.
@@ -83,21 +119,34 @@ class ResultController extends AbstractController
             $transaction->setStatus(Transaction::STATUS_DECLINED);
             $entityManager->persist($transaction);
             $entityManager->flush();
-            return new Response('Declined by Payflow', Response::HTTP_OK);
+            $msg = 'Declined by Payflow';
+            $response_status = Response::HTTP_OK;
+            $struct_log['response_message'] = $msg;
+            $struct_log['response_status'] = $response_status;
+            $logger->info(json_encode($struct_log));
+            return new Response($msg, $response_status);
         }
 
         $transaction->setStatus(Transaction::STATUS_PAID);
 
         if ($this->updateFeesOnAlma($transaction)) {
-            $transaction->setStatus(Transaction::STATUS_COMPLETED);
+            $status = Transaction::STATUS_COMPLETED;
+            $transaction->setStatus($status);
+            $struct_log['transaction_status'] =$status;
         } else {
-            $transaction->setStatus(Transaction::STATUS_FAILED);
+            $status =Transaction::STATUS_FAILED;
+            $transaction->setStatus($status);
+            $struct_log['transaction_status'] = $status;
         }
 
         $entityManager->persist($transaction);
         $entityManager->flush();
-
-        return new Response("Success", Response::HTTP_OK);
+        $msg = "Success";
+        $response_status = Response::HTTP_OK;
+        $struct_log['response_message'] = $msg;
+        $struct_log['response_status'] = $response_status;
+        $logger->info(json_encode($struct_log));
+        return new Response($msg, $response_status);
     }
 
     /**
