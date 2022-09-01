@@ -132,7 +132,7 @@ class ResultController extends AbstractController
         if ($this->updateFeesOnAlma($transaction)) {
             $status = Transaction::STATUS_COMPLETED;
             $transaction->setStatus($status);
-            $struct_log['transaction_status'] =$status;
+            $struct_log['transaction_status'] = $status;
         } else {
             $status =Transaction::STATUS_FAILED;
             $transaction->setStatus($status);
