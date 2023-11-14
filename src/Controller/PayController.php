@@ -51,9 +51,9 @@ class PayController extends AbstractController
             'user_id' => $transaction->getUserId(),
             'invoice_number' => $transaction->getInvoiceNumber(),
             'total_balance' => $transaction->getTotalBalance(),
-            'payflow_url' => getEnv("PAYFLOW_URL"),
-            'payflow_login' => getEnv("PAYFLOW_LOGIN"),
-            'payflow_partner' => getEnv("PAYFLOW_PARTNER"),
+            'payflow_url' => $_ENV['PAYFLOW_URL'],
+            'payflow_login' => $_ENV['PAYFLOW_LOGIN'],
+            'payflow_partner' => $_ENV['PAYFLOW_PARTNER'],
         ]);
     }
 
