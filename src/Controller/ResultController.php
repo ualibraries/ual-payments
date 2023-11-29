@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,10 +34,11 @@ class ResultController extends AbstractController
      *
      * @Route("/result", name="result")
      * @param Request $request
+     * @param ManagerRegistry $doctrine
      * @param LoggerInterface $logger
      * @return Response
      */
-    public function result(Request $request, LoggerInterface $logger)
+    public function result(Request $request, ManagerRegistry $doctrine, LoggerInterface $logger)
     {
         $struct_log = [];
         //No result code in the request
@@ -53,7 +55,7 @@ class ResultController extends AbstractController
 
         //Cannot find the transaction in the database
         $invoiceNumber = $request->request->get('INVOICE');
-        $transaction = $this->getDoctrine()->getRepository(Transaction::class)->findOneBy(['invoice_number' => $invoiceNumber]);
+        $transaction = $doctrine->getRepository(Transaction::class)->findOneBy(['invoice_number' => $invoiceNumber]);
         $struct_log['invoice_number'] = $invoiceNumber;
         if (!$transaction) {
             $msg = 'Cannot find the transaction';
@@ -77,7 +79,7 @@ class ResultController extends AbstractController
         }
 
         //Amount does not match.
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $doctrine->getManager();
         if ($transaction->getTotalBalance() != $request->request->get('AMOUNT')) {
             $transaction->setStatus(Transaction::STATUS_ERROR);
             $entityManager->persist($transaction);
