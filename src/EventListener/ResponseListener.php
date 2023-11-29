@@ -16,7 +16,7 @@ class ResponseListener implements EventSubscriberInterface
         $event->getResponse()->headers->set('x-frame-options', 'deny');
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             KernelEvents::RESPONSE => array('onKernelResponse', -1024),
