@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
  */
 class SecuritySubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             AuthenticationEvents::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',
