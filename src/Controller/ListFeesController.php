@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,11 +16,13 @@ class ListFeesController extends AbstractController
 {
     private $api;
     private $userData;
+    private $doctrine;
 
-    public function __construct(AlmaApi $api, AlmaUserData $userData)
+    public function __construct(AlmaApi $api, AlmaUserData $userData, ManagerRegistry $doctrine)
     {
         $this->api = $api;
         $this->userData = $userData;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -53,8 +56,8 @@ class ListFeesController extends AbstractController
     private function processTransactions()
     {
         $userId = $this->getUser()->getUsername();
-        $repository = $this->getDoctrine()->getRepository(Transaction::class);
-        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $this->doctrine->getRepository(Transaction::class);
+        $entityManager = $this->doctrine->getManager();
 
         $transactions = $repository->findBy([
             'user_id' => $userId,

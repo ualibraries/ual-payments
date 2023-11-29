@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Transaction;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,10 +15,10 @@ class HistoryController extends AbstractController
     /**
      * @Route("/history", name="history")
      */
-    public function index()
+    public function index(ManagerRegistry $doctrine)
     {
         $user = $this->getUser();
-        $transactions = $this->getDoctrine()->getRepository(Transaction::class)->findBy(
+        $transactions = $doctrine->getRepository(Transaction::class)->findBy(
             ['user_id' => $user->getUsername()],
             ['date' => 'DESC']
         );
