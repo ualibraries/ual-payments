@@ -27,6 +27,7 @@
     "symfony/property-access": "5.4.*",
     "symfony/property-info": "5.4.*",
     "symfony/proxy-manager-bridge": "5.4.*",
+    "symfony/runtime": "5.4.*",
     "symfony/security-bundle": "5.4.*",
     "symfony/serializer": "5.4.*",
     "symfony/translation": "5.4.*",
@@ -61,7 +62,8 @@
       "ext-xsl": "7.4"
     },
     "allow-plugins": {
-      "symfony/flex": true
+      "symfony/flex": true,
+      "symfony/runtime": true
     }
   },
   "autoload": {
