@@ -36,7 +36,7 @@ class ListFeesController extends AbstractController
         $transactionToNotify = $this->processTransactions();
 
         $totalDue = 0.0;
-        $userFees = $this->userData->listFees($this->api->getUserFees($user->getUsername()));
+        $userFees = $this->userData->listFees($this->api->getUserFees($user->getUserIdentifier()));
         foreach ($userFees as $userFee) {
             $totalDue += $userFee['balance'];
         }
@@ -55,7 +55,7 @@ class ListFeesController extends AbstractController
      */
     private function processTransactions()
     {
-        $userId = $this->getUser()->getUsername();
+        $userId = $this->getUser()->getUserIdentifier();
         $repository = $this->doctrine->getRepository(Transaction::class);
         $entityManager = $this->doctrine->getManager();
 

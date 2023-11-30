@@ -33,7 +33,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
         $this->twig = $twig;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         if ($this->security->getUser()) {
             return false;

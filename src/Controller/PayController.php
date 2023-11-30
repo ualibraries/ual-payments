@@ -40,7 +40,7 @@ class PayController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        $transaction = new Transaction($this->getUser()->getUsername());
+        $transaction = new Transaction($this->getUser()->getUserIdentifier());
 
         $entityManager = $this->doctrine->getManager();
         if ($this->setUserFees($transaction, $feeIds) == 0) {
