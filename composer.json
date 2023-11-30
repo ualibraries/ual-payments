@@ -39,8 +39,7 @@
     "twig/twig": "^2.12"
   },
   "require-dev": {
-    "deployer/dist": "^6.1",
-    "deployer/recipes": "^6.1",
+    "deployer/deployer": "^7.3",
     "phploc/phploc": "^7.0",
     "symfony/browser-kit": "^5.4",
     "symfony/debug-bundle": "^5.4",
@@ -90,10 +89,10 @@
       "npm run build"
     ],
     "deploy:prd": [
-      "vendor/bin/dep --ansi deploy prd"
+      "vendor/bin/dep --ansi deploy stage=prd"
     ],
     "deploy:stg": [
-      "vendor/bin/dep --ansi deploy stg"
+      "vendor/bin/dep --ansi deploy stage=stg"
     ],
     "deploy:rollback": [
       "vendor/bin/dep --ansi rollback prd"

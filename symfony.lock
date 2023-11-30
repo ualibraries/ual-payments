@@ -2,12 +2,6 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
-    "deployer/dist": {
-        "version": "v6.2.0"
-    },
-    "deployer/recipes": {
-        "version": "6.1.1"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
