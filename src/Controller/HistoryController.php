@@ -19,7 +19,7 @@ class HistoryController extends AbstractController
     {
         $user = $this->getUser();
         $transactions = $doctrine->getRepository(Transaction::class)->findBy(
-            ['user_id' => $user->getUsername()],
+            ['user_id' => $user->getUserIdentifier()],
             ['date' => 'DESC']
         );
         return $this->render('views/history.html.twig', [

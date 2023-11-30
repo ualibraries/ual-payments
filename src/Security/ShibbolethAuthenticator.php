@@ -30,7 +30,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
         $this->shibUaid = $shibUaid;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         if ($this->security->getUser()) {
             return false;
