@@ -13,13 +13,12 @@ class AlmaApiTest extends KernelTestCase
     private $userId;
     private $userData;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $dotenv = new Dotenv(true);
-        $dotenv->load(__DIR__ . '/../../.env');
+        (new Dotenv())->loadEnv(__DIR__ . '/../../.env');
         $kernel = self::bootKernel();
         $this->api = $kernel->getContainer()->get('test.App\Service\AlmaApi');
-        $this->userId = getenv('TEST_ID');
+        $this->userId = $_ENV['TEST_ID'];
         $this->userData = new AlmaUserData();
         parent::setUp();
     }
@@ -68,7 +67,7 @@ class AlmaApiTest extends KernelTestCase
     {
         //Test correct password
         try {
-            $response = $this->api->authenticateUser($this->userId, getenv('TEST_PASS'));
+            $response = $this->api->authenticateUser($this->userId, $_ENV['TEST_PASS']);
             $this->assertEquals(204, $response->getStatusCode());
         } catch (\Exception $e) {
             $this->fail($e->getMessage());
