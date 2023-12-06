@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Twig\Environment;
 
 
 /**
@@ -22,12 +23,14 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
     private $router;
     private $security;
     private $shibUaid;
+    private Environment $twig;
 
-    public function __construct(RouterInterface $router, Security $security, $shibUaid)
+    public function __construct(RouterInterface $router, Security $security, $shibUaid, Environment $twig)
     {
         $this->router = $router;
         $this->security = $security;
         $this->shibUaid = $shibUaid;
+        $this->twig = $twig;
     }
 
     public function supports(Request $request)
@@ -94,7 +97,7 @@ class ShibbolethAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        return new RedirectResponse($this->router->generate('login'));
+        return new Response($this->twig->render('views/user_not_found_error.html.twig'));
     }
 
     /**
