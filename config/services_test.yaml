@@ -2,6 +2,10 @@ services:
     _defaults:
         public: true
 
+    App\Tests\Behat\FeatureContext:
+        arguments:
+            - '@App\Service\AlmaApi'
+
     # If you need to access services in a test, create an alias
     # and then fetch that alias from the container. As a convention,
     # aliases are prefixed with test. For example:
