@@ -5,19 +5,15 @@ default:
   suites:
     default:
       contexts:
-        - behatch:context:browser
-        - \FeatureContext:
-           api: '@test.App\Service\AlmaApi'
+        - App\Tests\Behat\FeatureContext
+
   extensions:
-    Behatch\Extension: ~
-    Behat\Symfony2Extension:
+    FriendsOfBehat\SymfonyExtension:
+      bootstrap: tests/bootstrap.php
       kernel:
-        bootstrap: features/bootstrap/bootstrap.php
         class: App\Kernel
     Behat\MinkExtension:
       sessions:
-        default:
-          goutte: ~
         javascript:
           zombie:
             server_path: bin/mink-zombie-server.js

@@ -1,20 +1,20 @@
 <?php
 
+namespace App\Tests\Behat;
+
 use App\Entity\Fee;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use GuzzleHttp\Client;
-use Symfony\Component\Dotenv\Dotenv;
 use Webmozart\Assert\Assert;
+use Behat\MinkExtension\Context\MinkContext;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends Behat\MinkExtension\Context\MinkContext
+class FeatureContext extends MinkContext
 {
-    use Behat\Symfony2Extension\Context\KernelDictionary;
-
     private $testTransaction;
     private $paymentResponse;
     private $api;
@@ -29,8 +29,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function __construct(AlmaApi $api)
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__ . '/../../.env');
         $this->testTransaction = null;
         $this->paymentResponse = null;
         $this->api = $api;
@@ -42,7 +40,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function createFee($event)
     {
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $testFeeBody = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $this->api->createUserFee($userId, json_decode($testFeeBody));
     }
@@ -54,7 +52,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     public function removeFees($event)
     {
         $userData = new AlmaUserData();
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $fees = $userData->listFees($this->api->getUserFees($userId));
 
         foreach ($fees as $fee) {
@@ -110,7 +108,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function iHaveAFee($amount)
     {
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
@@ -127,7 +125,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $transaction = new Transaction($userId);
         $total = 0;
 
@@ -204,7 +202,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
         $url = rtrim($this->getMinkParameter('base_url'), '/');
         $url .= $this->getContainer()->get('router')->generate('result');
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
 
         $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
         $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
