@@ -6,6 +6,7 @@ use App\Entity\Fee;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,13 @@ class PayController extends AbstractController
 {
     private $api;
     private $userData;
+    private $doctrine;
 
-    public function __construct(AlmaApi $api, AlmaUserData $userData)
+    public function __construct(AlmaApi $api, AlmaUserData $userData, ManagerRegistry $doctrine)
     {
         $this->api = $api;
         $this->userData = $userData;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -37,9 +40,9 @@ class PayController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        $transaction = new Transaction($this->getUser()->getUsername());
+        $transaction = new Transaction($this->getUser()->getUserIdentifier());
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->doctrine->getManager();
         if ($this->setUserFees($transaction, $feeIds) == 0) {
             return $this->redirectToRoute('index');
         }
@@ -51,9 +54,9 @@ class PayController extends AbstractController
             'user_id' => $transaction->getUserId(),
             'invoice_number' => $transaction->getInvoiceNumber(),
             'total_balance' => $transaction->getTotalBalance(),
-            'payflow_url' => getEnv("PAYFLOW_URL"),
-            'payflow_login' => getEnv("PAYFLOW_LOGIN"),
-            'payflow_partner' => getEnv("PAYFLOW_PARTNER"),
+            'payflow_url' => $_ENV['PAYFLOW_URL'],
+            'payflow_login' => $_ENV['PAYFLOW_LOGIN'],
+            'payflow_partner' => $_ENV['PAYFLOW_PARTNER'],
         ]);
     }
 
@@ -74,7 +77,7 @@ class PayController extends AbstractController
             if (in_array($almaFee['id'], $feeIds)) {
                 $fee = new Fee($almaFee['id'], $almaFee['balance'], $almaFee['label']);
 
-                $this->getDoctrine()->getManager()->persist($fee);
+                $this->doctrine->getManager()->persist($fee);
                 $transaction->addFee($fee);
                 $total += $almaFee['balance'];
             }

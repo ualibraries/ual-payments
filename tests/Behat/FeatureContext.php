@@ -1,23 +1,27 @@
 <?php
 
+namespace App\Tests\Behat;
+
 use App\Entity\Fee;
 use App\Entity\Transaction;
 use App\Service\AlmaApi;
 use App\Service\AlmaUserData;
 use GuzzleHttp\Client;
-use Symfony\Component\Dotenv\Dotenv;
 use Webmozart\Assert\Assert;
+use Behat\MinkExtension\Context\MinkContext;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends Behat\MinkExtension\Context\MinkContext
+class FeatureContext extends MinkContext
 {
-    use Behat\Symfony2Extension\Context\KernelDictionary;
-
     private $testTransaction;
     private $paymentResponse;
     private $api;
+    private $doctrine;
+    private $router;
 
     /**
      * Initializes context.
@@ -27,13 +31,13 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      * context constructor through behat.yml.
      * @param AlmaApi $api
      */
-    public function __construct(AlmaApi $api)
+    public function __construct(AlmaApi $api, ManagerRegistry $doctrine, RouterInterface $router)
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__ . '/../../.env');
         $this->testTransaction = null;
         $this->paymentResponse = null;
         $this->api = $api;
+        $this->doctrine = $doctrine;
+        $this->router = $router;
     }
 
     /**
@@ -42,7 +46,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function createFee($event)
     {
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $testFeeBody = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $this->api->createUserFee($userId, json_decode($testFeeBody));
     }
@@ -54,7 +58,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
     public function removeFees($event)
     {
         $userData = new AlmaUserData();
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $fees = $userData->listFees($this->api->getUserFees($userId));
 
         foreach ($fees as $fee) {
@@ -110,7 +114,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function iHaveAFee($amount)
     {
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
@@ -123,17 +127,17 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
      */
     public function iHaveATransaction($numFees, $amount)
     {
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->doctrine->getManager();
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
-        $userId = getenv('TEST_ID');
+        $userId = $_ENV['TEST_ID'];
         $transaction = new Transaction($userId);
         $total = 0;
 
         for ($i = 0; $i < $numFees; $i++) {
             $response = $this->api->createUserFee($userId, $testFee);
-            $sxml = new SimpleXMLElement($response->getBody());
+            $sxml = new \SimpleXMLElement($response->getBody());
             $fee = new Fee((int)$sxml->id, (float)$sxml->original_amount, (string)$sxml->type);
             $transaction->addFee($fee);
             $em->persist($fee);
@@ -203,8 +207,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
 
 
         $url = rtrim($this->getMinkParameter('base_url'), '/');
-        $url .= $this->getContainer()->get('router')->generate('result');
-        $userId = getenv('TEST_ID');
+        $url .= $this->router->generate('result');
+        $userId = $_ENV['TEST_ID'];
 
         $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
         $form_params['AMOUNT'] = $this->testTransaction->getTotalBalance();
@@ -467,6 +471,23 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext
         } catch (\Behat\Mink\Exception\ElementNotFoundException $e) {
             print($e);
             return;
+        }
+    }
+
+    /**
+     * Checks, that element with given CSS is disabled
+     *
+     * @Then the element :element should be disabled
+     */
+    public function theElementShouldBeDisabled($element)
+    {
+        $node = $this->getSession()->getPage()->find('css', $element);
+        if ($node === null) {
+            throw new \Exception("There is no '$element' element");
+        }
+
+        if (!$node->hasAttribute('disabled')) {
+            throw new \Exception("The element '$element' is not disabled");
         }
     }
 }

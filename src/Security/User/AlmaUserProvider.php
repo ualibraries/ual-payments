@@ -42,7 +42,7 @@ class AlmaUserProvider implements UserProviderInterface
         return $user;
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return AlmaUser::class === $class;
     }

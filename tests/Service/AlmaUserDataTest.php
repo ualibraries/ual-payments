@@ -19,11 +19,10 @@ class AlmaUserDataTest extends TestCase
 {
     private $userdata;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $dotenv = new Dotenv(true);
-        $dotenv->load(__DIR__ . '/../../.env');
-        $userId = getenv('TEST_ID');
+        (new Dotenv())->loadEnv(__DIR__ . '/../../.env');
+        $userId = $_ENV['TEST_ID'];
         $this->userdata = new AlmaUserData($userId);
 
         parent::setUp();

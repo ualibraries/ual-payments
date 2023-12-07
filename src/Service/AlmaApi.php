@@ -32,12 +32,12 @@ class AlmaApi
      */
     protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues)
     {
-        $client = new Client(['base_uri' => getenv('API_URL')]);
+        $client = new Client(['base_uri' => $_ENV['API_URL']]);
 
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
         $defaultRequestParams = [
             'headers' => [
-                'Authorization' => 'apikey ' . getenv('API_KEY'),
+                'Authorization' => 'apikey ' . $_ENV['API_KEY'],
             ]
         ];
 

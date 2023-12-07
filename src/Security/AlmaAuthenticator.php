@@ -38,7 +38,7 @@ class AlmaAuthenticator extends AbstractGuardAuthenticator
         $this->api = $api;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         if ($this->security->getUser()) {
             return false;

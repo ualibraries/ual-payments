@@ -69,6 +69,16 @@ class AlmaUser implements UserInterface, EquatableInterface
      *
      * @return string The username
      */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
     public function getUsername()
     {
         return $this->username;

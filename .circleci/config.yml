@@ -50,26 +50,33 @@ jobs:
       - run: composer install -n --prefer-dist
       - run: cp behat.local.yml.dist behat.local.yml
       - run:
-          name: Install npm
+          name: Install Node 16
           command: |
-            curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+            sudo apt-get install -y ca-certificates curl gnupg
+            sudo mkdir -p /etc/apt/keyrings
+            curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
+            sudo apt-get update
+            sudo apt-get install nodejs -y
       - run: npm install
       - run: npm run build
       - run: sudo npm install -g zombie
       - run: sudo chmod -R 777 var/
-      - run: cp .env.dist .env
+      - run: cp .env .env.local
       - run:
-          name: Configure .env
+          name: Configure .env.local
           command: |
-            sed 's/\(^APP_ENV=\)dev/\1'ci'/' -i .env
-            sed 's/\(^TEST_ID=\)/\1\"'"$TEST_ALMA_USER_ID"'\"/' -i .env
-            sed 's/\(^TEST_PASS=\)/\1'$ALMA_CIRCLECI_TEST_USER_PASSWORD'/' -i .env
-            sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env
-            sed 's/\(^DB_USER=\)/\1'root'/' -i .env
-            sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env
-            sed 's#\(^API_URL=\)#\1'$ALMA_API_URL'#' -i .env
-            sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env
+            sed 's/\(^APP_ENV=\)dev/\1'ci'/' -i .env.local
+            sed 's/\(^APP_SECRET=\)/\1'secret'/' -i .env.local
+            sed 's/\(^TEST_ID=\)/\1\"'"$TEST_ALMA_USER_ID"'\"/' -i .env.local
+            sed 's/\(^TEST_PASS=\)/\1'$ALMA_CIRCLECI_TEST_USER_PASSWORD'/' -i .env.local
+            sed 's/\(^USE_TEST_ID=\)/\1'TRUE'/' -i .env.local
+            sed 's/\(^DB_USER=\)/\1'root'/' -i .env.local
+            sed 's/\(^DB_NAME=\)/\1'circle_test'/' -i .env.local
+            sed 's#\(^API_URL=\)#\1'$ALMA_API_URL'#' -i .env.local
+            sed 's/\(^API_KEY=\)/\1'$ALMA_API_KEY'/' -i .env.local
+      - run: cp .env.local .env.test.local
       - run: php bin/console doctrine:migrations:migrate --no-interaction
 
       - run: sudo sed 's/\(^CipherString = DEFAULT@SECLEVEL=\)2/\1'1'/' -i /etc/ssl/openssl.cnf
