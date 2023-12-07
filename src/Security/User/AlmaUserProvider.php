@@ -30,9 +30,8 @@ class AlmaUserProvider implements UserProviderInterface
             return new AlmaUser($username, array('ROLE_USER'), $this->userData->getFullNameAsString($response));
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             $this->logger->error($e->getCode() . $e->getMessage());
+            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
-
-        throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
     }
 
     public function refreshUser(UserInterface $user)
