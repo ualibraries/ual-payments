@@ -9,6 +9,8 @@ use App\Service\AlmaUserData;
 use GuzzleHttp\Client;
 use Webmozart\Assert\Assert;
 use Behat\MinkExtension\Context\MinkContext;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Defines application features from the specific context.
@@ -18,6 +20,8 @@ class FeatureContext extends MinkContext
     private $testTransaction;
     private $paymentResponse;
     private $api;
+    private $doctrine;
+    private $router;
 
     /**
      * Initializes context.
@@ -27,11 +31,13 @@ class FeatureContext extends MinkContext
      * context constructor through behat.yml.
      * @param AlmaApi $api
      */
-    public function __construct(AlmaApi $api)
+    public function __construct(AlmaApi $api, ManagerRegistry $doctrine, RouterInterface $router)
     {
         $this->testTransaction = null;
         $this->paymentResponse = null;
         $this->api = $api;
+        $this->doctrine = $doctrine;
+        $this->router = $router;
     }
 
     /**
@@ -121,7 +127,7 @@ class FeatureContext extends MinkContext
      */
     public function iHaveATransaction($numFees, $amount)
     {
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->doctrine->getManager();
         $testFee = file_get_contents(__DIR__ . '/../../tests/Service/TestJSONData/fee1.json');
         $testFee = json_decode($testFee);
         $testFee->original_amount = $amount;
@@ -131,7 +137,7 @@ class FeatureContext extends MinkContext
 
         for ($i = 0; $i < $numFees; $i++) {
             $response = $this->api->createUserFee($userId, $testFee);
-            $sxml = new SimpleXMLElement($response->getBody());
+            $sxml = new \SimpleXMLElement($response->getBody());
             $fee = new Fee((int)$sxml->id, (float)$sxml->original_amount, (string)$sxml->type);
             $transaction->addFee($fee);
             $em->persist($fee);
@@ -201,7 +207,7 @@ class FeatureContext extends MinkContext
 
 
         $url = rtrim($this->getMinkParameter('base_url'), '/');
-        $url .= $this->getContainer()->get('router')->generate('result');
+        $url .= $this->router->generate('result');
         $userId = $_ENV['TEST_ID'];
 
         $form_params['INVOICE'] = $this->testTransaction->getInvoiceNumber();
@@ -465,6 +471,23 @@ class FeatureContext extends MinkContext
         } catch (\Behat\Mink\Exception\ElementNotFoundException $e) {
             print($e);
             return;
+        }
+    }
+
+    /**
+     * Checks, that element with given CSS is disabled
+     *
+     * @Then the element :element should be disabled
+     */
+    public function theElementShouldBeDisabled($element)
+    {
+        $node = $this->getSession()->getPage()->find('css', $element);
+        if ($node === null) {
+            throw new \Exception("There is no '$element' element");
+        }
+
+        if (!$node->hasAttribute('disabled')) {
+            throw new \Exception("The element '$element' is not disabled");
         }
     }
 }
