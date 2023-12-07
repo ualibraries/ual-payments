@@ -7,7 +7,7 @@
     <div class="unauthorized__wrapper">
         <h2>Could not find user account</h2>
         <p>
-            It looks like we had a problem locating your Library account. Try <a href="{{ path('shib_logout') }}">signing out</a> and logging back in again.
+            It looks like we had a problem locating your Library account. Try <a href="{{ path('shib_logout',{'return': path('login')}) }}">signing out</a> and logging back in again.
         </p>
         <p>
             If that does not resolve the issue
