@@ -9,6 +9,7 @@ This project uses [Behat](https://github.com/Behat/Behat) for Behavior Driven De
 
 ## Testing Locally
 
+* Copy `.env` to `.env.test.local`
 * Copy `behat.local.yml.dist` to `behat.local.yml`
 * Change the `base_url` parameter to the webroot of your local build
 * Install Zombie.js globally with NPM: `$ sudo npm install -g zombie`.  Unfortunately due to a quirk with the ZombieDriver, Zombie.js must be installed

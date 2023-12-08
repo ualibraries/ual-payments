@@ -21,7 +21,7 @@ University of Arizona Libraries - Payments
 * NOTE: For MacOS Mojave users, visit [here](https://getgrav.org/blog/macos-mojave-apache-multiple-php-versions) and [here](https://github.com/liip/php-osx/issues/249) first.
 * Clone the repository using `git clone ssh://git@github.com/ualibraries/ual-payments.git`.
 * Run `composer install`
-* Copy `.env.dist` to `.env` and open it in a text editor.
+* Copy `.env` to `.env.local` and open it in a text editor.
 * Create an empty database.
 * Replace the `DB_*` with the correct credentials for your database connection.
 * Run `bin/console doctrine:migrations:migrate` to get the database structure in place.
