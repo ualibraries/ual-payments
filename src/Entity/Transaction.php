@@ -29,7 +29,7 @@ class Transaction
     private $invoice_number;
 
     /**
-     * @ORM\Column(type="string", length=25)
+     * @ORM\Column(type="string", length=128)
      */
     private $user_id;
 
