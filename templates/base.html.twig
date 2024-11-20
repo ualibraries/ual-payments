@@ -6,18 +6,6 @@
     <title>{% block title %}{% endblock %} - University of Arizona Libraries</title>
     {{ encore_entry_link_tags('app') }}
     {% block stylesheets %}{% endblock %}
-
-    {% if ga_tracking != "" %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_tracking }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', '{{ ga_tracking }}');
-    </script>
-    {% endif %}
 </head>
 
 <body>
