@@ -3,10 +3,16 @@ recipe: symfony
 services:
   appserver:
     build_as_root:
+      - rm -f /etc/apt/sources.list.d/mariadb*.list || true
+      - sed -i '/mirror\.mariadb\.org/d' /etc/apt/sources.list || true
+      - apt-get update
       - apt-get update -y
       - docker-php-ext-install sockets
       - apt-get install -y libxslt1-dev
       - docker-php-ext-install xsl
+    build:
+        - apt-get install -y --no-install-recommends mariadb-client || true
+
   node:
     type: node
     build:
@@ -15,7 +21,6 @@ config:
   php: '7.4'
   via: apache:2.4
   webroot: ./public
-  database: mysql:5.7
   xdebug: false
 tooling:
   npm:
