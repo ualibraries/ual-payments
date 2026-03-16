@@ -38,6 +38,24 @@ class AlmaUserData
     }
 
     /**
+     * Checks if the user has any transfer fees
+     *
+     * @param Response $response
+     * @return bool
+     */
+    public function hasTransferFees(Response $response)
+    {
+        $sxml = new SimpleXMLElement($response->getBody());
+        // If any fee has the status of "EXPORTED", then it is a transfer fee and we return true, otherwise we return false
+        foreach ($sxml->fee as $indv_fee) {
+            if ((string)$indv_fee->status === 'EXPORTED') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Get the full name of user from Alma API response
      *
      * @param Response $response

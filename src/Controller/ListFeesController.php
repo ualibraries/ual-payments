@@ -40,11 +40,13 @@ class ListFeesController extends AbstractController
         foreach ($userFees as $userFee) {
             $totalDue += $userFee['balance'];
         }
+        $hasTransferFees = $this->userData->hasTransferFees($this->api->getUserTransferFees($user->getUserIdentifier()));
 
         return $this->render('views/index.html.twig', [
             'full_name' => $user->getFullName(),
             'user_fees' => $userFees,
             'total_Due' => $totalDue,
+            'has_transfer_fees' => $hasTransferFees,
             'transaction' => $transactionToNotify
         ]);
     }
