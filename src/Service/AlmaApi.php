@@ -96,7 +96,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserFees($userId)
+    public function getUserFees($userId, $status = 'ACTIVE')
     {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
@@ -104,29 +104,7 @@ class AlmaApi
         $templateParamValues = array(rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
-            'status' => 'ACTIVE'
-        ];
-        $requestParams = compact('query');
-
-        return $this->executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues);
-    }
-
-    /**
-     * Get the users list of transferfees from Alma.
-     *
-     * @param $userId
-     * @return mixed|null|\Psr\Http\Message\ResponseInterface
-     * @throws GuzzleException
-     */
-    public function getUserTransferFees($userId)
-    {
-        $method = 'GET';
-        $urlPath = '/almaws/v1/users/{user_id}/fees';
-        $templateParamNames = array('{user_id}');
-        $templateParamValues = array(rawurlencode($userId));
-        $query = [
-            'user_id_type' => 'all_unique',
-            'status' => 'EXPORTED'
+            'status' => $status
         ];
         $requestParams = compact('query');
 
