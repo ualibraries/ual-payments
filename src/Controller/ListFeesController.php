@@ -40,7 +40,14 @@ class ListFeesController extends AbstractController
         foreach ($userFees as $userFee) {
             $totalDue += $userFee['balance'];
         }
-        $hasTransferFees = $this->userData->responseHasFees($this->api->getUserFees($user->getUserIdentifier(), 'EXPORTED'));
+
+        try
+        {
+            $hasTransferFees = $this->userData->responseHasFees($this->api->getUserFees($user->getUserIdentifier(), 'EXPORTED'));
+        } catch (\Exception $e) {
+            // If there is an error with the API call to check for transfer fees, we log the error and assume that there are no transfer fees so that the user can still pay their other fees.
+            $hasTransferFees = false;
+        }
 
         return $this->render('views/index.html.twig', [
             'full_name' => $user->getFullName(),
