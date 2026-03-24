@@ -12,14 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * List the Alma fees for a particular user.
  */
-class ListFeesController extends AbstractController
-{
+class ListFeesController extends AbstractController {
     private $api;
     private $userData;
     private $doctrine;
 
-    public function __construct(AlmaApi $api, AlmaUserData $userData, ManagerRegistry $doctrine)
-    {
+    public function __construct(AlmaApi $api, AlmaUserData $userData, ManagerRegistry $doctrine) {
         $this->api = $api;
         $this->userData = $userData;
         $this->doctrine = $doctrine;
@@ -30,8 +28,7 @@ class ListFeesController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function index()
-    {
+    public function index() {
         $user = $this->getUser();
         $transactionToNotify = $this->processTransactions();
 
@@ -41,10 +38,18 @@ class ListFeesController extends AbstractController
             $totalDue += $userFee['balance'];
         }
 
+        try {
+            $hasTransferFees = $this->userData->responseHasFees($this->api->getUserFees($user->getUserIdentifier(), 'EXPORTED'));
+        } catch (\Exception $e) {
+            // If there is an error with the API call to check for transfer fees, we log the error and assume that there are no transfer fees so that the user can still pay their other fees.
+            $hasTransferFees = false;
+        }
+
         return $this->render('views/index.html.twig', [
             'full_name' => $user->getFullName(),
             'user_fees' => $userFees,
             'total_Due' => $totalDue,
+            'has_transfer_fees' => $hasTransferFees,
             'transaction' => $transactionToNotify
         ]);
     }
@@ -53,8 +58,7 @@ class ListFeesController extends AbstractController
      * Remove user's pending transactions and return the latest transaction if it has not been notified.
      * @return Transaction|null Return null if the latest transaction has been notified or in PENDING status.
      */
-    private function processTransactions()
-    {
+    private function processTransactions() {
         $userId = $this->getUser()->getUserIdentifier();
         $repository = $this->doctrine->getRepository(Transaction::class);
         $entityManager = $this->doctrine->getManager();

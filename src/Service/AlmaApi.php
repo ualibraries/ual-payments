@@ -10,12 +10,10 @@ use SimpleXMLElement;
 /**
  * Provides functionality for accessing the Alma API.
  */
-class AlmaApi
-{
+class AlmaApi {
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
-    {
+    public function __construct(LoggerInterface $logger) {
         $this->logger = $logger;
     }
 
@@ -30,8 +28,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues)
-    {
+    protected function executeApiRequest($urlPath, $method, $requestParams, $templateParamNames, $templateParamValues) {
         $client = new Client(['base_uri' => $_ENV['API_URL']]);
 
         $url = str_replace($templateParamNames, $templateParamValues, $urlPath);
@@ -96,15 +93,14 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserFees($userId)
-    {
+    public function getUserFees($userId, $status = 'ACTIVE') {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
         $templateParamValues = array(rawurlencode($userId));
         $query = [
             'user_id_type' => 'all_unique',
-            'status' => 'ACTIVE'
+            'status' => $status
         ];
         $requestParams = compact('query');
 
@@ -118,8 +114,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function getUserById($userId)
-    {
+    public function getUserById($userId) {
         $method = 'GET';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');
@@ -144,8 +139,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function payUserFee($userId, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null)
-    {
+    public function payUserFee($userId, $feeId, $amount, $method = 'ONLINE', $externalTransactionId = null, $comment = null) {
         $queryParams = [
             'op' => 'pay',
             'amount' => $amount,
@@ -169,8 +163,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    protected function updateUserFee($userId, $feeId, $query)
-    {
+    protected function updateUserFee($userId, $feeId, $query) {
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees/{fee_id}';
         $templateParamNames = array('{user_id}', '{fee_id}');
@@ -186,8 +179,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function createUserFee($userId, $body)
-    {
+    public function createUserFee($userId, $body) {
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}/fees';
         $templateParamNames = array('{user_id}');
@@ -208,8 +200,7 @@ class AlmaApi
      * @return mixed|null|\Psr\Http\Message\ResponseInterface
      * @throws GuzzleException
      */
-    public function authenticateUser($userId, $userPassword)
-    {
+    public function authenticateUser($userId, $userPassword) {
         $method = 'POST';
         $urlPath = '/almaws/v1/users/{user_id}';
         $templateParamNames = array('{user_id}');

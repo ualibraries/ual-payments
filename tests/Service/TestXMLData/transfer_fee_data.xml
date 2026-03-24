@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<fees total_record_count="1" total_sum="5.0" currency="USD">
+    <fee link="https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/TestBenson1/fees/48382360670003843">
+        <id>48382360670003843</id>
+        <type desc="Item replacement fee">LOSTITEMREPLACEMENTFEE</type>
+        <status desc="Transferred">EXPORTED</status>
+        <user_primary_id link="https://api-na.hosted.exlibrisgroup.com/almaws/v1/users/TestBenson1">TestBenson1</user_primary_id>
+        <balance>115.0</balance>
+        <remaining_vat_amount>0.0</remaining_vat_amount>
+        <original_amount>115.0</original_amount>
+        <original_vat_amount>0.0</original_vat_amount>
+        <creation_time>2021-04-05T19:26:46.404Z</creation_time>
+        <status_time>2022-05-05T17:28:03.966Z</status_time>
+        <comment>In write-off status</comment>
+        <owner desc="Main Library">MAIN</owner>
+        <title>Archaeology of a world of changes : late Roman and early Byzantine architecture, sculpture and landscapes : selected papers from the 23rd International Congress of Byzantine Studies (Belgrade, 22-27 August 2016) in memoriam Claudiae Barsanti / edited by Dominic Moreau, Carolyn S. Snively, Alessandra Guiglia, Isabella Baldini, Ljubomir Milanović, Ivana Popović, Nicolas Beaudry and Orsolya Heinrich-Tamáska.</title>
+        <barcode link="https://api-na.hosted.exlibrisgroup.com/almaws/v1/items?item_barcode=39001502086567">39001502086567</barcode>
+        <transactions>
+            <transaction>
+                <type desc="Export">EXPORT</type>
+                <amount>115.0</amount>
+                <vat_amount>0.0</vat_amount>
+                <reason>Bursar External system</reason>
+                <comment>TestBursars </comment>
+                <created_by>Ex Libris</created_by>
+                <transaction_time>2021-04-05T19:27:36.499Z</transaction_time>
+                <received_by desc="Main Library">Test Bursars</received_by>
+                <payment_method></payment_method>
+            </transaction>
+            <transaction>
+                <type desc="Waive">WAIVE</type>
+                <amount>0.0</amount>
+                <vat_amount>0.0</vat_amount>
+                <reason>OTHER</reason>
+                <comment>In write-off status</comment>
+                <created_by>Ex Libris</created_by>
+                <transaction_time>2022-04-28T19:07:54.799Z</transaction_time>
+                <received_by desc="Main Library">Circ-billing</received_by>
+                <payment_method></payment_method>
+            </transaction>
+            <transaction>
+                <type desc="Export">EXPORT</type>
+                <amount>115.0</amount>
+                <vat_amount>0.0</vat_amount>
+                <reason>Bursar External system</reason>
+                <comment>BURSAR2</comment>
+                <created_by>Ex Libris</created_by>
+                <transaction_time>2022-05-05T17:28:03.966Z</transaction_time>
+                <received_by desc="Main Library">Bursar 7 days</received_by>
+                <payment_method></payment_method>
+            </transaction>
+        </transactions>
+        <bursar_transaction_id>21500773840003843</bursar_transaction_id>
+    </fee>
+</fees>

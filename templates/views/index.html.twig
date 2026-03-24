@@ -36,6 +36,10 @@
         {% include 'partials/greetings-and-signout.html.twig' %}
 
         {% if user_fees %}
+            {% if has_transfer_fees %}
+            <p>You have library fees to pay here and in <a href="https://arizona-ua.primo.exlibrisgroup.com/discovery/account?vid=01UA_INST:01UA&section=fines" target="_blank">your student account</a>. Make sure you pay both fees on time.</p>
+            {% endif %}
+
         <div class="charges__total-amount-due">Your total amount due is:
             <span class="charges__total-amount-number">${{ total_Due|number_format(2, '.', ',') }}</span>
         </div>
@@ -69,9 +73,11 @@
 
             <input id="submitButton" type="submit" value="Pay now" class="button button-primary" disabled="disabled" />
         </form>
+        {% elseif has_transfer_fees %}
+        <p>You don’t have library fees to pay here, but there are fees to pay in <a href="https://arizona-ua.primo.exlibrisgroup.com/discovery/account?vid=01UA_INST:01UA&section=fines" target="_blank">your student account</a>.</p>
         {% else %}
-            <div class="charges__total-amount-due">Good news.</div>
-        <p>You don’t have any fees at this time.</p>
+        <div class="charges__total-amount-due">Good news.</div>
+        <p>You don’t have any library fees to pay right now.</p>
         {% endif %}
     </div>
 </div>

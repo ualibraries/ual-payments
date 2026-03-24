@@ -8,8 +8,7 @@ use SimpleXMLElement;
 /**
  * Utility class used for parsing responses from the Alma API.
  */
-class AlmaUserData
-{
+class AlmaUserData {
     /**
      * Given a guzzle response from Alma, return the list of fees as an associative array with each
      * fee and each fees properties
@@ -17,8 +16,7 @@ class AlmaUserData
      * @param Response $response
      * @return array
      */
-    public function listFees(Response $response)
-    {
+    public function listFees(Response $response) {
         $sxml = new SimpleXMLElement($response->getBody());
 
         $list_fees = [];
@@ -38,13 +36,26 @@ class AlmaUserData
     }
 
     /**
+     * Checks if the user has any fees by checking the total_record_count attribute of the Alma API response
+     *
+     * @param Response $response
+     * @return bool
+     */
+    public function responseHasFees(Response $response) {
+        $sxml = new SimpleXMLElement($response->getBody());
+        if ($sxml->attributes()->total_record_count == '0') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get the full name of user from Alma API response
      *
      * @param Response $response
      * @return string
      */
-    public function getFullNameAsString(Response $response)
-    {
+    public function getFullNameAsString(Response $response) {
         $sxml = new SimpleXMLElement($response->getBody());
         return $sxml->full_name->__toString();
     }
@@ -55,8 +66,7 @@ class AlmaUserData
      * @param Response $response
      * @return bool
      */
-    public function isValidUser(Response $response)
-    {
+    public function isValidUser(Response $response) {
         $sxml = new SimpleXMLElement($response->getBody());
         return $sxml->attributes()->total_record_count == '1';
     }
