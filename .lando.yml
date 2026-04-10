@@ -10,12 +10,14 @@ services:
             - apt-get install -y libxslt1-dev
             - docker-php-ext-install xsl
             - apt-get install -y --no-install-recommends mariadb-client || true
-
-    node:
-        type: node:22
+            - apt-get install -y ca-certificates curl gnupg
+            - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+            - apt-get install -y nodejs
+            - corepack enable
         build:
             - npm install
             - npm run build
+
 config:
     php: '7.4'
     via: apache:2.4
@@ -23,12 +25,12 @@ config:
     xdebug: false
 tooling:
     npm:
-        service: node
+        service: appserver
     node:
-        service: node
+        service: appserver
     behat:
         service: appserver
         cmd: vendor/bin/behat
         description: Run Behat (pass paths/flags after --)
     yarn:
-        service: node
+        service: appserver
