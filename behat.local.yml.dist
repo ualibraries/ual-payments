@@ -1,8 +1,7 @@
 default:
   extensions:
     Behat\MinkExtension:
+      # CircleCI / bare Apache: http://localhost — Lando: https://payments.lndo.site
       base_url: 'http://localhost'
-      sessions:
-        javascript:
-          zombie:
-            node_modules_path: /usr/lib/node_modules/
+      # Do not set webdriver_classic.wd_host here unless you need to override BEHAT_PARAMS.
+      # Lando and CircleCI set BEHAT_PARAMS so Selenium is reached on the Docker network.

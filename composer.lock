@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a9269d68ae6cbb5991634f5345f32cf",
+    "content-hash": "1dd3ab616590f0436e6fb7ef343eb073",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1191,16 +1191,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.20.9",
+            "version": "2.20.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "87f1ba74e04c8694ca00099f3c64706ebac0b114"
+                "reference": "9fe8ce4bf75fbb7342f35835d9a90640902164db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/87f1ba74e04c8694ca00099f3c64706ebac0b114",
-                "reference": "87f1ba74e04c8694ca00099f3c64706ebac0b114",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/9fe8ce4bf75fbb7342f35835d9a90640902164db",
+                "reference": "9fe8ce4bf75fbb7342f35835d9a90640902164db",
                 "shasum": ""
             },
             "require": {
@@ -1286,9 +1286,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.20.9"
+                "source": "https://github.com/doctrine/orm/tree/2.20.10"
             },
-            "time": "2025-11-29T14:03:56+00:00"
+            "time": "2026-04-02T06:18:54+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -1734,16 +1734,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "21dc724a0583619cd1652f673303492272778051"
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
-                "reference": "21dc724a0583619cd1652f673303492272778051",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
                 "shasum": ""
             },
             "require": {
@@ -1759,6 +1759,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
+                "jshttp/mime-db": "1.54.0.1",
                 "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
@@ -1830,7 +1831,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
             },
             "funding": [
                 {
@@ -1846,7 +1847,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T21:21:41+00:00"
+            "time": "2026-03-10T16:41:02+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -2071,16 +2072,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.6.6",
+            "version": "5.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8"
+                "reference": "31a105931bc8ffa3a123383829772e832fd8d903"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/5cee1d3dfc2d2aa6599834520911d246f656bcb8",
-                "reference": "5cee1d3dfc2d2aa6599834520911d246f656bcb8",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/31a105931bc8ffa3a123383829772e832fd8d903",
+                "reference": "31a105931bc8ffa3a123383829772e832fd8d903",
                 "shasum": ""
             },
             "require": {
@@ -2129,9 +2130,9 @@
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.6"
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.6.7"
             },
-            "time": "2025-12-22T21:13:58+00:00"
+            "time": "2026-03-18T20:47:46+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -7864,35 +7865,41 @@
             "time": "2025-11-22T12:18:15+00:00"
         },
         {
-            "name": "behat/mink-zombie-driver",
-            "version": "v1.6.0",
+            "name": "behat/mink-browserkit-driver",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/minkphp/MinkZombieDriver.git",
-                "reference": "a6a9042ececbd2b82e29ea9cd9b7c8c705cb3d21"
+                "url": "https://github.com/minkphp/MinkBrowserKitDriver.git",
+                "reference": "d361516cba6e684bdc4518b9c044edc77f249e36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/minkphp/MinkZombieDriver/zipball/a6a9042ececbd2b82e29ea9cd9b7c8c705cb3d21",
-                "reference": "a6a9042ececbd2b82e29ea9cd9b7c8c705cb3d21",
+                "url": "https://api.github.com/repos/minkphp/MinkBrowserKitDriver/zipball/d361516cba6e684bdc4518b9c044edc77f249e36",
+                "reference": "d361516cba6e684bdc4518b9c044edc77f249e36",
                 "shasum": ""
             },
             "require": {
-                "behat/mink": "~1.9@dev",
-                "ext-json": "*",
-                "ext-sockets": "*",
+                "behat/mink": "^1.11.0@dev",
+                "ext-dom": "*",
                 "php": ">=7.2",
-                "symfony/process": "^4.4 || ^5.0 || ^6.0"
+                "symfony/browser-kit": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/dom-crawler": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "mink/driver-testsuite": "dev-master",
-                "phpunit/phpunit": "^8.5.22 || ^9.5.11",
-                "symfony/error-handler": "^4.4.36 || ^5.4.2 || ^6.0.2"
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpunit/phpunit": "^8.5 || ^9.5",
+                "symfony/error-handler": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/http-client": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "symfony/mime": "^4.4 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "type": "mink-driver",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -7906,32 +7913,24 @@
             ],
             "authors": [
                 {
-                    "name": "Pascal Cremer",
-                    "email": "b00gizm@gmail.com",
-                    "homepage": "https://github.com/b00gizm"
-                },
-                {
                     "name": "Konstantin Kudryashov",
                     "email": "ever.zet@gmail.com",
                     "homepage": "http://everzet.com"
                 }
             ],
-            "description": "Zombie.js driver for Mink framework",
+            "description": "Symfony2 BrowserKit driver for Mink framework",
             "homepage": "https://mink.behat.org/",
             "keywords": [
-                "ajax",
+                "Mink",
+                "Symfony2",
                 "browser",
-                "headless",
-                "javascript",
-                "testing",
-                "zombie"
+                "testing"
             ],
             "support": {
-                "issues": "https://github.com/minkphp/MinkZombieDriver/issues",
-                "source": "https://github.com/minkphp/MinkZombieDriver/tree/v1.6.0"
+                "issues": "https://github.com/minkphp/MinkBrowserKitDriver/issues",
+                "source": "https://github.com/minkphp/MinkBrowserKitDriver/tree/v2.3.0"
             },
-            "abandoned": true,
-            "time": "2022-03-28T14:41:43+00:00"
+            "time": "2025-11-22T12:42:18+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -8039,35 +8038,38 @@
         },
         {
             "name": "friends-of-behat/mink-extension",
-            "version": "v2.7.5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfBehat/MinkExtension.git",
-                "reference": "854336030e11983f580f49faad1b49a1238f9846"
+                "reference": "f5bd8e3d1f89f01b1069d8f35e8d2c93f4dc3efe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfBehat/MinkExtension/zipball/854336030e11983f580f49faad1b49a1238f9846",
-                "reference": "854336030e11983f580f49faad1b49a1238f9846",
+                "url": "https://api.github.com/repos/FriendsOfBehat/MinkExtension/zipball/f5bd8e3d1f89f01b1069d8f35e8d2c93f4dc3efe",
+                "reference": "f5bd8e3d1f89f01b1069d8f35e8d2c93f4dc3efe",
                 "shasum": ""
             },
             "require": {
                 "behat/behat": "^3.0.5",
                 "behat/mink": "^1.5",
-                "php": ">=7.4",
-                "symfony/config": "^4.4 || ^5.0 || ^6.0 || ^7.0"
+                "php": "^7.4 || ^8",
+                "symfony/config": "^4.4 || ^5.0 || ^6.0 || ^7.0",
+                "symfony/deprecation-contracts": "^1.0 || ^2.0 || ^3.0"
             },
             "replace": {
                 "behat/mink-extension": "self.version"
             },
             "require-dev": {
                 "behat/mink-goutte-driver": "^1.1 || ^2.0",
+                "mink/webdriver-classic-driver": "^1.0@dev",
                 "phpspec/phpspec": "^6.0 || ^7.0 || 7.1.x-dev"
             },
+            "default-branch": true,
             "type": "behat-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -8090,7 +8092,7 @@
                 }
             ],
             "description": "Mink extension for Behat",
-            "homepage": "http://extensions.behat.org/mink",
+            "homepage": "https://github.com/FriendsOfBehat/MinkExtension#readme",
             "keywords": [
                 "browser",
                 "gui",
@@ -8099,9 +8101,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FriendsOfBehat/MinkExtension/issues",
-                "source": "https://github.com/FriendsOfBehat/MinkExtension/tree/v2.7.5"
+                "source": "https://github.com/FriendsOfBehat/MinkExtension/tree/master"
             },
-            "time": "2024-01-11T09:12:02+00:00"
+            "time": "2026-01-14T17:30:58+00:00"
         },
         {
             "name": "friends-of-behat/symfony-extension",
@@ -8173,6 +8175,73 @@
             "time": "2023-12-09T12:17:26+00:00"
         },
         {
+            "name": "mink/webdriver-classic-driver",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/minkphp/webdriver-classic-driver.git",
+                "reference": "48e5773f20cc3a0ff3062c380984093c0eae5a54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/minkphp/webdriver-classic-driver/zipball/48e5773f20cc3a0ff3062c380984093c0eae5a54",
+                "reference": "48e5773f20cc3a0ff3062c380984093c0eae5a54",
+                "shasum": ""
+            },
+            "require": {
+                "behat/mink": "^1.11@dev",
+                "ext-json": "*",
+                "php": ">=7.4",
+                "php-webdriver/webdriver": "^1.14"
+            },
+            "require-dev": {
+                "jetbrains/phpstorm-attributes": "^1.0",
+                "mink/driver-testsuite": "dev-master",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpunit/phpunit": "^9.6.8",
+                "symfony/error-handler": "^5.4 || ^6.0 || ^7.0",
+                "symfony/process": "^5.4 || ^6.0 || ^7.0"
+            },
+            "type": "mink-driver",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mink\\WebdriverClassicDriver\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Sciberras",
+                    "email": "christian@sciberras.me",
+                    "homepage": "https://github.com/uuf6429"
+                }
+            ],
+            "description": "W3C WebDriver Classic driver for Mink framework",
+            "homepage": "https://mink.behat.org/",
+            "keywords": [
+                "ajax",
+                "browser",
+                "javascript",
+                "selenium",
+                "testing",
+                "webdriver"
+            ],
+            "support": {
+                "issues": "https://github.com/minkphp/webdriver-classic-driver/issues",
+                "source": "https://github.com/minkphp/webdriver-classic-driver/tree/1.1.1"
+            },
+            "time": "2024-12-03T13:20:16+00:00"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v4.19.5",
             "source": {
@@ -8222,6 +8291,72 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.19.5"
             },
             "time": "2025-12-06T11:45:25+00:00"
+        },
+        {
+            "name": "php-webdriver/webdriver",
+            "version": "1.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-webdriver/php-webdriver.git",
+                "reference": "ac0662863aa120b4f645869f584013e4c4dba46a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-webdriver/php-webdriver/zipball/ac0662863aa120b4f645869f584013e4c4dba46a",
+                "reference": "ac0662863aa120b4f645869f584013e4c4dba46a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-zip": "*",
+                "php": "^7.3 || ^8.0",
+                "symfony/polyfill-mbstring": "^1.12",
+                "symfony/process": "^5.0 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "replace": {
+                "facebook/webdriver": "*"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.20.0",
+                "ondram/ci-detector": "^4.0",
+                "php-coveralls/php-coveralls": "^2.4",
+                "php-mock/php-mock-phpunit": "^2.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpunit/phpunit": "^9.3",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/var-dumper": "^5.0 || ^6.0 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "ext-simplexml": "For Firefox profile creation"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "lib/Exception/TimeoutException.php"
+                ],
+                "psr-4": {
+                    "Facebook\\WebDriver\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP client for Selenium WebDriver. Previously facebook/webdriver.",
+            "homepage": "https://github.com/php-webdriver/php-webdriver",
+            "keywords": [
+                "Chromedriver",
+                "geckodriver",
+                "php",
+                "selenium",
+                "webdriver"
+            ],
+            "support": {
+                "issues": "https://github.com/php-webdriver/php-webdriver/issues",
+                "source": "https://github.com/php-webdriver/php-webdriver/tree/1.16.0"
+            },
+            "time": "2025-12-28T23:57:40+00:00"
         },
         {
             "name": "phploc/phploc",
@@ -9326,23 +9461,36 @@
             "time": "2019-03-13T09:34:17+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "friends-of-behat/mink-extension",
+            "version": "9999999-dev",
+            "alias": "2.8.0",
+            "alias_normalized": "2.8.0.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "friends-of-behat/mink-extension": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.4",
         "ext-simplexml": "*",
         "ext-ctype": "*",
+        "ext-curl": "*",
         "ext-iconv": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-zip": "*"
     },
     "platform-dev": {},
     "platform-overrides": {
         "php": "7.4",
+        "ext-curl": "7.4",
+        "ext-zip": "7.4",
         "ext-sockets": "7.4",
         "ext-xsl": "7.4"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
