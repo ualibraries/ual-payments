@@ -26,5 +26,9 @@ tooling:
         service: node
     node:
         service: node
+    behat:
+        service: appserver
+        cmd: vendor/bin/behat
+        description: Run Behat (pass paths/flags after --)
     yarn:
         service: node
