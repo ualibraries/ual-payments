@@ -39,6 +39,7 @@ jobs:
           name: Install PHP extensions
           command: |
             sudo -E apt-get update
+            sudo -E apt-get install -y libcurl4-openssl-dev pkg-config
             sudo -E docker-php-ext-install pdo_mysql curl
             sudo -E docker-php-ext-enable pdo_mysql
             sudo -E apt-get install libzip-dev
