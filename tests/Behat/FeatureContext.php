@@ -465,9 +465,14 @@ class FeatureContext extends MinkContext
         $session = $this->getSession();
         $page = $session->getPage();
 
+        $value = $_ENV[$arg2] ?? $_SERVER[$arg2] ?? getenv($arg2);
+        if ($value === false || $value === null) {
+            throw new \RuntimeException(sprintf('Environment variable %s is not set.', $arg2));
+        }
+
         $form = $page->findById('login_form');
         try {
-            $form->fillField($arg1, getenv($arg2));
+            $form->fillField($arg1, (string) $value);
         } catch (\Behat\Mink\Exception\ElementNotFoundException $e) {
             print($e);
             return;
