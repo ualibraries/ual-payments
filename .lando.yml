@@ -11,7 +11,6 @@ services:
                 - '4444:4444'
             # Lando overrides the image entrypoint; restore Selenium's default.
             command: /opt/bin/entry_point.sh
-
     appserver:
         overrides:
             environment:
@@ -21,19 +20,16 @@ services:
             - rm -f /etc/apt/sources.list.d/mariadb*.list || true
             - sed -i '/mirror\.mariadb\.org/d' /etc/apt/sources.list || true
             - apt-get update -y
-            - apt-get install -y libcurl4-openssl-dev libzip-dev pkg-config
-            - docker-php-ext-install curl zip sockets
+            - docker-php-ext-install sockets
             - apt-get install -y libxslt1-dev
             - docker-php-ext-install xsl
             - apt-get install -y --no-install-recommends mariadb-client || true
-            - apt-get install -y ca-certificates curl gnupg
-            - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-            - apt-get install -y nodejs
-            - corepack enable
+
+    node:
+        type: node:22
         build:
             - npm install
             - npm run build
-
 config:
     php: '7.4'
     via: apache:2.4
@@ -41,12 +37,12 @@ config:
     xdebug: false
 tooling:
     npm:
-        service: appserver
+        service: node
     node:
-        service: appserver
+        service: node
+    yarn:
+        service: node
     behat:
         service: appserver
         cmd: vendor/bin/behat
         description: Run Behat (pass paths/flags after --)
-    yarn:
-        service: appserver
