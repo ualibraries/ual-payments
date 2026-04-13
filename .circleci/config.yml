@@ -14,6 +14,14 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.7
 
+      # Behat @javascript (Mink webdriver_classic + Selenium 4)
+      - image: selenium/standalone-chrome:4.27.0
+        shm_size: 2gb
+
+    # Behat loads this first, then behat.yml; file config must not set wd_host or it overrides this.
+    environment:
+      BEHAT_PARAMS: '{"extensions":{"Behat\\MinkExtension":{"sessions":{"javascript":{"webdriver_classic":{"wd_host":"http://127.0.0.1:4444"}}}}}}'
+
     working_directory: ~/repo
 
     steps:
@@ -31,7 +39,8 @@ jobs:
           name: Install PHP extensions
           command: |
             sudo -E apt-get update
-            sudo -E docker-php-ext-install pdo_mysql
+            sudo -E apt-get install -y libcurl4-openssl-dev pkg-config
+            sudo -E docker-php-ext-install pdo_mysql curl
             sudo -E docker-php-ext-enable pdo_mysql
             sudo -E apt-get install libzip-dev
             sudo -E docker-php-ext-install zip
@@ -61,7 +70,6 @@ jobs:
             sudo apt-get install nodejs -y
       - run: npm install
       - run: npm run build
-      - run: sudo npm install -g zombie
       - run: sudo chmod -R 777 var/
       - run: cp .env .env.local
       - run:
@@ -91,6 +99,18 @@ jobs:
       - run: sudo a2ensite circleci
       - run: sudo a2enmod rewrite
       - run: sudo service apache2 restart
+      - run:
+          name: Wait for Selenium
+          command: |
+            for i in $(seq 1 90); do
+              if curl -sf http://127.0.0.1:4444/status >/dev/null 2>&1; then
+                echo "Selenium is up"
+                exit 0
+              fi
+              sleep 1
+            done
+            echo "Selenium did not become ready in time"
+            exit 1
       # run tests!
       - run: composer test
   deploy-docs:

@@ -1,7 +1,21 @@
 name: payments
 recipe: symfony
 services:
+    selenium:
+        type: compose
+        app_mount: false
+        services:
+            image: selenium/standalone-chrome:4.27.0
+            shm_size: 2gb
+            ports:
+                - '4444:4444'
+            # Lando overrides the image entrypoint; restore Selenium's default.
+            command: /opt/bin/entry_point.sh
     appserver:
+        overrides:
+            environment:
+                # Selenium hostname is only valid inside the Lando Docker network.
+                BEHAT_PARAMS: '{"extensions":{"Behat\\MinkExtension":{"sessions":{"javascript":{"webdriver_classic":{"wd_host":"http://selenium:4444"}}}}}}'
         build_as_root:
             - rm -f /etc/apt/sources.list.d/mariadb*.list || true
             - sed -i '/mirror\.mariadb\.org/d' /etc/apt/sources.list || true
@@ -28,3 +42,7 @@ tooling:
         service: node
     yarn:
         service: node
+    behat:
+        service: appserver
+        cmd: vendor/bin/behat
+        description: Run Behat (pass paths/flags after --)

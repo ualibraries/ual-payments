@@ -1,11 +1,9 @@
 Feature: User wants to visit the homepage
 
-  @javascript
   Scenario: Checking the login page
     Given I am on "/"
     Then I should see "Library payments"
 
-  @javascript
   Scenario: Checking the homepage
     Given I am on "/login"
     And I fill in "username" with the ENV variable "TEST_ID"

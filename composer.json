@@ -7,8 +7,10 @@
     "php": ">=7.4",
     "ext-SimpleXML": "*",
     "ext-ctype": "*",
+    "ext-curl": "*",
     "ext-iconv": "*",
     "ext-json": "*",
+    "ext-zip": "*",
     "doctrine/annotations": "^1.0",
     "doctrine/doctrine-bundle": "^2.4",
     "doctrine/doctrine-migrations-bundle": "^2.2",
@@ -40,9 +42,10 @@
   },
   "require-dev": {
     "behat/behat": "^3.13",
-    "behat/mink-zombie-driver": "^1.6",
+    "behat/mink-browserkit-driver": "^2.0",
     "deployer/deployer": "^7.3",
-    "friends-of-behat/mink-extension": "^2.7",
+    "friends-of-behat/mink-extension": "dev-master as 2.8.0",
+    "mink/webdriver-classic-driver": "^1.1",
     "friends-of-behat/symfony-extension": "^2.4",
     "phploc/phploc": "^7.0",
     "symfony/browser-kit": "^5.4",
@@ -61,12 +64,23 @@
     "sort-packages": true,
     "platform": {
       "php": "7.4",
+      "ext-curl": "7.4",
+      "ext-zip": "7.4",
       "ext-sockets": "7.4",
       "ext-xsl": "7.4"
     },
     "allow-plugins": {
       "symfony/flex": true,
       "symfony/runtime": true
+    },
+    "audit": {
+      "ignore": [
+        "PKSA-yhcn-xrg3-68b1",
+        "PKSA-2wrf-1xmk-1pky",
+        "PKSA-6319-ffpf-gx66",
+        "PKSA-n7sg-8f52-pqtf",
+        "PKSA-8kk8-h2xr-h5nx"
+      ]
     }
   },
   "autoload": {

@@ -31,7 +31,7 @@ University of Arizona Libraries - Payments
 * Update the `PAYFLOW_*` properties with correct credentials for your Payflow Link account.
 * Log in to your Payflow Link account and navigate to Service Settings > Configuration.  Under "Form Configuration", set "Return URL" to be the root of your application (e.g. `http://www.example.com`) and set the "Silent POST URL" value to the `/result` endpoint of the application (e.g. `http://www.example.com/result`).  In order for Payflow to successfully post success and failure messages to your application, your server *must* be publicly available.  For local development, a tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel) can provide public URLs for Payflow.
 * (Optional) Set `TEST_ID` and `TEST_PASS` to the credentials for a test user in your Alma system.  These credentials will be used while running automated tests.
-* (Optional) Install Zombie.js globally: `npm install -g zombie`.  This is necessary for running automated tests due to [a quirk in the Mink ZombieDriver](http://mink.behat.org/en/latest/drivers/zombie.html).
+* (Optional) For Behat scenarios tagged `@javascript`, run [Selenium Standalone Chrome](https://github.com/SeleniumHQ/docker-selenium) (or use Lando, which includes a `selenium` service). See `docs/ci_and_testing.md`.
 * (Optional) Enable emergency logging in Slack for production environments by creating a new Slack incoming webhook and copying the webhook url to the `SLACK_LOGGING` parameter in `.env`.  Update `SLACK_CHANNEL` with the name of the channel you want the emergency logs to go to.  Make sure `SLACK_CHANNEL` doesn't start with a #, otherwise the `.env` file will interpret the line as a comment!
 
 ## Deploying

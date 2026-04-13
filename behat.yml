@@ -13,7 +13,25 @@ default:
       kernel:
         class: App\Kernel
     Behat\MinkExtension:
+      default_session: symfony
+      javascript_session: javascript
       sessions:
+        symfony:
+          symfony: ~
         javascript:
-          zombie:
-            server_path: bin/mink-zombie-server.js
+          # Selenium 4 needs W3C sessions; behat/mink-selenium2-driver is not compatible (see minkphp/MinkSelenium2Driver#395).
+          webdriver_classic:
+            browser: chrome
+            capabilities:
+              # Mink merges Sauce-style "tags" by default; clear so Selenium Grid does not reject the session.
+              tags: []
+              acceptInsecureCerts: true
+              goog:chromeOptions:
+                excludeSwitches:
+                  - enable-automation
+                args:
+                  - '--headless=new'
+                  - '--no-sandbox'
+                  - '--disable-dev-shm-usage'
+                  - '--disable-gpu'
+                  - '--window-size=1920,1080'
