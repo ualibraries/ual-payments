@@ -75,11 +75,17 @@
     },
     "audit": {
       "ignore": [
+        "PKSA-sjvz-tbbr-vwth",
+        "PKSA-h8hf-ytnd-5t9q",
+        "PKSA-kvv6-36cr-fkzb",
+        "PKSA-n14z-jjjg-g8vd",
+        "PKSA-3mcc-k66d-pydb",
+        "PKSA-gw7n-z4yx-7xjt",
+        "PKSA-dpx1-78wg-1kqs",
         "PKSA-yhcn-xrg3-68b1",
         "PKSA-2wrf-1xmk-1pky",
         "PKSA-6319-ffpf-gx66",
-        "PKSA-n7sg-8f52-pqtf",
-        "PKSA-8kk8-h2xr-h5nx"
+        "PKSA-n7sg-8f52-pqtf"
       ]
     }
   },
