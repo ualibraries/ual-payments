@@ -5694,16 +5694,16 @@
         },
         {
             "name": "symfony/routing",
-            "version": "v5.4.52",
+            "version": "v5.4.53",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "275b31328b2e58cab004be0cf086380e2a5c5ee7"
+                "reference": "f4ca0c533854c26e3b27e981da760807f89e1a42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/275b31328b2e58cab004be0cf086380e2a5c5ee7",
-                "reference": "275b31328b2e58cab004be0cf086380e2a5c5ee7",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/f4ca0c533854c26e3b27e981da760807f89e1a42",
+                "reference": "f4ca0c533854c26e3b27e981da760807f89e1a42",
                 "shasum": ""
             },
             "require": {
@@ -5764,7 +5764,7 @@
                 "url"
             ],
             "support": {
-                "source": "https://github.com/symfony/routing/tree/v5.4.52"
+                "source": "https://github.com/symfony/routing/tree/v5.4.53"
             },
             "funding": [
                 {
@@ -5784,7 +5784,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-16T14:40:03+00:00"
+            "time": "2026-05-22T19:02:28+00:00"
         },
         {
             "name": "symfony/runtime",
