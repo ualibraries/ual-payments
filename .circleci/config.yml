@@ -154,12 +154,7 @@ workflows:
   version: 2
   build-test:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - develop
-                - /release*/
+      - build
   build-deploy-docs:
     jobs:
       - build
