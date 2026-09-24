@@ -1,0 +1,26 @@
+build:
+  environment:
+    php: '7.4'
+  nodes:
+    analysis:
+      project_setup:
+        override:
+          - 'true'
+      tests:
+        override:
+          - php-scrutinizer-run
+          - phpcs-run --standard=PSR12 src/
+          - js-scrutinizer-run
+filter:
+  excluded_paths:
+    - 'tests/*'
+    - 'bin/*'
+    - 'features/*'
+checks:
+  php: true
+  javascript: true
+coding_style:
+  php:
+    spaces:
+      other:
+        after_type_cast: false

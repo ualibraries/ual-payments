@@ -35,6 +35,11 @@ jobs:
           - v1-dependencies-{{ checksum "composer.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+      - run: &drop-bullseye-security
+          # Bullseye LTS has ended; bullseye-security still indexes packages it no longer serves (404s).
+          name: Remove bullseye-security apt source
+          command: |
+            sudo grep -rl 'security.debian.org' /etc/apt/sources.list /etc/apt/sources.list.d/ | xargs -r sudo sed -i '/security\.debian\.org/d'
       - run:
           name: Install PHP extensions
           command: |
@@ -123,6 +128,7 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "composer.json" }}
+      - run: *drop-bullseye-security
       - run: sudo -E apt-get update
       - run:
           name: Install awscli
@@ -147,14 +153,6 @@ jobs:
 workflows:
   version: 2
   build-test:
-    jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - develop
-                - /release*/
-  build-deploy-docs:
     jobs:
       - build
       - deploy-docs:
