@@ -52,7 +52,7 @@ class FeatureContext extends MinkContext
     }
 
     /**
-     * @AfterScenario @fee, @transactions
+     * @AfterScenario @fee,@transactions
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function removeFees($event)
@@ -68,7 +68,7 @@ class FeatureContext extends MinkContext
 
     /**
      * @Then the element with class :arg1 should equal the element with class :arg2
-     * @throws Exception
+     * @throws \Exception
      */
     public function theElementWithClassShouldEqualTheElementWithClass($arg1, $arg2)
     {
@@ -78,7 +78,7 @@ class FeatureContext extends MinkContext
         $element2 = $page->find('css', $arg2)->getText();
 
         if ($element1 != $element2) {
-            throw new Exception(
+            throw new \Exception(
                 $element1 . " does not equal " . $element2
             );
         }
