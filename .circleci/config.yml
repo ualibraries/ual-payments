@@ -155,9 +155,6 @@ workflows:
   build-test:
     jobs:
       - build
-  build-deploy-docs:
-    jobs:
-      - build
       - deploy-docs:
           requires:
             - build
