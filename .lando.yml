@@ -19,6 +19,10 @@ services:
         build_as_root:
             - rm -f /etc/apt/sources.list.d/mariadb*.list || true
             - sed -i '/mirror\.mariadb\.org/d' /etc/apt/sources.list || true
+            # Bullseye LTS has ended; deb.debian.org/debian-security 404s on packages. Use the archive instead
+            # (the base image already has security-updated libs like libxml2, so we need those versions available).
+            - grep -rlE 'deb\.debian\.org/debian-security|security\.debian\.org' /etc/apt/sources.list /etc/apt/sources.list.d/ 2>/dev/null | xargs -r sed -i -E '/debian-security|security\.debian\.org/ s#https?://(deb|security)\.debian\.org(/debian-security)?#http://archive.debian.org/debian-security#'
+            - echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99archive
             - apt-get update -y
             - docker-php-ext-install sockets
             - apt-get install -y libxslt1-dev
